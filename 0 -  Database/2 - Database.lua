@@ -75,6 +75,8 @@ end
 -- Categories && Sub-Categories && Formulas --
 ----------------------------------------------
 
+--Needs some work
+
 c_th = utf8(952)
 
 addCat(1, "Motion Stuff", "Performs calculations of motion-related stuff")
@@ -100,11 +102,13 @@ addCatVar(1,    "eng",      "Total energy",                 "J"         )
 addCatVar(1,    c_th,       "Angle (Degrees)",              utf8(176)   )
 addCatVar(1,    "Tp",       "Period",                       "s"         )
 addCatVar(1,    "c",        "Circumference",                "m"         )
+addCatVar(1,    "r",        "Radius",                       "m"         )
+
 
 addSubCat(1, 1, "Kinematics", "Solves for: u, v, s, t, a")
 aF(1, 1,    "u=v-a*t",              U("u", "v", "a", "t")   )
-aF(1, 1,    "v=sqrt(2*a*s+u^2)",    U("v", "a", "s", "u")   )
-aF(1, 1,    "s=(u*t)+(.5*a*t^2)",   U("s", "u", "t", "a")   )
+aF(1, 1,    "v=sqrt(2*a*s+u^(2))",    U("v", "a", "s", "u")   )
+aF(1, 1,    "s=(u*t)+(.5*a*t^(2))",   U("s", "u", "t", "a")   )
 aF(1, 1,    "t=(2*s)/(u+v)",        U("t", "s", "u", "v")   )
 aF(1, 1,    "a=(v-u)*t",            U("a", "v", "u", "t")   )
 
@@ -139,10 +143,10 @@ aF(1, 5,    "s=(P*t*sec("..c_th.."))/F",    U("s", "P", "t", c_th, "F") )
 aF(1, 5,    "m=F/a",                        U("m", "F", "a")            )
 aF(1, 5,    "a=F/m",                        U("a", "F", "m")            )
 aF(1, 5,    "av=(P*sec("..c_th.."))/F",     U("av", "P", c_th, "F")     )
-aF(1, 5,    c_th,                        U(c_th)                     )
+aF(1, 5,    c_th,                           U(c_th)                     )
 
 addSubCat(1, 6, "Energy", "Solves for: KE, GPE, eng, m, v, h, g")
-aF(1, 6,    "KE=(1/2)*m*v^2",       U("KE", "m", "v")           )
+aF(1, 6,    "KE=(1/2)*m*v^(2)",       U("KE", "m", "v")           )
 aF(1, 6,    "GPE=m*abs(g)*h",       U("GPE", "m", "g", "h")     )
 aF(1, 6,    "eng=KE+GPE",           U("eng", "KE", "GPE")       )
 aF(1, 6,    "m=GPE/(g*h)",          U("m", "GPE", "g", "h")     )
@@ -151,10 +155,10 @@ aF(1, 6,    "h=GPE/(abs(g)*m)",     U("h", "GPE", "g", "m")     )
 aF(1, 6,    "v=sqrt((2*KE)/m)",     U("v", "KE", "m")           )
 
 addSubCat(1, 7, "Centripital", "Solves for F[c], a[c], v, r, Tp (period), m, c" )
-aF(1, 7,    "F=(m*v^2)/r",                  U( "F", "m", "v", "r" )     )
-aF(1, 7,    "a=(4*pi^2*r)/Tp^2",            U( "a", "r", "Tp" )         )
+aF(1, 7,    "F=(m*v^(2))/r",                U( "F", "m", "v", "r" )     )
+aF(1, 7,    "a=(4*pi^(2)*r)/Tp^(2)",        U( "a", "r", "Tp" )         )
 aF(1, 7,    "v=sqrt(a*r)",                  U( "v", "a", "r" )          )
-aF(1, 7,    "r=(m*v^2)/F",                  U( "r", "m" ,"v", "F" )     )
-aF(1, 7,    "m=(F*r)/v^2",                  U( "m", "r", "v" )          )
+aF(1, 7,    "r=(m*v^(2))/F",                U( "r", "m" ,"v", "F" )     )
+aF(1, 7,    "m=(F*r)/v^(2)",                U( "m", "r", "v" )          )
 aF(1, 7,    "Tp=(2*pi*sqrt(r))/sqrt(a)",    U( "Tp", "r", "v" )         )
 aF(1, 7,    "c=2*π*r",                      U( "c", "r" )               )
