@@ -5,10 +5,10 @@ echo "Backing up..."
 cd ..
 endTime=$(date +%F_%H.%M.%S)
 backupName="PhysPro-"$endTime".tar.bz2"
-tar -jcvf $backupName "PhysPro"
+tar -jcvf $backupName "PhysPro-Nspire"
 mv $backupName ./bk/
 
-cd ./PhysPro/
+cd ./PhysPro-Nspire/
 
 echo "Backup complete"
 echo "Building PhysPro v0.8a..."
