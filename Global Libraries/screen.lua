@@ -1,6 +1,6 @@
 
 
-stdout	= print
+stdout = print
 
 function pprint(...)
 	stdout(...)

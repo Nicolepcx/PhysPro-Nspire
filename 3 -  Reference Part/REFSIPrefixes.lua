@@ -2,29 +2,29 @@
 SIPrefixes = Screen()
 
 SIPrefixes.prefixes1 = {
-	{"Y", "Yotta", "24"},
-	{"Z", "Zetta", "21"},
-	{"E", "Exa", "18"},
-	{"P", "Peta", "15"},
-	{"T", "Tera", "12"},
-	{"G", "Giga", "9"},
-	{"M", "Mega", "6"},
-	{"k", "Kilo", "3"},
-	{"h", "Hecto", "2"},
-	{"da", "Deka", "1"}
+	{ "Y",      "Yotta",        "24"    },
+	{ "Z",      "Zetta",        "21"    },
+	{ "E",      "Exa",          "18"    },
+	{ "P",      "Peta",         "15"    },
+	{ "T",      "Tera",         "12"    },
+	{ "G",      "Giga",         "9"     },
+	{ "M",      "Mega",         "6"     },
+	{ "k",      "Kilo",         "3"     },
+	{ "h",      "Hecto",        "2"     },
+	{ "da",     "Deka",         "1"     }
 }
 
 SIPrefixes.prefixes2 = {
-	{"d", "Deci", "-1"},
-	{"c", "Centi", "-2"},
-	{"m", "Milli", "-3"},
-	{utf8(956), "Micro", "-6"},
-	{"n", "Nano", "-9"},
-	{"p", "Pico", "-12"},
-	{"f", "Femto", "-15"},
-	{"a", "Atto", "-18"},
-	{"z", "Zepto", "-21"},
-	{"y", "Yocto", "-24"}
+	{ "d",          "Deci",         "-1"        },
+	{ "c",          "Centi",        "-2"        },
+	{ "m",          "Milli",        "-3"        },
+	{ utf8(956),    "Micro",        "-6"        },
+	{ "n",          "Nano",         "-9"        },
+	{ "p",          "Pico",         "-12"       },
+	{ "f",          "Femto",        "-15"       },
+	{ "a",          "Atto",         "-18"       },
+	{ "z",          "Zepto",        "-21"       },
+	{ "y",          "Yocto",        "-24"       }
 }
 
 function SIPrefixes:paint(gc)

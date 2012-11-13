@@ -1,3 +1,6 @@
+--------------------------------------------
+--                 MAIN                   --
+--------------------------------------------
 
 function initBasicFunctions()
     local basicFunctions = {

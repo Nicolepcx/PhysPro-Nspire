@@ -1,9 +1,17 @@
 #!/bin/sh
+#Mr.Kitty
+echo "Backing up..."
 
-# Jim and Adriweb
-# Building FormulaPro Nspire v1.4alpha....
+cd ..
+endTime=$(date +%F_%H.%M.%S)
+backupName="PhysPro-"$endTime".tar.bz2"
+tar -jcvf $backupName "PhysPro"
+mv $backupName ./bk/
 
-echo "Building FormulaPro Nspire v1.4alpha..."
+cd ./PhysPro/
+
+echo "Backup complete"
+echo "Building PhysPro v0.8a..."
 echo "Building the database"
 
 cd 0\ -\ \ Database
@@ -31,14 +39,19 @@ cd Global\ Libraries
 cd ..
 
 echo "Creating the whole thing..."
-#cat Database.big.lua lib.big.lua FormulaPro.big.lua Analysis.big.lua Reference.big.lua main.lua > EEPro.big.lua
-cat Database.big.lua lib.big.lua FormulaPro.big.lua Reference.big.lua main.lua > EEPro.big.lua
-luna EEPro.big.lua EEPro.tns
-cp EEPro.tns FormulaPro.tns
+cat Database.big.lua lib.big.lua FormulaPro.big.lua Reference.big.lua main.lua > PhysPro.big.lua
+echo "wine luna PhysProp.big.lua TestPhysPro.tns"
+wine /Users/alex3yoyo/Dropbox/Documents/TI/TI-Nspire/dev-workspace/luna-v0.3a/luna.exe PhysPro.big.lua TestPhysPro.tns
 
-echo "Done building"
+echo "Done building PhysPro"
+
+echo "Building definitions"
+cd ./definitions
+./build.sh
+cd ..
+echo "Done building definitions"
+
 echo "Cleaning up"
-
 rm lib.big.lua
 rm FormulaPro.big.lua
 #rm Analysis.big.lua
@@ -46,5 +59,5 @@ rm Reference.big.lua
 rm Database.big.lua
 #rm EEPro.big.lua
 
-echo "Done. Enjoy !"
+echo "Done. Enjoy!"
 

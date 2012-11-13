@@ -1,7 +1,7 @@
 
 CategorySel = WScreen()
-CategorySel.iconS = 48
 
+CategorySel.iconS = 48
 CategorySel.sublist = sList()
 CategorySel:appendWidget(CategorySel.sublist, 5, 5 + 24)
 CategorySel.sublist:setSize(-10, -70)
@@ -23,16 +23,16 @@ function CategorySel:paint(gc)
     gc:setColorRGB(255, 255, 255)
     gc:fillRect(self.x, self.y, self.w, self.h)
 
-    if not kIsInSubCatScreen then
+    if not kIsInSubCatScreen then 
         gc:setColorRGB(0, 0, 0)
         gc:setFont("sansserif", "r", 16)
-        gc:drawString("FormulaPro", self.x + 5, 0, "top")
+        gc:drawString(pInfo["name"], self.x + 5, 0, "top")
 
         gc:setFont("sansserif", "r", 12)
-        gc:drawString("v1.4a", self.x + .4 * self.w, 4, "top")
+        gc:drawString(pInfo["ver"], self.x + .4 * self.w, 4, "top")
 
         gc:setFont("sansserif", "r", 12)
-        gc:drawString("by TI-Planet", self.x + self.w - gc:getStringWidth("by TI-Planet") - 5, 4, "top")
+        gc:drawString("by "..pInfo["by"], self.x + self.w - gc:getStringWidth("by "..pInfo["by"]) - 5, 4, "top")
 
         gc:setColorRGB(220, 220, 220)
         gc:setFont("sansserif", "r", 8)
@@ -64,8 +64,8 @@ end
 
 
 SubCatSel = WScreen()
-SubCatSel.sel = 1
 
+SubCatSel.sel = 1
 SubCatSel.sublist = sList()
 SubCatSel:appendWidget(SubCatSel.sublist, 5, 5 + 24)
 SubCatSel.back = sButton(utf8(9664) .. " Back")

@@ -1,14 +1,15 @@
 
 References	= {
-	{title="Resistor color chart"     , info="", screen=ResColor    },
-	{title="Standard Component Values", info="", screen=nil         },
-	{title="Semiconductor Data",        info="", screen=nil         },
-	{title="Boolean Expressions",       info="", screen=RefBoolExpr },
-	{title="Boolean Algebra",           info="", screen=RefBoolAlg  },
-	{title="Transforms",                info="", screen=nil         },
-	{title="Constants",                 info="", screen=RefConstants},
-	{title="SI Prefixes",               info="", screen=SIPrefixes  },
-	{title="Greek Alphabet",            info="", screen=Greek       },
+	{ title="SI Prefixes",               info="",       screen=SIPrefixes       },
+	{ title="Greek Alphabet",            info="",       screen=Greek            },
+	{ title="Motion Variables",          info="",       screen=MotionVars       },
+	{ title="Displacement Units",        info="",       screen=RefDisplacement  },
+	{ title="Velocity Units",            info="",       screen=RefVelocity      },
+	{ title="Acceleration Units",        info="",       screen=RefAcceleration  },
+	{ title="Time Units",                info="",       screen=RefTime          },
+	{ title="Force Units",               info="",       screen=RefForce         },
+	{ title="Energy Units",              info="",       screen=RefEnergy        },
+	{ title="Power Units",               info="",       screen=RefPower         }
 }
 
 Ref	= WScreen()
@@ -23,7 +24,7 @@ function Ref.addRefs()
 		if ref.screen then
 			table.insert(RefList.items, ref.title)
 		else
-			table.insert(RefList.items, ref.title .. " (not yet done)")  -- TODO !
+			table.insert(RefList.items, ref.title .. " (not yet done)")
 		end
 	end
 end
@@ -39,7 +40,7 @@ function Ref:pushed()
 end
 
 function Ref:paint(gc)
-    gc:setFont("serif", "b", 16)
+    gc:setFont("sansserif", "b", 16)
     gc:drawString("Reference", self.x+6, -2, "top")
     gc:setFont("serif", "r", 12)
 end

@@ -1,18 +1,9 @@
 
 
-aboutWindow	= Dialog("About FormulaPro :", 50, 20, 280, 180)
+aboutWindow	= Dialog("About", 50, 20, 280, 180)
 
-local aboutstr	= [[FormulaPro v1.4a
---------------------
-Jim Bauwens, Adrien "Adriweb" Bertrand
-Thanks also to Levak.
-LGPL3 License.
-More info and contact : 
-tiplanet.org  -  inspired-lua.org
-
-
-Tip : Press [Tab] for Reference !]]
-
+local origInfoStr = "Orig Code:\nFormulaPro v1.4a LGPL3\nJim Bauwens, Adrien \"Adriweb\" Bertrand, Levak\ntiplanet.org - inspired-lua.org"
+local aboutstr = infoStr..origInfoStr
 local aboutButton	= sButton("OK")
 
 for i, line in ipairs(aboutstr:split("\n")) do
@@ -42,20 +33,15 @@ end
 
 ----------------------------------------
 
-
 function errorPopup(gc)
     
     errorHandler.display = false
-
     errorDialog = Dialog("Oops...", 50, 20, "85", "80")
 
-    local textMessage	= [[FormulaPro has encountered an error
+    local textMessage	= [[PhysPro has encountered an error
 -----------------------------
 Sorry for the inconvenience.
-Please report this bug to info@tiplanet.org
-How/where/when it happened etc.
- (bug at line ]] .. errorHandler.errorLine .. ")"
-    
+Error at line ]]..errorHandler.errorLine
     local errorOKButton	= sButton("OK")
     
     for i, line in ipairs(textMessage:split("\n")) do
@@ -92,23 +78,20 @@ end
 errorHandler = {}
 
 function handleError(line, errMsg, callStack, locals)
-    print("Error handled !", errMsg)
+    print("Error handled!", errMsg)
     errorHandler.display = true
     errorHandler.errorMessage = errMsg
     errorHandler.errorLine = line
     errorHandler.callStack = callStack
     errorHandler.locals = locals
     platform.window:invalidate()
-    return true -- go on....
+    return true --go on....
 end
 
 if platform.registerErrorHandler then
     platform.registerErrorHandler( handleError )
 end
 
-
-
-----------------------------------------------  Launch !
+---------------------------------------------- Launch!
 
 push_screen_direct(CategorySel)
-

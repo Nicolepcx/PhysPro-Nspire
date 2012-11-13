@@ -1,6 +1,5 @@
-
--- This part is supposed to load external formulas stored in a string
--- (or else, if a better way of storing is found) from a file in MyLib.
+--This part is supposed to load external formulas stored in a string from a file in MyLib.
+--WIP
 
 function loadExtDB()
     local err
@@ -12,11 +11,10 @@ function loadExtDB()
     end)
 
     if err then
-        print("no external db loaded")
-        -- Display something ?
-        -- or it simply means there is nothing to be loaded.
+        print("No external DB loaded")
+        -- Display something, or it simply means there is nothing to be loaded.
     else
-        -- display something that tells the user the external DB has been successfully loaded.
-        print("external db succesfully loaded")
+        -- Display something that tells the user the external DB has been successfully loaded.
+        print("External DB succesfully loaded")
     end
 end

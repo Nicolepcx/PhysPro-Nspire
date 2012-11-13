@@ -187,13 +187,13 @@ aF(1, 6,    "h=GPE/(abs(g)*m)",     U("h", "GPE", "g", "m")     )
 aF(1, 6,    "v=sqrt((2*KE)/m)",     U("v", "KE", "m")           )
 
 addSubCat(1, 7, "Centripital", "Solves for F[c], a[c], v, r, Tp (period), m, c" )
-aF(1, 7, "F=(m*v^(2))/r", U( "F", "m", "v", "r" ) )
-aF(1, 7, "a=(4*π^(2)*r)/Tp^(2)", U( "a", "r", "Tp" ) )
-aF(1, 7, "v=sqrt(a*r)", U( "v", "a", "r" ) )
-aF(1, 7, "r=", U( "r" ) )
-aF(1, 7, "m=(F*r)/v^(2)", U( "m", "r", "v" ) )
-aF(1, 7, "Tp=", U( "Tp", "m", "v", "r" ) )
-aF(1, 7, "c=2*π*r", U( "c", "r" ) )
+aF(1, 7,    "F=(m*v^2)/r",                  U( "F", "m", "v", "r" )     )
+aF(1, 7,    "a=(4*pi^2*r)/Tp^2",            U( "a", "r", "Tp" )         )
+aF(1, 7,    "v=sqrt(a*r)",                  U( "v", "a", "r" )          )
+aF(1, 7,    "r=(m*v^2)/F",                  U( "r", "m" ,"v", "F" )     )
+aF(1, 7,    "m=(F*r)/v^2",                  U( "m", "r", "v" )          )
+aF(1, 7,    "Tp=(2*pi*sqrt(r))/sqrt(a)",    U( "Tp", "r", "v" )         )
+aF(1, 7,    "c=2*π*r",                      U( "c", "r" )               )
 --This part is supposed to load external formulas stored in a string from a file in MyLib.
 --WIP
 
