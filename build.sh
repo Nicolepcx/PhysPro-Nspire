@@ -41,7 +41,7 @@ cd ..
 echo "Creating the whole thing..."
 cat Database.big.lua lib.big.lua FormulaPro.big.lua Reference.big.lua main.lua > PhysPro.big.lua
 echo "wine luna PhysProp.big.lua TestPhysPro.tns"
-wine /Users/alex3yoyo/Dropbox/Documents/TI/TI-Nspire/dev-workspace/luna-v0.3a/luna.exe PhysPro.big.lua TestPhysPro.tns
+wine ./luna-v0.3a/luna.exe PhysPro.big.lua TestPhysPro.tns
 
 echo "Done building PhysPro"
 
