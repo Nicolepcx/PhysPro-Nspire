@@ -2,9 +2,7 @@
 RefConstants = Screen()
 
 RefConstants.data = {
-{"Gravitational acceleration",      "aG",       "9.81 m*s^-2"                   },
-{"Gravitational constant",          "cG",       "6.67 x 10^-11 Nm^2 kg^-2"      },
-{"Speed of light in vacuum",        "C",        "2.9979 x 10^8 m/s"             }
+    {"Acceleration due to gravity", "", ""}
 }
 
 RefConstants.tmpScroll = 1
@@ -31,7 +29,7 @@ function RefConstants:paint(gc)
 	gc:fillRect(self.x, self.y, self.w, self.h)
 	gc:setColorRGB(0,0,0)
 	
-	    msg = "Physical Constants : "
+	    msg = "Physical Constants: "
         gc:setFont("sansserif","b",12)
         if RefConstants.leftRight > 1 then
         	gc:drawString(utf8(9664),4,0,"top")
