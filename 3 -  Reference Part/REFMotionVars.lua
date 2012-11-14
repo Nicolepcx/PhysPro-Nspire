@@ -14,9 +14,14 @@ MotionVars.data = {
     { "m",          "kg",           "Mass"                                  },
     { "W",          "J",            "Work"                                  },
     { "P",          "W",            "Power"                                 },
-    { "KE",         "J",            "Kinetic energy"                        },
-    { "GPE",        "J",            "Gravitational potential energy"        },
-    { "eng",        "J",            "Total energy"                          }
+    { "Ek",         "J",            "Kinetic energy"                        },
+    { "Ep",         "J",            "Gravitaty potential energy"            },
+    { "E",          "J",            "Total energy"                          },
+    { "p",          "N*s",          "Momentum"                              },
+    { "imp",        "N*s",          "Impulse"                               },
+    { "Tp",         "s",            "Period"                                },
+    { "r",          "m",            "Radius"                                },
+    { "c",          "m",            "Circumference"                         }
 }
 
 MotionVars.tmpScroll = 1
