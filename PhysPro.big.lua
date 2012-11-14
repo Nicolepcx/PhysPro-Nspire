@@ -118,7 +118,6 @@ addCat(1, "Motion", "Performs calculations of motion-related stuff")
 addCatVar(1,    "u",        "Intial velocity",              "m/s"       )
 addCatVar(1,    "v",        "Final velocity",               "m/s"       )
 addCatVar(1,    "dv",       "Change in velocity",           "m/s"       )
-addCatVar(1,    "av",       "Average velocity",             "m/s"       )
 addCatVar(1,    "s",        "Displacement",                 "m"         )
 addCatVar(1,    "t",        "Time",                         "s"         )
 addCatVar(1,    "a",        "Accleration",                  "m/s2"      )
@@ -130,9 +129,9 @@ addCatVar(1,    "g",        "Gravity Acc.",                 "m/s2"      )
 addCatVar(1,    "h",        "Height",                       "m"         )
 addCatVar(1,    "Imp",      "Impulse",                      "N*s"       )
 addCatVar(1,    "p",        "Momentum",                     "N*s"       )
-addCatVar(1,    "Ep",      "Gravity PE",                    "J"         )
+addCatVar(1,    "Ep",       "Gravity PE",                   "J"         )
 addCatVar(1,    "Ek",       "Kinetic energy",               "J"         )
-addCatVar(1,    "E",      "Total energy",                   "J"         )
+addCatVar(1,    "E",        "Total energy",                 "J"         )
 addCatVar(1,    c_th,       "Angle (Degrees)",              utf8(176)   )
 addCatVar(1,    "Tp",       "Period",                       "s"         )
 addCatVar(1,    "c",        "Circumference",                "m"         )
@@ -3032,7 +3031,6 @@ MotionVars = Screen()
 MotionVars.data = {
     { "u",          "m/s",          "Initial velocity"                      },
     { "v",          "m/s",          "Final velocity"                        },
-    { "av",         "m/s",          "Average velocity"                      },
     { "dv",         "m/s",          "Change in velocity"                    },
     { "a",          "m/s2",         "Average acceleration"                  },
     { "s",          "m",            "Displacement"                          },
@@ -3042,9 +3040,14 @@ MotionVars.data = {
     { "m",          "kg",           "Mass"                                  },
     { "W",          "J",            "Work"                                  },
     { "P",          "W",            "Power"                                 },
-    { "KE",         "J",            "Kinetic energy"                        },
-    { "GPE",        "J",            "Gravitational potential energy"        },
-    { "eng",        "J",            "Total energy"                          }
+    { "Ek",         "J",            "Kinetic energy"                        },
+    { "Ep",         "J",            "Gravitaty potential energy"            },
+    { "E",          "J",            "Total energy"                          },
+    { "p",          "N*s",          "Momentum"                              },
+    { "imp",        "N*s",          "Impulse"                               },
+    { "Tp",         "s",            "Period"                                },
+    { "r",          "m",            "Radius"                                },
+    { "c",          "m",            "Circumference"                         }
 }
 
 MotionVars.tmpScroll = 1
@@ -3373,7 +3376,7 @@ References	= {
 	{ title="Time Units",                info="",       screen=RefTime          },
 	{ title="Force Units",               info="",       screen=RefForce         },
 	{ title="Energy Units",              info="",       screen=RefEnergy        },
-	{ title="Power Units",               info="",       screen=RefPower         }
+	{ title="Power Units",               info="",       screen=RefPower         },
 }
 
 Ref	= WScreen()

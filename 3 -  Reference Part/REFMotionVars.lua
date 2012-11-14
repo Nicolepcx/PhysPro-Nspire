@@ -4,7 +4,6 @@ MotionVars = Screen()
 MotionVars.data = {
     { "u",          "m/s",          "Initial velocity"                      },
     { "v",          "m/s",          "Final velocity"                        },
-    { "av",         "m/s",          "Average velocity"                      },
     { "dv",         "m/s",          "Change in velocity"                    },
     { "a",          "m/s2",         "Average acceleration"                  },
     { "s",          "m",            "Displacement"                          },
