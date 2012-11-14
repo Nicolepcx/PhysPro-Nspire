@@ -148,3 +148,18 @@ aF(1, 7,    "c=2*π*r",                  U( "c", "r" )               )
 
 addCat(2, "Thermal", "Performs thermal related physics calculations")
 
+--addCat(3, "Oscillations and Waves", "Performs calculations related to oscillations and waves")
+
+--addCat(4, "Electric Currents", "Performs electrical related physics calculations")
+
+--addCat(5, "Nuclear", "Performs calculations relating to nuclear physics")
+
+--addCat(6, "Quantum", "Performs calculations relating to quantum physics")
+
+--addCat(7, "Electromagnetism", "Performs calculations relating to electromagnetism")
+
+--addCat(8, "Relativity", "Performs calculations relating to relivity")
+
+--addCat(9, "Astrophysics", "Performs calculations relating to astrophysics")
+
+--addCat(10, "Particle", "Performs calculations relating to particle physics")
