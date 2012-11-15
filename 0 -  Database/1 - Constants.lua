@@ -8,7 +8,8 @@ function numberToSub(w,n)
 	return w..utf8(SubNumbers[tonumber(n)])
 end
 
-Constants	= {}
+
+Constants = {}
 Constants["g"] = {info="Acceleration due to gravity", value="9.81", unit="m*s^-2"}
 Constants["G"] = {info="Gravitational constant", value="6.67 * 10^-11", unit="Nm^2/kg^-2"}
 Constants["N"] = {info="Avogadro's constant", value="6.022 * 10^23", unit="mol^-1"}

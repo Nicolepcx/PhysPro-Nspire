@@ -29,10 +29,25 @@ function numberToSub(w,n)
 	return w..utf8(SubNumbers[tonumber(n)])
 end
 
-Constants	= {}
-Constants["aG"] = {info="Gravity acceleration", value="9.81", unit="m*s^-2" }
-Constants["C"] = {info="Speed of light", value="2.9979*10^8", unit="m/s"}
-Constants["pi"]	= {info="PI", value="pi", unit=nil}
+
+Constants = {}
+Constants["g"] = {info="Acceleration due to gravity", value="9.81", unit="m*s^-2"}
+Constants["G"] = {info="Gravitational constant", value="6.67 * 10^-11", unit="Nm^2/kg^-2"}
+Constants["N"] = {info="Avogadro's constant", value="6.022 * 10^23", unit="mol^-1"}
+Constants["R"] = {info="Gas constant", value="8.314", unit="J/((mol^-1)*(K^-1))"}
+Constants["k"]	= {info="Boltzmann's constant", value="1.38 * 10^-23", unit="J/K^-1"}
+--Constants["k"]	= {info="Stefan-Boltzmann constant", value="5.67 * 10^-8", unit="W*m^-2*K^-1"}
+--Constants["k"] = {info="Coulomb constant", value="8.99 * 10^9", unit="N*m^2*C^-2"}
+Constants[utf8(949).."0"] = {info="Permittivity of a vacuum", value="8.854 * 10^-12", unit="F/m^-1"}
+Constants[utf8(956).."0"] = {info="Permeability of a vacuum", value="4*pi * 10^-7", unit="N/A^-2"}
+Constants["C"] = {info="Speed of light in vacuum", value="2.9979 * 10^8", unit="m/s"}
+Constants["h"] = {info="Planck constant", value="6.626 * 10^-34", unit="J/s"}
+Constants["q"] = {info="Elementary charge", value="1.60218 * 10^-19", unit="C"}
+Constants["me"] = {info="Electron rest mass", value="9.109 * 10^-31", unit="kg"}
+Constants["mp"] = {info="Proton rest mass", value="1.6726 * 10^-27", unit="kg"}
+Constants["mn"]	= {info="Neutron rest mass", value="1.675 * 10^-27", unit="kg"}
+Constants["mu"] = {info="Atomic mass unit", value="1.66 * 10^-27", unit="kg"}
+Constants["pi"] = {info="PI", value="pi", unit=nil}
 Constants[utf8(960)] = Constants["pi"]
 
 --------------------------------------------------------
@@ -112,6 +127,12 @@ end
 ----------------------------------------------
 
 c_th = utf8(952)
+c_om = utf8(969)
+c_la = utf8(955)
+c_ep = utf8(949)
+c_de = utf8(916)
+c_ph = utf8(966)
+c_pi = utf8(960)
 
 addCat(1, "Motion", "Performs calculations of motion-related stuff")
 
@@ -173,7 +194,7 @@ aF(1, 5,    "F=m*a",                        U("F", "m", "a")            )
 addSubCat(1, 6, "Energy", "Solves for: Ek, Ep, E, m, v, h, g")
 aF(1, 6,    "Ek=(1/2)*m*v^(2)",     U("Ek", "m", "v")           )
 aF(1, 6,    "Ek=p^(2)/(2*m)",       U("Ek", "p", "m")           )
-aF(1, 6,    "Ep=m*abs(g)*h",        U("Ep", "m", "g", "h")     )
+aF(1, 6,    "Ep=m*abs(g)*h",        U("Ep", "m", "g", "h")      )
 aF(1, 6,    "E=Ek+Ep",              U("E", "Ek", "Ep")          )
 
 addSubCat(1, 7, "Centripital", "Solves for F, a, v, r, Tp (period), m, c" )
@@ -184,6 +205,75 @@ aF(1, 7,    "c=2*π*r",                  U( "c", "r" )               )
 
 addCat(2, "Thermal", "Performs thermal related physics calculations")
 
+addCatVar(2, "P", "", "")
+addCatVar(2, "F", "", "")
+addCatVar(2, "A", "", "")
+addCatVar(2, "Q", "", "")
+addCatVar(2, "T", "", "")
+addCatVar(2, "m", "", "")
+addCatVar(2, "c", "", "")
+addCatVar(2, "W", "", "")
+addCatVar(2, "V", "", "")
+addCatVar(2, "R", "", "")
+addCatVar(2, "U", "", "")
+addCatVar(2, "n", "", "")
+
+addCat(3, "Oscillations and Waves", "Performs calculations related to oscillations and waves")
+
+addCatVar(2,    c_om, "", "")
+addCatVar(2,    "T", "", "")
+addCatVar(2,    "x", "", "")
+addCatVar(2,    "v", "", "")
+addCatVar(2,    "u", "", "")
+addCatVar(2,    "t", "", "")
+addCatVar(2,    "Ek", "Kinetic energy", "")
+addCatVar(2,    "Ekm", "Kinetic energy (max)", "")
+addCatVar(2,    "ET", "Thermal energy", "")
+addCatVar(2,    "f", "", "")
+addCatVar(2,    "m", "", "")
+addCatVar(2,    "n", "", "")
+addCatVar(2,    c_la, "", "")
+addCatVar(2,    c_th, "Angle (Degrees)", utf8(176))
+
+addCat(4, "Electric Currents", "Performs electrical related physics calculations")
+
+addCatVar(2,    "Ve", "", "")
+addCatVar(2,    "m", "", "")
+addCatVar(2,    "v", "", "")
+addCatVar(2,    "I", "", "")
+addCatVar(2,    "q", "", "")
+addCatVar(2,    "t", "", "")
+addCatVar(2,    "R", "", "")
+addCatVar(2,    "P", "", "")
+addCatVar(2,    c_ep, "", "")
+addCatVar(2,    "r", "", "")
+
+addCat(5, "Quantum & Nuclear", "Performs calculations relating to nuclear physics")
+
+addCatVar(2,    "E", "", "")
+addCatVar(2,    "m", "", "")
+addCatVar(2,    "c", "", "")
+addCatVar(2,    "h", "", "")
+addCatVar(2,    "f", "", "")
+addCatVar(2,    "eV", "", "")
+addCatVar(2,    "n", "", "")
+addCatVar(2,    "x", "", "")
+addCatVar(2,    "p", "", "")
+addCatVar(2,    "A", "", "")
+addCatVar(2,    "N", "", "")
+addCatVar(2,    "t", "", "")
+addCatVar(2,    c_la, "", "")
+addCatVar(2,    "T", "", "")
+addCatVar(2,    "L", "", "")
+addCatVar(2,    "", "", "")
+
+addCat(6, "Electromagnetism", "Performs calculations relating to electromagnetism")
+
+addCat(7, "Relativity", "Performs calculations relating to relivity")
+
+addCat(8, "Astrophysics", "Performs calculations relating to astrophysics")
+
+addCat(9, "Particle", "Performs calculations relating to particle physics")
 --This part is supposed to load external formulas stored in a string from a file in MyLib.
 --WIP
 
@@ -2735,6 +2825,68 @@ function RefAcceleration:paint(gc)
 end
 
 
+RefConstants = Screen()
+
+RefConstants.data = {
+    {"Acceleration due to gravity", "", ""}
+}
+
+RefConstants.tmpScroll = 1
+RefConstants.leftRight = 1
+
+function RefConstants:arrowKey(arrw)
+	if arrw == "up" then
+		RefConstants.tmpScroll = RefConstants.tmpScroll - test(RefConstants.tmpScroll>1)
+	end
+	if arrw == "down" then
+		RefConstants.tmpScroll = RefConstants.tmpScroll + test(RefConstants.tmpScroll<(table.getn(RefConstants.data)-7))
+	end
+	if arrw == "left" then
+		RefConstants.leftRight = RefConstants.leftRight - 5*test(RefConstants.leftRight>1)
+	end
+	if arrw == "right" then
+		RefConstants.leftRight = RefConstants.leftRight + 5*test(RefConstants.leftRight<150)
+	end
+	screenRefresh()
+end
+
+function RefConstants:paint(gc)
+	gc:setColorRGB(255,255,255)
+	gc:fillRect(self.x, self.y, self.w, self.h)
+	gc:setColorRGB(0,0,0)
+	
+	    msg = "Physical Constants: "
+        gc:setFont("sansserif","b",12)
+        if RefConstants.leftRight > 1 then
+        	gc:drawString(utf8(9664),4,0,"top")
+        end
+        if RefConstants.leftRight < 160 then
+        	gc:drawString(utf8(9654),pww()-gc:getStringWidth(utf8(9660))-2,0,"top")
+        end
+        if RefConstants.tmpScroll > 1 then
+        	gc:drawString(utf8(9650),gc:getStringWidth(utf8(9664))+7,0,"top")
+        end
+        if RefConstants.tmpScroll < table.getn(RefConstants.data)-7 then
+        	gc:drawString(utf8(9660),pww()-4*gc:getStringWidth(utf8(9654))-2,0,"top")
+        end
+        drawXCenteredString(gc,msg,4)
+        gc:setFont("sansserif","r",12)
+        
+       	local tmp = 0
+       	for k=RefConstants.tmpScroll,table.getn(RefConstants.data) do
+			tmp = tmp + 1
+       		gc:setFont("sansserif","b",12)
+            gc:drawString(RefConstants.data[k][1], 5-RefConstants.leftRight, 5+22*tmp, "top")
+        	gc:setFont("sansserif","r",12)
+            gc:drawString("  (" .. RefConstants.data[k][2] .. ") : " .. RefConstants.data[k][3] .. ". ", gc:getStringWidth(RefConstants.data[k][1])+15-RefConstants.leftRight, 5+22*tmp, "top")
+		end
+end
+
+function RefConstants:escapeKey()
+	only_screen_back(Ref)
+end
+
+
 RefDisplacement = Screen()
 
 RefDisplacement.data = {
@@ -3367,16 +3519,17 @@ end
 
 
 References	= {
-	{ title="SI Prefixes",               info="",       screen=SIPrefixes       },
-	{ title="Greek Alphabet",            info="",       screen=Greek            },
-	{ title="Motion Variables",          info="",       screen=MotionVars       },
-	{ title="Displacement Units",        info="",       screen=RefDisplacement  },
-	{ title="Velocity Units",            info="",       screen=RefVelocity      },
-	{ title="Acceleration Units",        info="",       screen=RefAcceleration  },
-	{ title="Time Units",                info="",       screen=RefTime          },
-	{ title="Force Units",               info="",       screen=RefForce         },
-	{ title="Energy Units",              info="",       screen=RefEnergy        },
-	{ title="Power Units",               info="",       screen=RefPower         },
+	{ title="SI Prefixes",              info="",        screen=SIPrefixes       },
+	{ title="Greek Alphabet",           info="",        screen=Greek            },
+	{ title="Motion Variables",         info="",        screen=MotionVars       },
+	{ title="Displacement Units",       info="",        screen=RefDisplacement  },
+	{ title="Velocity Units",           info="",        screen=RefVelocity      },
+	{ title="Acceleration Units",       info="",        screen=RefAcceleration  },
+	{ title="Time Units",               info="",        screen=RefTime          },
+	{ title="Force Units",              info="",        screen=RefForce         },
+	{ title="Energy Units",             info="",        screen=RefEnergy        },
+	{ title="Power Units",              info="",        screen=RefPower         },
+	{ title="Constants",                info="",        screen=REFConstants     }
 }
 
 Ref	= WScreen()
