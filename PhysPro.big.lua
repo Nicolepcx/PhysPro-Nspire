@@ -29,7 +29,6 @@ function numberToSub(w,n)
 	return w..utf8(SubNumbers[tonumber(n)])
 end
 
-
 Constants = {}
 Constants["g"] = {info="Acceleration due to gravity", value="9.81", unit="m*s^-2"}
 Constants["G"] = {info="Gravitational constant", value="6.67 * 10^-11", unit="Nm^2/kg^-2"}
@@ -205,75 +204,78 @@ aF(1, 7,    "c=2*π*r",                  U( "c", "r" )               )
 
 addCat(2, "Thermal", "Performs thermal related physics calculations")
 
-addCatVar(2, "P", "", "")
-addCatVar(2, "F", "", "")
-addCatVar(2, "A", "", "")
-addCatVar(2, "Q", "", "")
-addCatVar(2, "T", "", "")
-addCatVar(2, "m", "", "")
-addCatVar(2, "c", "", "")
-addCatVar(2, "W", "", "")
-addCatVar(2, "V", "", "")
-addCatVar(2, "R", "", "")
-addCatVar(2, "U", "", "")
-addCatVar(2, "n", "", "")
+addCatVar(2, "P", "Pressure", "Pa")
+addCatVar(2, "V", "Volume", "m3")
+addCatVar(2, "T", "Tempturature", "K")
+addCatVar(2, "n", "Amount", "mol")
+addCatVar(2, "m", "Atomic Mass", "kg")
+addCatVar(2, "M", "Mass", "kg")
+--addCatVar(2, "F", "", "")
+--addCatVar(2, "A", "", "")
+--addCatVar(2, "Q", "", "")
+--addCatVar(2, "c", "", "")
+--addCatVar(2, "W", "", "")
+--addCatVar(2, "U", "", "")
 
-addCat(3, "Oscillations and Waves", "Performs calculations related to oscillations and waves")
+addSubCat(2, 1, "Thermo", "Solves for P, V, T, n, m, M")
+aF(2, 1, "P*V=n*"..Constants["R"].value.."*T", U( "P", "V", "n", "T" ) )
+aF(2, 1, "n=m/M", U( "n", "m", "M" ) )
 
-addCatVar(2,    c_om, "", "")
-addCatVar(2,    "T", "", "")
-addCatVar(2,    "x", "", "")
-addCatVar(2,    "v", "", "")
-addCatVar(2,    "u", "", "")
-addCatVar(2,    "t", "", "")
-addCatVar(2,    "Ek", "Kinetic energy", "")
-addCatVar(2,    "Ekm", "Kinetic energy (max)", "")
-addCatVar(2,    "ET", "Thermal energy", "")
-addCatVar(2,    "f", "", "")
-addCatVar(2,    "m", "", "")
-addCatVar(2,    "n", "", "")
-addCatVar(2,    c_la, "", "")
-addCatVar(2,    c_th, "Angle (Degrees)", utf8(176))
+--addCat(3, "Oscillations and Waves", "Performs calculations related to oscillations and waves")
 
-addCat(4, "Electric Currents", "Performs electrical related physics calculations")
+--addCatVar(2,    c_om, "", "")
+--addCatVar(2,    "T", "", "")
+--addCatVar(2,    "x", "", "")
+--addCatVar(2,    "v", "", "")
+--addCatVar(2,    "u", "", "")
+--addCatVar(2,    "t", "", "")
+--addCatVar(2,    "Ek", "Kinetic energy", "")
+--addCatVar(2,    "Ekm", "Kinetic energy (max)", "")
+--addCatVar(2,    "ET", "Thermal energy", "")
+--addCatVar(2,    "f", "", "")
+--addCatVar(2,    "m", "", "")
+--addCatVar(2,    "n", "", "")
+--addCatVar(2,    c_la, "", "")
+--addCatVar(2,    c_th, "Angle (Degrees)", utf8(176))
 
-addCatVar(2,    "Ve", "", "")
-addCatVar(2,    "m", "", "")
-addCatVar(2,    "v", "", "")
-addCatVar(2,    "I", "", "")
-addCatVar(2,    "q", "", "")
-addCatVar(2,    "t", "", "")
-addCatVar(2,    "R", "", "")
-addCatVar(2,    "P", "", "")
-addCatVar(2,    c_ep, "", "")
-addCatVar(2,    "r", "", "")
+--addCat(4, "Electric Currents", "Performs electrical related physics calculations")
 
-addCat(5, "Quantum & Nuclear", "Performs calculations relating to nuclear physics")
+--addCatVar(2,    "Ve", "", "")
+--addCatVar(2,    "m", "", "")
+--addCatVar(2,    "v", "", "")
+--addCatVar(2,    "I", "", "")
+--addCatVar(2,    "q", "", "")
+--addCatVar(2,    "t", "", "")
+--addCatVar(2,    "R", "", "")
+--addCatVar(2,    "P", "", "")
+--addCatVar(2,    c_ep, "", "")
+--addCatVar(2,    "r", "", "")
 
-addCatVar(2,    "E", "", "")
-addCatVar(2,    "m", "", "")
-addCatVar(2,    "c", "", "")
-addCatVar(2,    "h", "", "")
-addCatVar(2,    "f", "", "")
-addCatVar(2,    "eV", "", "")
-addCatVar(2,    "n", "", "")
-addCatVar(2,    "x", "", "")
-addCatVar(2,    "p", "", "")
-addCatVar(2,    "A", "", "")
-addCatVar(2,    "N", "", "")
-addCatVar(2,    "t", "", "")
-addCatVar(2,    c_la, "", "")
-addCatVar(2,    "T", "", "")
-addCatVar(2,    "L", "", "")
-addCatVar(2,    "", "", "")
+--addCat(5, "Quantum & Nuclear", "Performs calculations relating to nuclear physics")
 
-addCat(6, "Electromagnetism", "Performs calculations relating to electromagnetism")
+--addCatVar(2,    "E", "", "")
+--addCatVar(2,    "m", "", "")
+--addCatVar(2,    "c", "", "")
+--addCatVar(2,    "h", "", "")
+--addCatVar(2,    "f", "", "")
+--addCatVar(2,    "eV", "", "")
+--addCatVar(2,    "n", "", "")
+--addCatVar(2,    "x", "", "")
+--addCatVar(2,    "p", "", "")
+--addCatVar(2,    "A", "", "")
+--addCatVar(2,    "N", "", "")
+--addCatVar(2,    "t", "", "")
+--addCatVar(2,    c_la, "", "")
+--addCatVar(2,    "T", "", "")
+--addCatVar(2,    "L", "", "")
 
-addCat(7, "Relativity", "Performs calculations relating to relivity")
+--addCat(6, "Electromagnetism", "Performs calculations relating to electromagnetism")
 
-addCat(8, "Astrophysics", "Performs calculations relating to astrophysics")
+--addCat(7, "Relativity", "Performs calculations relating to relivity")
 
-addCat(9, "Particle", "Performs calculations relating to particle physics")
+--addCat(8, "Astrophysics", "Performs calculations relating to astrophysics")
+
+--addCat(9, "Particle", "Performs calculations relating to particle physics")
 --This part is supposed to load external formulas stored in a string from a file in MyLib.
 --WIP
 
@@ -294,6 +296,9 @@ function loadExtDB()
         print("External DB succesfully loaded")
     end
 end
+---------------
+--   Units   --
+---------------
 
 local mathpi = math.pi
 
@@ -317,31 +322,29 @@ or
 n subunit = (n-b)/a mainunit
 --]]
 
-
 Mt = {}
-
 Mt.G = 1 / 1000000000
 Mt.M = 1 / 1000000
 Mt.k = 1 / 1000
 Mt.h = 1 / 100
 Mt.da = 1 / 10
-
 Mt.d = 10
 Mt.c = 100
 Mt.m = 1000
 Mt.u = 1000000
 Mt.n = 1000000000
 
-Mt.min = 60
-Mt.hr = 3600
-Mt.day = 86400
-Mt.wk = 604800
-Mt.fortn = 1209600
-Mt.month = 18144000 
-Mt.yr = 217728000
+Ms = {}
+Ms.min = 60
+Ms.hr = 3600
+Ms.day = 86400
+Ms.wk = 604800
+Ms.fortn = 1209600
+Ms.month = 18144000 
+Ms.yr = 217728000
 
 
--- Meters (Displacement/Height)
+--Length
 Units["m"] = {}
 Units["m"]["nm"] = { Mt.n, 0 }
 Units["m"][utf8(956).."m"] = { Mt.u, 0 }
@@ -366,12 +369,12 @@ Units["m"]["FB-F"] = { 109.7, 0 }
 Units["m"]["furlong"] = { 201.168, 0 }
 Units["m"]["brds"] = { 0.000000005, 0 }
 
---Meters/sec (Velocity)
+--Velocity
 Units["m/s"] = {}
 Units["m/s"]["km/s"] = { Mt.k, 0 }
 Units["m/s"]["cm/s"] = { Mt.c, 0 }
 Units["m/s"]["mm/s"] = { Mt.m, 0 }
-Units["m/s"]["m/hr"] = { Mt.hr, 0 }
+Units["m/s"]["m/hr"] = { Ms.hr, 0 }
 Units["m/s"]["km/hr"] = { 3.6, 0 }
 Units["m/s"]["knot"] = { 0.514444, 0 }
 Units["m/s"]["mi/hr"] = { 0.44704, 0 }
@@ -381,12 +384,12 @@ Units["m/s"]["ft/s"] = { 0.3048, 0 }
 Units["m/s"]["mi/min"] = { 26.8224, 0 }
 Units["m/s"]["brds/sec"] = { 0.000000005, 0 }
 
---Meters/sec/sec (Acceleration)
+--Acceleration
 Units["m/s2"] = {}
 Units["m/s2"]["km/s2"] = { Mt.k, 0 }
 Units["m/s2"]["cm/s2"] = { Mt.c, 0 }
 Units["m/s2"]["mm/s2"] = { Mt.m, 0 }
-Units["m/s2"]["m/hr2"] = { Mt.hr, 0 }
+Units["m/s2"]["m/hr2"] = { Ms.hr, 0 }
 Units["m/s2"]["km/hr2"] = { 3.6, 0 }
 Units["m/s2"]["knot2"] = { 0.514444, 0 }
 Units["m/s2"]["mi/hr2"] = { 0.44704, 0 }
@@ -395,19 +398,19 @@ Units["m/s2"]["ft/min2"] = { 0.00508, 0 }
 Units["m/s2"]["ft/s2"] = { 0.3048, 0 }
 Units["m/s2"]["mi/min2"] = { 26.8224, 0 }
 
---Seconds (Time)
+--Time
 Units["s"] = {}
-Units["s"]["min"] = { Mt.min, 0 }
-Units["s"]["hr"] = { Mt.hr, 0 }
-Units["s"]["day"] = { Mt.day, 0 }
-Units["s"]["wk"] = { Mt.wk, 0 }
-Units["s"]["fortn"] = { Mt.fortn, 0 }
+Units["s"]["min"] = { Ms.min, 0 }
+Units["s"]["hr"] = { Ms.hr, 0 }
+Units["s"]["day"] = { Ms.day, 0 }
+Units["s"]["wk"] = { Ms.wk, 0 }
+Units["s"]["fortn"] = { Ms.fortn, 0 }
 Units["s"]["month"] = { Mt.month, 0 }
 Units["s"]["yr"] = { Mt.yr, 0 }
 Units["s"]["mCent"] = { 34, 0 }
 Units["s"]["Frieds"] = { 108864000, 0 }
 
---Newtons (Force)
+--Force
 Units["N"] = {}
 Units["N"]["kN"] = { Mt.k, 0 }
 Units["N"]["mN"] = { Mt.m, 0 }
@@ -421,7 +424,7 @@ Units["N"]["tonf"] = { 0.000112404, 0 }
 --Newton*sec (Impulse/Momentum)
 Units["N*s"] = {}
 
---Kilograms (Mass)
+--Mass
 Units["kg"] = {}
 Units["kg"]["g"] = { Mt.m, 0 }
 Units["kg"]["mg"] = { Mt.u, 0 }
@@ -430,7 +433,7 @@ Units["kg"]["oz"] = { 0.0283495, 0 }
 Units["kg"]["ton"] = { 907.185, 0 }
 Units["kg"]["slug"] = { 14.5939, 0 }
 
---Joules (Energy/Work)
+--Energy
 Units["J"] = {}
 Units["J"]["GJ"] = { Mt.G, 0 }
 Units["J"]["MJ"] = { Mt.M, 0 }
@@ -440,7 +443,7 @@ Units["J"]["kWh"] = { 3600000, 0 }
 Units["J"]["ftlb"] = { 1.35582, 0 }
 Units["J"]["Btu"] = { 1055.06, 0 }
 
---Watts (Power)
+--Power
 Units["W"] = {}
 Units["W"]["GW"] = { Mt.G, 0 }
 Units["W"]["MW"] = { Mt.M, 0 }
@@ -448,10 +451,57 @@ Units["W"]["kW"] = { Mt.k, 0 }
 Units["W"]["mW"] = { Mt.m, 0 }
 Units["W"]["hp"] = { 745.7, 0 }
 Units["W"]["airW"] = { 0.9983, 0 }
+Units["W"]["Btu/min"] = { 17.5842638, 0}
+
+--Pressure
+Units["Pa"] = {}
+Units["Pa"]["mPA"] = { Mt.m, 0}
+Units["Pa"]["kPa"] = { Mt.k, 0}
+Units["Pa"]["MPa"] = { Mt.M, 0}
+Units["Pa"]["N/m2"] = { 1, 0}
+Units["Pa"]["mmH20"] = { 9.80665, 0}
+Units["Pa"]["inH2O"] = { 249.08891, 0}
+Units["Pa"]["mmHg"] = { 133.32236842105, 0}
+Units["Pa"]["inHg"] = { 3338.6388157895, 0}
+Units["Pa"]["mbar"] = { 100, 0}
+Units["Pa"]["lb/ft2"] = { 47.880258980336, 0}
+Units["Pa"]["psi"] = { 6894.7572931684, 0}
+Units["Pa"]["torr"] = { 0133.32236842105, 0}
+Units["Pa"]["atm"] = { 101325, 0}
+
+--Volume
+Units["m3"] = {}
+Units["m3"]["mm3"] = { Mt.m, 0}
+Units["m3"]["cm3"] = { Mt.c, 0}
+Units["m3"]["km3"] = { Mt.k, 0}
+Units["m3"]["ml"] = { 0.000001, 0}
+Units["m3"]["l"] = { 0.001, 0}
+Units["m3"]["in3"] = { .000016387064, 0}
+Units["m3"]["ft3"] = { 0.028316846592, 0}
+Units["m3"]["yd3"] = { 0.764554857984, 0}
+Units["m3"]["tsp"] = { 0.00000492892159375, 0}
+Units["m3"]["tbsp"] = { 0.00001478676478125, 0}
+Units["m3"]["floz"] = { 0.0000295735295625, 0}
+Units["m3"]["cup"] = { 0.0002365882365, 0}
+Units["m3"]["pt"] = { 0.000473176473, 0}
+Units["m3"]["qt"] = { 0.000946352946, 0}
+Units["m3"]["gal"] = { 0.003785411784, 0}
+Units["m3"]["flozUK"] = { 0.000028413075, 0}
+Units["m3"]["galUK"] = { 0.004546092, 0}
+
+--Temperature
+Units["K"] = {}
+--Units["K"][utf8(176).."C"] = { 1, 273.15}
+--Units["K"][utf8(176).."F"] = { 255.92777777778, 0}
+--Units["K"]["R"] = { 0.55555555555556, 0}
+
+--Moles
+Units["mol"] = {}
 
 --Degrees (Angle)
 Units[utf8(176)] = {}
-Units[utf8(176)]["rad"] = { 180/mathpi, 0 }
+Units[utf8(176)]["rad"] = { (180/mathpi), 0 }
+
 ------------------------------------------------------------------
 --                  Overall Global Variables                    --
 ------------------------------------------------------------------
@@ -2380,7 +2430,6 @@ end
 function CategorySel:tabKey()
     push_screen_back(Ref)
 end
-
 
 
 SubCatSel = WScreen()
