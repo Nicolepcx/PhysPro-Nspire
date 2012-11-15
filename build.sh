@@ -1,16 +1,19 @@
 #!/bin/sh
+
 #Mr.Kitty
-echo "Backing up..."
 
-cd ..
-endTime=$(date +%F_%H.%M.%S)
-backupName="PhysPro-"$endTime".tar.bz2"
-tar -jcvf $backupName "PhysPro-Nspire"
-mv $backupName ./bk/
+# echo "Backing up..."
+# 
+# cd ..
+# endTime=$(date +%F_%H.%M.%S)
+# backupName="PhysPro-"$endTime".tar.bz2"
+# tar -jcvf $backupName "PhysPro-Nspire"
+# mv $backupName ./bk/
+# 
+# cd ./PhysPro-Nspire/
+# 
+# echo "Backup complete"
 
-cd ./PhysPro-Nspire/
-
-echo "Backup complete"
 echo "Building PhysPro v0.8a..."
 echo "Building the database"
 

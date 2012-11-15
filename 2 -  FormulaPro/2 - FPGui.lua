@@ -62,7 +62,6 @@ function CategorySel:tabKey()
 end
 
 
-
 SubCatSel = WScreen()
 
 SubCatSel.sel = 1
