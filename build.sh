@@ -2,19 +2,19 @@
 
 #Mr.Kitty
 
-# echo "Backing up..."
-# 
-# cd ..
-# endTime=$(date +%F_%H.%M.%S)
-# backupName="PhysPro-"$endTime".tar.bz2"
-# tar -jcvf $backupName "PhysPro-Nspire"
-# mv $backupName ./bk/
-# 
-# cd ./PhysPro-Nspire/
-# 
-# echo "Backup complete"
+echo "Backing up..."
+ 
+cd ..
+endTime=$(date +%F_%H.%M.%S)
+backupName="PhysPro-"$endTime".tar.bz2"
+tar -jcvf $backupName "PhysPro-Nspire"
+mv $backupName ./bk/
+ 
+cd ./PhysPro-Nspire/
+ 
+echo "Backup complete"
 
-echo "Building PhysPro v0.8a..."
+echo "Building PhysPro v0.1a..."
 echo "Building the database"
 
 cd 0\ -\ \ Database
@@ -43,8 +43,9 @@ cd ..
 
 echo "Creating the whole thing..."
 cat Database.big.lua lib.big.lua FormulaPro.big.lua Reference.big.lua main.lua > PhysPro.big.lua
-echo "wine luna PhysProp.big.lua TestPhysPro.tns"
-wine ./luna-v0.3a/luna.exe PhysPro.big.lua TestPhysPro.tns
+echo "wine luna PhysProp.big.lua PhysPro-Nspire.tns"
+wine ./luna-v0.3a/luna.exe PhysPro.big.lua PhysPro-Nspire.tns
+mv PhysPro-Nspire.tns ./Files/PhysPro-Nspire.tns
 
 echo "Done building PhysPro"
 
@@ -60,7 +61,6 @@ rm FormulaPro.big.lua
 #rm Analysis.big.lua
 rm Reference.big.lua
 rm Database.big.lua
-#rm EEPro.big.lua
 
 echo "Done. Enjoy!"
 
