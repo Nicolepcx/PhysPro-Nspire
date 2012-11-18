@@ -3,15 +3,15 @@
 #Mr.Kitty
 
 echo "Backing up..."
- 
+
 cd ..
 endTime=$(date +%F_%H.%M.%S)
 backupName="PhysPro-"$endTime".tar.bz2"
 tar -jcvf $backupName "PhysPro-Nspire"
 mv $backupName ./bk/
- 
+
 cd ./PhysPro-Nspire/
- 
+
 echo "Backup complete"
 
 echo "Building PhysPro v0.1a..."
@@ -43,16 +43,18 @@ cd ..
 
 echo "Creating the whole thing..."
 cat Database.big.lua lib.big.lua FormulaPro.big.lua Reference.big.lua main.lua > PhysPro.big.lua
-echo "wine luna PhysProp.big.lua PhysPro-Nspire.tns"
-wine ./luna-v0.3a/luna.exe PhysPro.big.lua PhysPro-Nspire.tns
+echo "wine luna PhysPro.big.lua PhysPro-Nspire.tns"
+wine ../../luna-v0.3a/luna.exe PhysPro.big.lua PhysPro-Nspire.tns
 mv PhysPro-Nspire.tns ./Files/PhysPro-Nspire.tns
-
 echo "Done building PhysPro"
 
 echo "Building definitions"
 cd ./definitions
 ./build.sh
 cd ..
+echo "wine luna definitions.big.lua definitions.tns"
+wine ../../luna-v0.3a/luna.exe definitions.big.lua definitions.tns
+mv definitions.tns ./Files/definitions.tns
 echo "Done building definitions"
 
 echo "Cleaning up"
