@@ -170,7 +170,7 @@ addSubCat(2, 1, "Thermo", "Solves for P, V, T, n, m, M")
 aF(2, 1, "P*V=n*"..Constants["R"].value.."*T", U( "P", "V", "n", "T" ) )
 aF(2, 1, "n=m/M", U( "n", "m", "M" ) )
 
---addCat(3, "Oscillations and Waves", "Performs calculations related to oscillations and waves")
+addCat(3, "Oscillations and Waves", "Performs calculations related to oscillations and waves")
 
 --addCatVar(2,    c_om, "", "")
 --addCatVar(2,    "T", "", "")
@@ -187,7 +187,7 @@ aF(2, 1, "n=m/M", U( "n", "m", "M" ) )
 --addCatVar(2,    c_la, "", "")
 --addCatVar(2,    c_th, "Angle (Degrees)", utf8(176))
 
---addCat(4, "Electric Currents", "Performs electrical related physics calculations")
+addCat(4, "Electric Currents", "Performs electrical related physics calculations")
 
 --addCatVar(2,    "Ve", "", "")
 --addCatVar(2,    "m", "", "")
@@ -200,7 +200,7 @@ aF(2, 1, "n=m/M", U( "n", "m", "M" ) )
 --addCatVar(2,    c_ep, "", "")
 --addCatVar(2,    "r", "", "")
 
---addCat(5, "Quantum & Nuclear", "Performs calculations relating to nuclear physics")
+addCat(5, "Quantum & Nuclear", "Performs calculations relating to nuclear physics")
 
 --addCatVar(2,    "E", "", "")
 --addCatVar(2,    "m", "", "")
@@ -218,10 +218,10 @@ aF(2, 1, "n=m/M", U( "n", "m", "M" ) )
 --addCatVar(2,    "T", "", "")
 --addCatVar(2,    "L", "", "")
 
---addCat(6, "Electromagnetism", "Performs calculations relating to electromagnetism")
+addCat(6, "Electromagnetism", "Performs calculations relating to electromagnetism")
 
---addCat(7, "Relativity", "Performs calculations relating to relivity")
+addCat(7, "Relativity", "Performs calculations relating to relivity")
 
---addCat(8, "Astrophysics", "Performs calculations relating to astrophysics")
+addCat(8, "Astrophysics", "Performs calculations relating to astrophysics")
 
---addCat(9, "Particle", "Performs calculations relating to particle physics")
+addCat(9, "Particle", "Performs calculations relating to particle physics")
