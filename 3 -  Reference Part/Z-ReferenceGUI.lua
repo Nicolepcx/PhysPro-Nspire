@@ -9,8 +9,7 @@ References	= {
 	{ title="Time Units",               info="",        screen=RefTime          },
 	{ title="Force Units",              info="",        screen=RefForce         },
 	{ title="Energy Units",             info="",        screen=RefEnergy        },
-	{ title="Power Units",              info="",        screen=RefPower         },
-	{ title="Constants",                info="",        screen=REFConstants     }
+	{ title="Power Units",              info="",        screen=RefPower         }
 }
 
 Ref	= WScreen()
