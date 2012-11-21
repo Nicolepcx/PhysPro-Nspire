@@ -27,4 +27,3 @@ Constants["mn"]	= {info="Neutron rest mass", value="1.675 * 10^-27", unit="kg"}
 Constants["mu"] = {info="Atomic mass unit", value="1.66 * 10^-27", unit="kg"}
 Constants["pi"] = {info="PI", value="pi", unit=nil}
 Constants[utf8(960)] = Constants["pi"]
-

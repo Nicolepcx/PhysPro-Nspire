@@ -157,8 +157,11 @@ addCatVar(2, "P", "Pressure", "Pa")
 addCatVar(2, "V", "Volume", "m3")
 addCatVar(2, "T", "Tempturature", "K")
 addCatVar(2, "n", "Amount", "mol")
-addCatVar(2, "m", "Atomic Mass", "kg")
-addCatVar(2, "M", "Mass", "kg")
+addCatVar(2, "m", "Mass", "kg")
+addCatVar(2, "amu", "Molecular mass", "amu")
+--addCatVar(2, "tK", "Kelvin", "")
+--addCatVar(2, "tC", "Celcius", "")
+--addCatVar(2, "tF", "Farhenhiet", "")
 --addCatVar(2, "F", "", "")
 --addCatVar(2, "A", "", "")
 --addCatVar(2, "Q", "", "")
@@ -166,11 +169,14 @@ addCatVar(2, "M", "Mass", "kg")
 --addCatVar(2, "W", "", "")
 --addCatVar(2, "U", "", "")
 
+--addSubCat(2, 1, "Tempurature", "Converts between the different tempurature scales")
+--aF(2, 1, "tC/5=(tF-32)/9=(tK-273)/5", U( "tC", "tF", "tK") )
+
 addSubCat(2, 1, "Thermo", "Solves for P, V, T, n, m, M")
 aF(2, 1, "P*V=n*"..Constants["R"].value.."*T", U( "P", "V", "n", "T" ) )
-aF(2, 1, "n=m/M", U( "n", "m", "M" ) )
+aF(2, 1, "n=m/amu", U( "n", "m", "amu" ) )
 
-addCat(3, "Oscillations and Waves", "Performs calculations related to oscillations and waves")
+--addCat(3, "Oscillations and Waves", "Performs calculations related to oscillations and waves")
 
 --addCatVar(2,    c_om, "", "")
 --addCatVar(2,    "T", "", "")
@@ -187,7 +193,7 @@ addCat(3, "Oscillations and Waves", "Performs calculations related to oscillatio
 --addCatVar(2,    c_la, "", "")
 --addCatVar(2,    c_th, "Angle (Degrees)", utf8(176))
 
-addCat(4, "Electric Currents", "Performs electrical related physics calculations")
+--addCat(4, "Electric Currents", "Performs electrical related physics calculations")
 
 --addCatVar(2,    "Ve", "", "")
 --addCatVar(2,    "m", "", "")
@@ -200,7 +206,7 @@ addCat(4, "Electric Currents", "Performs electrical related physics calculations
 --addCatVar(2,    c_ep, "", "")
 --addCatVar(2,    "r", "", "")
 
-addCat(5, "Quantum & Nuclear", "Performs calculations relating to nuclear physics")
+--addCat(5, "Quantum & Nuclear", "Performs calculations relating to nuclear physics")
 
 --addCatVar(2,    "E", "", "")
 --addCatVar(2,    "m", "", "")
@@ -218,10 +224,10 @@ addCat(5, "Quantum & Nuclear", "Performs calculations relating to nuclear physic
 --addCatVar(2,    "T", "", "")
 --addCatVar(2,    "L", "", "")
 
-addCat(6, "Electromagnetism", "Performs calculations relating to electromagnetism")
+--addCat(6, "Electromagnetism", "Performs calculations relating to electromagnetism")
 
-addCat(7, "Relativity", "Performs calculations relating to relivity")
+--addCat(7, "Relativity", "Performs calculations relating to relivity")
 
-addCat(8, "Astrophysics", "Performs calculations relating to astrophysics")
+--addCat(8, "Astrophysics", "Performs calculations relating to astrophysics")
 
-addCat(9, "Particle", "Performs calculations relating to particle physics")
+--addCat(9, "Particle", "Performs calculations relating to particle physics")
