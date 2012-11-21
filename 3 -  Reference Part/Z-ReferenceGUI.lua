@@ -2,6 +2,7 @@
 References	= {
 	{ title="SI Prefixes",              info="",        screen=SIPrefixes       },
 	{ title="Greek Alphabet",           info="",        screen=Greek            },
+	{ title="Constants",                info="",        screen=RefConstants     },
 	{ title="Motion Variables",         info="",        screen=MotionVars       },
 	{ title="Displacement Units",       info="",        screen=RefDisplacement  },
 	{ title="Velocity Units",           info="",        screen=RefVelocity      },

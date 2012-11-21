@@ -132,7 +132,7 @@ c_de = utf8(916)
 c_ph = utf8(966)
 c_pi = utf8(960)
 
-addCat(1, "Motion", "Performs calculations of motion-related stuff")
+addCat(1, "Motion", "Perform calculations of motion-related stuff")
 
 addCatVar(1,    "u",        "Intial velocity",              "m/s"       )
 addCatVar(1,    "v",        "Final velocity",               "m/s"       )
@@ -157,7 +157,7 @@ addCatVar(1,    "c",        "Circumference",                "m"         )
 addCatVar(1,    "r",        "Radius",                       "m"         )
 
 
-addSubCat(1, 1, "Kinematics", "Solves for: u, v, s, t, a")
+addSubCat(1, 1, "Kinematics", "Solve for: u, v, s, t, a")
 aF(1, 1,    "s=((u+v)/2)*t",        U("s", "u", "v", "t")   )
 aF(1, 1,    "s=u*t+(1/2)*a*t^(2)",  U("s", "u", "t", "a")   )
 aF(1, 1,    "v^(2)=u^(2)+2*a*s",    U("v", "u", "a", "s")   )
@@ -166,7 +166,7 @@ aF(1, 1,    "v=u+a*t",              U("v", "u", "a", "t")   )
 addSubCat(1, 2, "Force", "")
 aF(1, 2,    "F=m*a",    U("F", "m", "a")  )
 
-addSubCat(1, 3, "Impulse", "Solves for: p, Imp, F, t, dv, m, v, u")
+addSubCat(1, 3, "Impulse", "Solve for: p, Imp, F, t, dv, m, v, u")
 aF(1, 3,    "Imp=F*t",          U("Imp", "F", "t")          )
 aF(1, 3,    "Imp=m*t",          U("Imp", "m", "t")          )
 aF(1, 3,    "p=m*v",            U("p", "m", "v")            )
@@ -176,42 +176,42 @@ aF(1, 3,    "dv=v-u",           U("dv", "v", "u")           )
 aF(1, 3,    "F*t=m*v-m*u",      U("F", "t", "m", "v", "u")  )
 aF(1, 3,    "p=m*v-m*u",        U("p", "m", "v", "u")       )
 
-addSubCat(1, 4, "Work", "Solves for: W, F, s, m, a, "..c_th)
+addSubCat(1, 4, "Work", "Solve for: W, F, s, m, a, "..c_th)
 aF(1, 4,    "W=F*s*cos("..c_th..")",        U("W", "F", c_th, "s")      )
 aF(1, 4,    "W=(m*a)*cos("..c_th..")*s",    U("W", "m", "a", c_th, "s") )
 aF(1, 4,    "F=m*a",                        U("F", "m", "a")            )
 aF(1, 4,    "W=(1/2)*m*(v^(2)-u^(2))",      U("W", "m", "v", "u")       )
 
-addSubCat(1, 5, "Power", "Solves for: P, W, t, F, m, a, s, "..c_th)
+addSubCat(1, 5, "Power", "Solve for: P, W, t, F, m, a, s, "..c_th)
 aF(1, 5,    "P=W/t",                        U("P", "W", "t")            )
 aF(1, 5,    "P=F*v*cos("..c_th..")",        U("P", "F", "v", c_th)      )
 aF(1, 5,    "P=F*cos("..c_th..")*(s/t)",    U("P", "F", c_th, "s", "t") )
 aF(1, 5,    "W=F*s*cos("..c_th..")",        U("W", "F", "s", c_th)      )
 aF(1, 5,    "F=m*a",                        U("F", "m", "a")            )
 
-addSubCat(1, 6, "Energy", "Solves for: Ek, Ep, E, m, v, h, g")
+addSubCat(1, 6, "Energy", "Solve for: Ek, Ep, E, m, v, h, g")
 aF(1, 6,    "Ek=(1/2)*m*v^(2)",     U("Ek", "m", "v")           )
 aF(1, 6,    "Ek=p^(2)/(2*m)",       U("Ek", "p", "m")           )
 aF(1, 6,    "Ep=m*abs(g)*h",        U("Ep", "m", "g", "h")      )
 aF(1, 6,    "E=Ek+Ep",              U("E", "Ek", "Ep")          )
 
-addSubCat(1, 7, "Centripital", "Solves for F, a, v, r, Tp (period), m, c" )
-aF(1, 7,    "F=(m*v^2)/r",              U( "F", "m", "v", "r" )     )
-aF(1, 7,    "a=(4*pi^2*r)/Tp^2",        U( "a", "r", "Tp" )         )
-aF(1, 7,    "a=v^2/r^2",                U( "a", "v", "r" )          )
-aF(1, 7,    "c=2*π*r",                  U( "c", "r" )               )
+addSubCat(1, 7, "Centripital", "Solve for F, a, v, r, Tp (period), m, c" )
+aF(1, 7,    "F=(m*v^2)/r",              U("F", "m", "v", "r")       )
+aF(1, 7,    "a=(4*pi^2*r)/Tp^2",        U("a", "r", "Tp")           )
+aF(1, 7,    "a=v^2/r^2",                U("a", "v", "r")            )
+aF(1, 7,    "c=2*π*r",                  U("c", "r")                )
 
-addCat(2, "Thermal", "Performs thermal related physics calculations")
+addCat(2, "Thermal", "Perform thermal related physics calculations")
 
-addCatVar(2, "P", "Pressure", "Pa")
-addCatVar(2, "V", "Volume", "m3")
-addCatVar(2, "T", "Tempturature", "K")
-addCatVar(2, "n", "Amount", "mol")
-addCatVar(2, "m", "Mass", "kg")
-addCatVar(2, "amu", "Molecular mass", "amu")
---addCatVar(2, "tK", "Kelvin", "")
---addCatVar(2, "tC", "Celcius", "")
---addCatVar(2, "tF", "Farhenhiet", "")
+addCatVar(2,    "P",        "Pressure",             "Pa")
+addCatVar(2,    "V",        "Volume",               "m3")
+addCatVar(2,    "T",        "Tempturature",         "K")
+addCatVar(2,    "n",        "Amount",               "mol")
+addCatVar(2,    "m",        "Mass",                 "kg")
+addCatVar(2,    "amu",      "Molecular mass",       "amu")
+addCatVar(2,    "tK",       "Kelvin",               "unitless")
+addCatVar(2,    "tC",       "Celcius",              "unitless")
+addCatVar(2,    "tF",       "Farhenhiet",           "unitless")
 --addCatVar(2, "F", "", "")
 --addCatVar(2, "A", "", "")
 --addCatVar(2, "Q", "", "")
@@ -219,14 +219,15 @@ addCatVar(2, "amu", "Molecular mass", "amu")
 --addCatVar(2, "W", "", "")
 --addCatVar(2, "U", "", "")
 
---addSubCat(2, 1, "Tempurature", "Converts between the different tempurature scales")
---aF(2, 1, "tC/5=(tF-32)/9=(tK-273)/5", U( "tC", "tF", "tK") )
+addSubCat(2, 1, "Tempurature", "Convert between the different tempurature scales")
+aF(2, 1, "tF=(9/5)*tC+32", U("tC", "tF") )
+aF(2, 1, "tK=tC+273.15", U("tK", "tC") )
 
-addSubCat(2, 1, "Thermo", "Solves for P, V, T, n, m, M")
-aF(2, 1, "P*V=n*"..Constants["R"].value.."*T", U( "P", "V", "n", "T" ) )
-aF(2, 1, "n=m/amu", U( "n", "m", "amu" ) )
+addSubCat(2, 2, "Thermo", "Solve for P, V, T, n, m, M")
+aF(2, 2, "P*V=n*"..Constants["R"].value.."*T", U("P", "V", "n", "T") )
+aF(2, 2, "n=m/amu", U("n", "m", "amu") )
 
---addCat(3, "Oscillations and Waves", "Performs calculations related to oscillations and waves")
+--addCat(3, "Oscillations and Waves", "Perform calculations related to oscillations and waves")
 
 --addCatVar(2,    c_om, "", "")
 --addCatVar(2,    "T", "", "")
@@ -243,7 +244,7 @@ aF(2, 1, "n=m/amu", U( "n", "m", "amu" ) )
 --addCatVar(2,    c_la, "", "")
 --addCatVar(2,    c_th, "Angle (Degrees)", utf8(176))
 
---addCat(4, "Electric Currents", "Performs electrical related physics calculations")
+--addCat(4, "Electric Currents", "Perform electrical related physics calculations")
 
 --addCatVar(2,    "Ve", "", "")
 --addCatVar(2,    "m", "", "")
@@ -256,7 +257,7 @@ aF(2, 1, "n=m/amu", U( "n", "m", "amu" ) )
 --addCatVar(2,    c_ep, "", "")
 --addCatVar(2,    "r", "", "")
 
---addCat(5, "Quantum & Nuclear", "Performs calculations relating to nuclear physics")
+--addCat(5, "Quantum & Nuclear", "Perform calculations relating to nuclear physics")
 
 --addCatVar(2,    "E", "", "")
 --addCatVar(2,    "m", "", "")
@@ -274,13 +275,13 @@ aF(2, 1, "n=m/amu", U( "n", "m", "amu" ) )
 --addCatVar(2,    "T", "", "")
 --addCatVar(2,    "L", "", "")
 
---addCat(6, "Electromagnetism", "Performs calculations relating to electromagnetism")
+--addCat(6, "Electromagnetism", "Perform calculations relating to electromagnetism")
 
---addCat(7, "Relativity", "Performs calculations relating to relivity")
+--addCat(7, "Relativity", "Perform calculations relating to relivity")
 
---addCat(8, "Astrophysics", "Performs calculations relating to astrophysics")
+--addCat(8, "Astrophysics", "Perform calculations relating to astrophysics")
 
---addCat(9, "Particle", "Performs calculations relating to particle physics")
+--addCat(9, "Particle", "Perform calculations relating to particle physics")
 --This part is supposed to load external formulas stored in a string from a file in MyLib.
 --WIP
 
@@ -3581,6 +3582,7 @@ end
 References	= {
 	{ title="SI Prefixes",              info="",        screen=SIPrefixes       },
 	{ title="Greek Alphabet",           info="",        screen=Greek            },
+	{ title="Constants",                info="",        screen=RefConstants     },
 	{ title="Motion Variables",         info="",        screen=MotionVars       },
 	{ title="Displacement Units",       info="",        screen=RefDisplacement  },
 	{ title="Velocity Units",           info="",        screen=RefVelocity      },
