@@ -3,7 +3,7 @@
 0-------------------0
 |                   |
 |    PhysPro v1.0   |
-|  (Nov. 7th 2012)  |
+| (Nov. 21th 2012)  |
 |   LGLP 3 License  |
 |     Mr. Kitty     |
 |                   |
@@ -16,7 +16,7 @@ Jim Bauwens         Adrien Bertrand
 TI-Planet.org       Inspired-Lua.org
 ]]--
 
-pInfo={name="PhysPro", by="Mr. Kitty", ver="v0.8a", web="", license="LGPL3 License" }
+pInfo={name="PhysPro", by="Mr. Kitty", ver="v0.8.1a", web="", license="LGPL3 License" }
 infoStr = pInfo["name"].." "..pInfo["ver"].."\nBy "..pInfo["by"].."\n"..pInfo["license" ]
 print("\n.."..infoStr.."\n")
 function utf8(n)
