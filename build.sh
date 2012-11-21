@@ -74,6 +74,10 @@ if [[ "$1" = "-definitions" || "$1" = "-a" ]]; then
     echo "Done building definitions"
 fi
 
+if [[ "$3" = "-o" ]]; then
+    open ./Files/PhysPro-Nspire.tns
+fi
+
 echo ""
 echo "Done. Enjoy!"
 
