@@ -1,9 +1,7 @@
 
 RefConstants = Screen()
 
-RefConstants.data = {
-    {"Acceleration due to gravity", "", ""}
-}
+RefConstants.data = refCon(Constants)
 
 RefConstants.tmpScroll = 1
 RefConstants.leftRight = 1
@@ -52,7 +50,7 @@ function RefConstants:paint(gc)
        		gc:setFont("sansserif","b",12)
             gc:drawString(RefConstants.data[k][1], 5-RefConstants.leftRight, 5+22*tmp, "top")
         	gc:setFont("sansserif","r",12)
-            gc:drawString("  (" .. RefConstants.data[k][2] .. ") : " .. RefConstants.data[k][3] .. ". ", gc:getStringWidth(RefConstants.data[k][1])+15-RefConstants.leftRight, 5+22*tmp, "top")
+            gc:drawString("  (" .. RefConstants.data[k][2] .. "): " .. RefConstants.data[k][3], gc:getStringWidth(RefConstants.data[k][1])+15-RefConstants.leftRight, 5+22*tmp, "top")
 		end
 end
 
