@@ -29,25 +29,43 @@ function numberToSub(w,n)
 	return w..utf8(SubNumbers[tonumber(n)])
 end
 
-Constants = {}
-Constants["g"] = {info="Acceleration due to gravity", value="9.81", unit="m*s^-2"}
-Constants["G"] = {info="Gravitational constant", value="6.67 * 10^-11", unit="Nm^2/kg^-2"}
-Constants["N"] = {info="Avogadro's constant", value="6.022 * 10^23", unit="mol^-1"}
-Constants["R"] = {info="Gas constant", value="8.314", unit="J/((mol^-1)*(K^-1))"}
-Constants["k"]	= {info="Boltzmann's constant", value="1.38 * 10^-23", unit="J/K^-1"}
---Constants["k"]	= {info="Stefan-Boltzmann constant", value="5.67 * 10^-8", unit="W*m^-2*K^-1"}
---Constants["k"] = {info="Coulomb constant", value="8.99 * 10^9", unit="N*m^2*C^-2"}
-Constants[utf8(949).."0"] = {info="Permittivity of a vacuum", value="8.854 * 10^-12", unit="F/m^-1"}
-Constants[utf8(956).."0"] = {info="Permeability of a vacuum", value="4*pi * 10^-7", unit="N/A^-2"}
-Constants["C"] = {info="Speed of light in vacuum", value="2.9979 * 10^8", unit="m/s"}
-Constants["h"] = {info="Planck constant", value="6.626 * 10^-34", unit="J/s"}
-Constants["q"] = {info="Elementary charge", value="1.60218 * 10^-19", unit="C"}
-Constants["me"] = {info="Electron rest mass", value="9.109 * 10^-31", unit="kg"}
-Constants["mp"] = {info="Proton rest mass", value="1.6726 * 10^-27", unit="kg"}
-Constants["mn"]	= {info="Neutron rest mass", value="1.675 * 10^-27", unit="kg"}
-Constants["mu"] = {info="Atomic mass unit", value="1.66 * 10^-27", unit="kg"}
-Constants["pi"] = {info="PI", value="pi", unit=nil}
-Constants[utf8(960)] = Constants["pi"]
+function refCon(t)
+	local t2 = {}
+	for k,v in ipairs(t) do	
+		t2[k] = {v.info,v.key,v.value.." "..v.unit}
+	end
+	return t2
+end
+
+Constants = {
+{key="g", info="Acceleration due to gravity", value="9.81", unit="m*s^-2"},
+{key="G", info="Gravitational constant", value="6.67*10^(-11)", unit="Nm^2/kg^-2"},
+{key="N", info="Avogadro's constant", value="6.022*10^(23)", unit="mol^-1"},
+{key="R", info="Gas constant", value="8.314", unit="J/((mol^-1)*(K^-1))"},
+{key="k1", info="Boltzmann's constant", value="1.38*10^(-23)", unit="J/K^-1"},
+{key="k2", info="Stefan-Boltzmann constant", value="5.67 * 10^-8", unit="W*m^-2*K^-1"},
+{key="k3", info="Coulomb constant", value="8.99 * 10^9", unit="N*m^2*C^-2"},
+{key="C", info="Speed of light in vacuum", value="2.9979*10^(8)", unit="m/s"},
+{key="h", info="Planck constant", value="6.626*10^(-34)", unit="J/s"},
+{key="q", info="Elementary charge", value="1.60218*10^(-19)", unit="C"},
+{key="me", info="Electron rest mass", value="9.109*10^(-31)", unit="kg"},
+{key="mp", info="Proton rest mass", value="1.6726*10^(-27)", unit="kg"},
+{key="mn", info="Neutron rest mass", value="1.675*10^(-27)", unit="kg"},
+{key="mu", info="Atomic mass unit", value="1.66*10^(-27)", unit="kg"},
+{key=utf8(949).."0", info="Permittivity of a vacuum", value="8.854*10^(-12)", unit="F/m^-1"},
+{key=utf8(956).."0", info="Permeability of a vacuum", value="4*pi*10^(-7)", unit="N/A^-2"}
+}
+
+function con(i)
+	for k,v in ipairs(Constants) do
+    	if Constants[k].key == i then
+			return Constants[k].value
+		end
+	end
+	return 0
+end
+
+
 --------------------------------------------------------
 --                      Database                      --
 --------------------------------------------------------
@@ -158,50 +176,50 @@ addCatVar(1,    "r",        "Radius",                       "m"         )
 
 
 addSubCat(1, 1, "Kinematics", "Solve for: u, v, s, t, a")
-aF(1, 1,    "s=((u+v)/2)*t",        U("s", "u", "v", "t")   )
-aF(1, 1,    "s=u*t+(1/2)*a*t^(2)",  U("s", "u", "t", "a")   )
-aF(1, 1,    "v^(2)=u^(2)+2*a*s",    U("v", "u", "a", "s")   )
-aF(1, 1,    "v=u+a*t",              U("v", "u", "a", "t")   )
+aF(1, 1, "s=((u+v)/2)*t", U("s", "u", "v", "t") )
+aF(1, 1, "s=u*t+(1/2)*a*t^(2)", U("s", "u", "t", "a") )
+aF(1, 1, "v^(2)=u^(2)+2*a*s", U("v", "u", "a", "s") )
+aF(1, 1, "v=u+a*t", U("v", "u", "a", "t") )
 
 addSubCat(1, 2, "Force", "")
-aF(1, 2,    "F=m*a",    U("F", "m", "a")  )
+aF(1, 2, "F=m*a",    U("F", "m", "a")  )
 
 addSubCat(1, 3, "Impulse", "Solve for: p, Imp, F, t, dv, m, v, u")
-aF(1, 3,    "Imp=F*t",          U("Imp", "F", "t")          )
-aF(1, 3,    "Imp=m*t",          U("Imp", "m", "t")          )
-aF(1, 3,    "p=m*v",            U("p", "m", "v")            )
-aF(1, 3,    "F=m*(dv/t)",       U("F", "m", "dv", "t")      )
-aF(1, 3,    "F*t=m*dv",         U("F", "t", "m", "dv")      )
-aF(1, 3,    "dv=v-u",           U("dv", "v", "u")           )
-aF(1, 3,    "F*t=m*v-m*u",      U("F", "t", "m", "v", "u")  )
-aF(1, 3,    "p=m*v-m*u",        U("p", "m", "v", "u")       )
+aF(1, 3, "Imp=F*t", U("Imp", "F", "t") )
+aF(1, 3, "Imp=m*t", U("Imp", "m", "t") )
+aF(1, 3, "p=m*v", U("p", "m", "v") )
+aF(1, 3, "F=m*(dv/t)", U("F", "m", "dv", "t") )
+aF(1, 3, "F*t=m*dv", U("F", "t", "m", "dv") )
+aF(1, 3, "dv=v-u", U("dv", "v", "u") )
+aF(1, 3, "F*t=m*v-m*u", U("F", "t", "m", "v", "u") )
+aF(1, 3, "p=m*v-m*u", U("p", "m", "v", "u") )
 
 addSubCat(1, 4, "Work", "Solve for: W, F, s, m, a, "..c_th)
-aF(1, 4,    "W=F*s*cos("..c_th..")",        U("W", "F", c_th, "s")      )
-aF(1, 4,    "W=(m*a)*cos("..c_th..")*s",    U("W", "m", "a", c_th, "s") )
-aF(1, 4,    "F=m*a",                        U("F", "m", "a")            )
-aF(1, 4,    "W=(1/2)*m*(v^(2)-u^(2))",      U("W", "m", "v", "u")       )
+aF(1, 4, "W=F*s*cos("..c_th..")", U("W", "F", c_th, "s") )
+aF(1, 4, "W=(m*a)*cos("..c_th..")*s", U("W", "m", "a", c_th, "s") )
+aF(1, 4, "F=m*a", U("F", "m", "a") )
+aF(1, 4, "W=(1/2)*m*(v^(2)-u^(2))", U("W", "m", "v", "u") )
 
 addSubCat(1, 5, "Power", "Solve for: P, W, t, F, m, a, s, "..c_th)
-aF(1, 5,    "P=W/t",                        U("P", "W", "t")            )
-aF(1, 5,    "P=F*v*cos("..c_th..")",        U("P", "F", "v", c_th)      )
-aF(1, 5,    "P=F*cos("..c_th..")*(s/t)",    U("P", "F", c_th, "s", "t") )
-aF(1, 5,    "W=F*s*cos("..c_th..")",        U("W", "F", "s", c_th)      )
-aF(1, 5,    "F=m*a",                        U("F", "m", "a")            )
+aF(1, 5, "P=W/t", U("P", "W", "t")            )
+aF(1, 5, "P=F*v*cos("..c_th..")", U("P", "F", "v", c_th) )
+aF(1, 5, "P=F*cos("..c_th..")*(s/t)", U("P", "F", c_th, "s", "t") )
+aF(1, 5, "W=F*s*cos("..c_th..")", U("W", "F", "s", c_th) )
+aF(1, 5,    "F=m*a", U("F", "m", "a") )
 
 addSubCat(1, 6, "Energy", "Solve for: Ek, Ep, E, m, v, h, g")
-aF(1, 6,    "Ek=(1/2)*m*v^(2)",     U("Ek", "m", "v")           )
-aF(1, 6,    "Ek=p^(2)/(2*m)",       U("Ek", "p", "m")           )
-aF(1, 6,    "Ep=m*abs(g)*h",        U("Ep", "m", "g", "h")      )
-aF(1, 6,    "E=Ek+Ep",              U("E", "Ek", "Ep")          )
+aF(1, 6, "Ek=(1/2)*m*v^(2)", U("Ek", "m", "v") )
+aF(1, 6, "Ek=p^(2)/(2*m)", U("Ek", "p", "m") )
+aF(1, 6, "Ep=m*abs(g)*h", U("Ep", "m", "g", "h") )
+aF(1, 6, "E=Ek+Ep", U("E", "Ek", "Ep") )
 
 addSubCat(1, 7, "Centripital", "Solve for F, a, v, r, Tp (period), m, c" )
-aF(1, 7,    "F=(m*v^2)/r",              U("F", "m", "v", "r")       )
-aF(1, 7,    "a=(4*pi^2*r)/Tp^2",        U("a", "r", "Tp")           )
-aF(1, 7,    "a=v^2/r^2",                U("a", "v", "r")            )
-aF(1, 7,    "c=2*π*r",                  U("c", "r")                )
+aF(1, 7, "F=(m*v^2)/r", U("F", "m", "v", "r") )
+aF(1, 7, "a=(4*pi^2*r)/Tp^2", U("a", "r", "Tp") )
+aF(1, 7, "a=v^2/r^2", U("a", "v", "r") )
+aF(1, 7, "c=2*π*r", U("c", "r") )
 
-addCat(2, "Thermal", "Perform thermal related physics calculations")
+addCat(2, "Thermodynamics", "Perform thermal related physics calculations")
 
 addCatVar(2,    "P",        "Pressure",             "Pa")
 addCatVar(2,    "V",        "Volume",               "m3")
@@ -212,9 +230,9 @@ addCatVar(2,    "amu",      "Molecular mass",       "amu")
 addCatVar(2,    "tK",       "Kelvin",               "unitless")
 addCatVar(2,    "tC",       "Celcius",              "unitless")
 addCatVar(2,    "tF",       "Farhenhiet",           "unitless")
---addCatVar(2, "F", "", "")
---addCatVar(2, "A", "", "")
---addCatVar(2, "Q", "", "")
+addCatVar(2,    "F",        "Force",                "N")
+addCatVar(2,    "A",        "Area",                 "m2")
+addCatVar(2,    "Ek",       "Kinetic energy",       "J")
 --addCatVar(2, "c", "", "")
 --addCatVar(2, "W", "", "")
 --addCatVar(2, "U", "", "")
@@ -223,26 +241,40 @@ addSubCat(2, 1, "Tempurature", "Convert between the different tempurature scales
 aF(2, 1, "tF=(9/5)*tC+32", U("tC", "tF") )
 aF(2, 1, "tK=tC+273.15", U("tK", "tC") )
 
-addSubCat(2, 2, "Thermo", "Solve for P, V, T, n, m, M")
-aF(2, 2, "P*V=n*"..Constants["R"].value.."*T", U("P", "V", "n", "T") )
+addSubCat(2, 2, "Thermal", "Solve for P, V, T, n, m, M")
+aF(2, 2, "P*V=n*("..con("R")..")*T", U("P", "V", "n", "T") )
 aF(2, 2, "n=m/amu", U("n", "m", "amu") )
+aF(2, 2, "P=F/A", U("P", "F", "A") )
 
---addCat(3, "Oscillations and Waves", "Perform calculations related to oscillations and waves")
+addSubCat(2, 3, "Energy", "Solve for Ke, T")
+aF(2, 3, "Ek=(3/2)*("..con("k1")..")*T", U("Ek", "T") )
 
---addCatVar(2,    c_om, "", "")
---addCatVar(2,    "T", "", "")
---addCatVar(2,    "x", "", "")
---addCatVar(2,    "v", "", "")
---addCatVar(2,    "u", "", "")
---addCatVar(2,    "t", "", "")
---addCatVar(2,    "Ek", "Kinetic energy", "")
---addCatVar(2,    "Ekm", "Kinetic energy (max)", "")
---addCatVar(2,    "ET", "Thermal energy", "")
---addCatVar(2,    "f", "", "")
---addCatVar(2,    "m", "", "")
---addCatVar(2,    "n", "", "")
---addCatVar(2,    c_la, "", "")
---addCatVar(2,    c_th, "Angle (Degrees)", utf8(176))
+addCat(3, "Oscillations and Waves", "Perform calculations related to oscillations and waves")
+
+addCatVar(3, c_om, "Omega", "unitless")
+addCatVar(3, "Ek", "Kinetic energy", "J")
+addCatVar(3, "Ekm", "Kinetic energy (max)", "J")
+addCatVar(3, "T", "Period", "s")
+addCatVar(3, "x", "x", "unitless")
+addCatVar(3, "x0", "x0", "unitless")
+addCatVar(3, "v", "v", "unitless")
+addCatVar(3, "v0", "v0", "unitless")
+addCatVar(3, "t", "Time", "s")
+--addCatVar(3,    "u", "", "")
+--addCatVar(3,    "ET", "Thermal energy", "J")
+--addCatVar(3,    "f", "", "")
+--addCatVar(3,    "m", "Mass", "kg")
+--addCatVar(3,    "n", "", "")
+--addCatVar(3,    c_la, "", "")
+--addCatVar(3,    c_th, "Angle (Degrees)", utf8(176))
+
+addSubCat(3, 1, "Stuff", "Solve for stuff")
+aF(3, 1, c_om.."=(2*pi)/T", U(c_om, "T") )
+aF(3, 1, "x=x0*sin("..c_om.."*t)", U("x", "x0", c_om, "t") )
+aF(3, 1, "v=v0*cos("..c_om.."*t)", U("v", "v0", c_om, "t") )
+aF(3, 1, "v="..c_om.."*sqrt(x0^2-x^2)", U("v", c_om, "x0", "x") )
+aF(3, 1, "Ek=(1/2)*m*"..c_om.."^2*(x0^2-x^2)", U("Ek", "m", c_om, "x0", "x") )
+aF(3, 1, "Ekm=(1/2)*m*"..c_om.."^2*x0^2", U("Ekm", "m", c_om, "x0") )
 
 --addCat(4, "Electric Currents", "Perform electrical related physics calculations")
 
@@ -2888,9 +2920,7 @@ end
 
 RefConstants = Screen()
 
-RefConstants.data = {
-    {"Acceleration due to gravity", "", ""}
-}
+RefConstants.data = refCon(Constants)
 
 RefConstants.tmpScroll = 1
 RefConstants.leftRight = 1
@@ -2939,7 +2969,7 @@ function RefConstants:paint(gc)
        		gc:setFont("sansserif","b",12)
             gc:drawString(RefConstants.data[k][1], 5-RefConstants.leftRight, 5+22*tmp, "top")
         	gc:setFont("sansserif","r",12)
-            gc:drawString("  (" .. RefConstants.data[k][2] .. ") : " .. RefConstants.data[k][3] .. ". ", gc:getStringWidth(RefConstants.data[k][1])+15-RefConstants.leftRight, 5+22*tmp, "top")
+            gc:drawString("  (" .. RefConstants.data[k][2] .. "): " .. RefConstants.data[k][3], gc:getStringWidth(RefConstants.data[k][1])+15-RefConstants.leftRight, 5+22*tmp, "top")
 		end
 end
 
