@@ -27,10 +27,6 @@ RefDisplacement.data = {
     { "0.000000005 m",      "Beard-seconds",            "brds"              }
 }
 
---[[
-{ "", "", "" },
-]]--
-
 RefDisplacement.tmpScroll = 1
 RefDisplacement.dual = false
 

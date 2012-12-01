@@ -1,19 +1,23 @@
+--------------------------------------------------------
+--                       Constants                    --
+--------------------------------------------------------
+
 function utf8(n)
-	return string.uchar(n)
+    return string.uchar(n)
 end
 
 SubNumbers={185, 178, 179, 8308, 8309, 8310, 8311, 8312, 8313}
 
 function numberToSub(w,n)
-	return w..utf8(SubNumbers[tonumber(n)])
+    return w..utf8(SubNumbers[tonumber(n)])
 end
 
 function refCon(t)
-	local t2 = {}
-	for k,v in ipairs(t) do	
-		t2[k] = {v.info,v.key,v.value.." "..v.unit}
-	end
-	return t2
+    local t2 = {}
+    for k,v in ipairs(t) do	
+        t2[k] = {v.info,v.key,v.value.." "..v.unit}
+    end
+    return t2
 end
 
 Constants = {
@@ -36,12 +40,12 @@ Constants = {
 }
 
 function con(i)
-	for k,v in ipairs(Constants) do
-    	if Constants[k].key == i then
-			return Constants[k].value
-		end
-	end
-	return 0
+    for k,v in ipairs(Constants) do
+        if Constants[k].key == i then
+            return Constants[k].value
+        end
+    end
+    return 0
 end
 
 

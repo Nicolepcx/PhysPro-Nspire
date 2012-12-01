@@ -12,10 +12,6 @@ RefEnergy.data = {
     { "1055.06 J",          "British thermal unit",     "Btu"       }
 }
 
---[[
-{ "", "", "" },
-]]--
-
 RefEnergy.tmpScroll = 1
 RefEnergy.dual = false
 

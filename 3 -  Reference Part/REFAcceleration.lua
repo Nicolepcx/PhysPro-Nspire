@@ -16,10 +16,6 @@ RefAcceleration.data = {
     { "0.514444 m/s2",          "knatical mile/hr/hr",          "knot2"     }
 }
 
---[[
-{ "", "", "" },
-]]--
-
 RefAcceleration.tmpScroll = 1
 RefAcceleration.dual = false
 

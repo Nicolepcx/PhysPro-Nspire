@@ -4,10 +4,10 @@
 function loadExtDB()
     local err
     _, err = pcall(function()
-        loadstring(math.eval("formulaproextdb\\categories()"))()
-        loadstring(math.eval("formulaproextdb\\variables()"))()
-        loadstring(math.eval("formulaproextdb\\subcategories()"))()
-        loadstring(math.eval("formulaproextdb\\equations()"))()
+        loadstring(math.eval("physproextdb\\categories()"))()
+        loadstring(math.eval("physproextdb\\variables()"))()
+        loadstring(math.eval("physproextdb\\subcategories()"))()
+        loadstring(math.eval("physproextdb\\equations()"))()
     end)
 
     if err then

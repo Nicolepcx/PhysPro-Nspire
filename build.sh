@@ -4,7 +4,7 @@
 
 echo "Building $1" 
 
-if [[ "$2" = -b ]]; then
+if [[ "$3" = -b ]]; then
     echo "Backing up..."
     cd ..
     endTime=$(date +%F_%H.%M.%S)
@@ -17,64 +17,39 @@ else
     echo "WARNING: A backup was not created."
 fi
 
-if [[ "$1" = "-physpro" || "$1" = "-a" ]]; then
-    echo ""
+if [[ "$1" = "-luna" ]]; then
     echo "Building PhysPro v0.1a..."
     
-    echo "Building the database"
-    cd 0\ -\ \ Database
-    ./build.sh
+    echo "Building the Database"
+    cat 0\ -\ \ Database/*.lua > build/big/Database.big.lua
     
     # echo "Building the analysis"
-    # cd ..
-    # cd 1\ -\ \ Analysis\ Part
-    # ./build.sh
+    # cat 1\ -\ \ Analysis\ Part/*.lua > /build/big/Analysis.big.lua
     
     echo "Building the FormulaPro core"
-    cd ..
-    cd 2\ -\ \ FormulaPro
-    ./build.sh
+    cat 2\ -\ \ FormulaPro/*.lua > build/big/FormulaPro.big.lua
     
     echo "Building Reference"
     cd ..
-    cd 3\ -\ \ Reference\ Part
-    ./build.sh
+    cat 3\ -\ \ Reference Part/*.lua > build/big/Reference.big.lua
     
     echo "Building the libraries"
-    cd ..
     cd Global\ Libraries
-    ./build.sh
+    cat globals.lua animation.lua screen.lua widgets.lua > ../build/big/lib.big.lua
     cd ..
     
     echo "Creating the whole thing..."
+    cd build/big/
     cat Database.big.lua lib.big.lua FormulaPro.big.lua Reference.big.lua main.lua > PhysPro.big.lua
-    echo "wine luna PhysPro.big.lua PhysPro-Nspire.tns"
-    wine ../../luna-v0.3a/luna.exe PhysPro.big.lua PhysPro-Nspire.tns
-    mv PhysPro-Nspire.tns ./Files/PhysPro-Nspire.tns
-    echo "Done building PhysPro"
-
-    echo "Cleaning up"
-    rm lib.big.lua
-    rm FormulaPro.big.lua
-    #rm Analysis.big.lua
-    rm Reference.big.lua
-    rm Database.big.lua
-fi
-
-if [[ "$1" = "-definitions" || "$1" = "-a" ]]; then
-    echo ""
-    
-    echo "Building definitions"
-    cd ./definitions
-    ./build.sh
     cd ..
-    echo "wine luna definitions.big.lua definitions.tns"
-    wine ../../luna-v0.3a/luna.exe definitions.big.lua definitions.tns
-    mv definitions.tns ./Files/definitions.tns
-    echo "Done building definitions"
+    wine /luna/luna.exe big/PhysPro.big.lua PhysPro-Nspire.tns
+    mv PhysPro-Nspire.tns PhysPro-Nspire.tns
+    echo "Done building PhysPro"
+elif [[ "$1" = "-etk" ]]; then
+    cd ./
 fi
 
-if [[ "$3" = "-o" ]]; then
+if [[ "$2" = "-o" ]]; then
     open ./Files/PhysPro-Nspire.tns
 fi
 

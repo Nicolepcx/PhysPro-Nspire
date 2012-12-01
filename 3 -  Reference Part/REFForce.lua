@@ -13,10 +13,6 @@ RefForce.data = {
     { "0.000112404 N",      "ton-force",                "tonf"      }
 }
 
---[[
-{ "", "", "" },
-]]--
-
 RefForce.tmpScroll = 1
 RefForce.dual = false
 

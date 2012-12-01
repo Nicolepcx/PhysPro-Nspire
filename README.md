@@ -1,12 +1,17 @@
 # PhysPro for Nspire
-Solves multiple physics equations and perforoms routine physics-related calculations.
+## Description
+Solves multiple physics equations and perforoms routine physics-related calculations. I made it for my IB Physics course in high school, and I am updating it as I learn new formulas. Almost all of the code is from EEPro-for-Nspire by Jim Bauwens and Adrien Bertrand. The only requirement to run the program is  to have Nspire OS ≥ 3.0. You can find the latest updates [here](http://education.ti.com).
 
-### Licence : [LGPL3](http://www.gnu.org/licenses/lgpl.html)
+## Licence
+[LGPL3](http://www.gnu.org/licenses/lgpl.html)
 
-The only requirement to run the .tns files is to have an Nspire OS >= 3.0. You can find the latest updates [here](http://education.ti.com). Version 3.2 is preferred to enjoy the latest features, and 3.1 if you want to keep Ndless.
-
-## Original code: ?
-For now, The two main developers are Jim Bauwens and Adrien Bertrand ("Adriweb")
-We also would like to thank Levak for his animation API and Nick Steen for the Resistor Reference part.
-Many thanks too to Critor, Excale, NeoCrisis ... and TI of course :)
+## Original code
+EEPro-for-Nspire:
+    Jim Bauwens
+    Adrien Bertrand ("Adriweb")
+Others:
+    Levak (Animation API)
+    Critor
+    Excale
+    NeoCrisis
 

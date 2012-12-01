@@ -70,7 +70,7 @@ function find_data(known, cid, sid)
                 end
 
                 if no == 1 then
-                    print("I can solve " .. tosolve .. " for " .. formula.formula)
+                    print("Solving " .. tosolve .. " for " .. formula.formula)
 
                     local sol, r = math.solve(formula.formula, tosolve)
                     if sol then
@@ -89,7 +89,7 @@ function find_data(known, cid, sid)
                     break
 
                 elseif no == 2 then
-                    print("I cannot solve " .. formula.formula .. " because I don't know the value of multiple variables")
+                    print("Cannot solve " .. formula.formula .. ": unknow value of multiple variables.")
                 end
             end
         end

@@ -7,40 +7,34 @@ local aboutstr = infoStr..origInfoStr
 local aboutButton	= sButton("OK")
 
 for i, line in ipairs(aboutstr:split("\n")) do
-	local aboutlabel	= sLabel(line)
-	aboutWindow:appendWidget(aboutlabel, 10, 27 + i*14-12)
+    local aboutlabel	= sLabel(line)
+    aboutWindow:appendWidget(aboutlabel, 10, 27 + i*14-12)
 end
 
 aboutWindow:appendWidget(aboutButton,-10,-5)
 
 function aboutWindow:postPaint(gc)
-	nativeBar(gc, self, self.h-40)
-	on.help = function() return 0 end
+    nativeBar(gc, self, self.h-40)
+    on.help = function() return 0 end
 end
 
 aboutButton:giveFocus()
 
 function aboutButton:action()
-	remove_screen(aboutWindow)
-	on.help = function() push_screen_direct(aboutWindow) end
+    remove_screen(aboutWindow)
+    on.help = function() push_screen_direct(aboutWindow) end
 end
-
-----------------------------------------
 
 function on.help()
-	push_screen_direct(aboutWindow)
+    push_screen_direct(aboutWindow)
 end
-
-----------------------------------------
 
 function errorPopup(gc)
     
     errorHandler.display = false
     errorDialog = Dialog("Oops...", 50, 20, "85", "80")
 
-    local textMessage	= [[PhysPro has encountered an error
------------------------------
-Sorry for the inconvenience.
+    local textMessage	= [[PhysPro has encountered an error:
 Error at line ]]..errorHandler.errorLine
     local errorOKButton	= sButton("OK")
     
@@ -68,11 +62,11 @@ end
 ---------------------------------------------------------------
 
 function on.create()
-	platform.os = "3.1"
+    platform.os = "3.1"
 end
 
 function on.construction()
-	platform.os = "3.2"
+    platform.os = "3.2"
 end
 
 errorHandler = {}

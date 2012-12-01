@@ -2,24 +2,20 @@
 RefVelocity = Screen()
 
 RefVelocity.data = {
-    { "Base",                   "meters/second",                   "m/s"           },
-    { "1000 m/s",               "kilometers/sec",               "km/s"          },
-    { "0.01 m/s",               "centimeters/sec",              "cm/s"          },
-    { "0.001 m/s",              "millimeters/sec",              "mm/s"          },
-    { "0.000277778 m/s",        "meters/hour",                  "m/hr"          },
-    { "0.277778 m/s",           "kilometers/hour",              "km/hr"         },
-    { "16.6667",                "kilometers/min",               "km/min"        },
-    { "0.3048 m/s",             "feet/second",                  "ft/s"          },
-    { "0.00508 m/s",            "feet/minute",                  "ft/min"        },
-    { "26.8224 m/s",            "miles/minute",                 "mi/min"        },
-    { "0.44704 m/s",            "miles/hour",                   "mi/hr"         },
-    { "0.514444 m/s",           "knatical mile/hour",           "knot"          },
-    { "0.000000005 m/s",        "bears-sec/second",             "brds/sec"      },
+    { "Base",               "meters/second",        "m/s"       },
+    { "1000 m/s",           "kilometers/sec",       "km/s"      },
+    { "0.01 m/s",           "centimeters/sec",      "cm/s"      },
+    { "0.001 m/s",          "millimeters/sec",      "mm/s"      },
+    { "0.000277778 m/s",    "meters/hour",          "m/hr"      },
+    { "0.277778 m/s",       "kilometers/hour",      "km/hr"     },
+    { "16.6667",            "kilometers/min",       "km/min"    },
+    { "0.3048 m/s",         "feet/second",          "ft/s"      },
+    { "0.00508 m/s",        "feet/minute",          "ft/min"    },
+    { "26.8224 m/s",        "miles/minute",         "mi/min"    },
+    { "0.44704 m/s",        "miles/hour",           "mi/hr"     },
+    { "0.514444 m/s",       "knatical mile/hour",   "knot"      },
+    { "0.000000005 m/s",    "bears-sec/second",     "brds/sec"  },
 }
-
---[[
-{ "", "", "" },
-]]--
 
 RefVelocity.tmpScroll = 1
 RefVelocity.dual = false

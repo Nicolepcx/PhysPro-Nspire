@@ -1,43 +1,43 @@
 
-References	= {
-	{ title="SI Prefixes",              info="",        screen=SIPrefixes       },
-	{ title="Greek Alphabet",           info="",        screen=Greek            },
-	{ title="Constants",                info="",        screen=RefConstants     },
-	{ title="Motion Variables",         info="",        screen=MotionVars       },
-	{ title="Displacement Units",       info="",        screen=RefDisplacement  },
-	{ title="Velocity Units",           info="",        screen=RefVelocity      },
-	{ title="Acceleration Units",       info="",        screen=RefAcceleration  },
-	{ title="Time Units",               info="",        screen=RefTime          },
-	{ title="Force Units",              info="",        screen=RefForce         },
-	{ title="Energy Units",             info="",        screen=RefEnergy        },
-	{ title="Power Units",              info="",        screen=RefPower         }
+References = {
+    { title="SI Prefixes", info="", screen=SIPrefixes },
+    { title="Greek Alphabet", info="", screen=Greek },
+    { title="Constants", info="", screen=RefConstants },
+    { title="Motion Variables", info="", screen=MotionVars },
+    { title="Displacement Units", info="", screen=RefDisplacement },
+    { title="Velocity Units", info="", screen=RefVelocity },
+    { title="Acceleration Units", info="", screen=RefAcceleration },
+    { title="Time Units", info="", screen=RefTime },
+    { title="Force Units", info="", screen=RefForce },
+    { title="Energy Units", info="", screen=RefEnergy },
+    { title="Power Units", info="", screen=RefPower }
 }
 
-Ref	= WScreen()
+Ref = WScreen()
 
-RefList	= sList()
+RefList = sList()
 RefList:setSize(-8, -32)
 
 Ref:appendWidget(RefList, 4, Ref.y+28)
 
 function Ref.addRefs()
-	for n, ref in ipairs(References) do
-		if ref.screen then
-			table.insert(RefList.items, ref.title)
-		else
-			table.insert(RefList.items, ref.title .. " (not yet done)")
-		end
-	end
+    for n, ref in ipairs(References) do
+        if ref.screen then
+            table.insert(RefList.items, ref.title)
+        else
+            table.insert(RefList.items, ref.title .. " (Not yet done)")
+        end
+    end
 end
 
 function RefList:action(ref)
-	if References[ref].screen then
-		push_screen(References[ref].screen)
-	end
+    if References[ref].screen then
+        push_screen(References[ref].screen)
+    end
 end
 
 function Ref:pushed()
-	RefList:giveFocus()
+    RefList:giveFocus()
 end
 
 function Ref:paint(gc)

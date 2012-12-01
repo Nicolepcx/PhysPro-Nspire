@@ -2,10 +2,10 @@
 
 0-------------------0
 |                   |
-|    PhysPro v1.0   |
+|   PhysPro v0.8.1  |
 | (Nov. 21th 2012)  |
 |   LGLP 3 License  |
-|     Mr. Kitty     |
+|     alex3yoyo     |
 |                   |
 0-------------------0
 
@@ -16,6 +16,7 @@ Jim Bauwens         Adrien Bertrand
 TI-Planet.org       Inspired-Lua.org
 ]]--
 
-pInfo={name="PhysPro", by="Mr. Kitty", ver="v0.8.1a", web="", license="LGPL3 License" }
-infoStr = pInfo["name"].." "..pInfo["ver"].."\nBy "..pInfo["by"].."\n"..pInfo["license" ]
+pInfo={name="PhysPro", by="Mr. Kitty", ver="v0.8.1a", web="", license="LGPL3 License"}
+infoStr = pInfo["name"].." "..pInfo["ver"].."\nBy "..pInfo["by"].."\n"..pInfo["license"]
 print("\n.."..infoStr.."\n")
+

@@ -36,7 +36,7 @@ function on.timer()
         platform.window:invalidate()
     else
         --for _,screen in pairs(Screens) do
-        --	screen:size()
+        --    screen:size()
         --end
         timer.stop()
     end

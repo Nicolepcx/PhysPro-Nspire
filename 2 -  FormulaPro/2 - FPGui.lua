@@ -201,7 +201,7 @@ function manualSolver:pushed(cid, sid)
             i = i + 1
             inp = sInput()
             inp.value = ""
-            --inp.number	= true
+            --inp.number = true
 
             function inp:enterKey()
                 if not tonumber(self.value) and #self.value > 0 then
@@ -233,7 +233,7 @@ function manualSolver:pushed(cid, sid)
 
             if variabledata then
                 if variabledata.unit ~= "unitless" then
-                    --unitlbl	= sLabel(variabledata.unit:gsub("([^%d]+)(%d)", numberToSub))
+                    --unitlbl = sLabel(variabledata.unit:gsub("([^%d]+)(%d)", numberToSub))
                     local itms = { variabledata.unit }
                     for k, _ in pairs(Units[variabledata.unit]) do
                         table.insert(itms, k)
@@ -412,5 +412,5 @@ end
 
 function usedFormulas.but.action(self)
     remove_screen()
-end	
+end
 

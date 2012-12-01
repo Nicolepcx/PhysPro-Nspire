@@ -2,18 +2,14 @@
 RefPower = Screen()
 
 RefPower.data = {
-    { "Base",               "watt",                 "W"         },
-    { "0.001 W",            "milliwatt",            "mW"        },
-    { "1000 W",             "kilowatt",             "kW"        },
-    { "1000000 W",          "megawatt",             "MW"        },
-    { "1000000000 W",       "gigawatt",             "GW"        },
-    { "745.7 W",            "horsepower",           "hp"        },
-    { "0.9983 W",           "air watt",             "airW"      }
+    { "Base",           "watt",         "W"     },
+    { "0.001 W",        "milliwatt",    "mW"    },
+    { "1000 W",         "kilowatt",     "kW"    },
+    { "1000000 W",      "megawatt",     "MW"    },
+    { "1000000000 W",   "gigawatt",     "GW"    },
+    { "745.7 W",        "horsepower",   "hp"    },
+    { "0.9983 W",       "air watt",     "airW"  }
 }
-
---[[
-{ "", "", "" },
-]]--
 
 RefPower.tmpScroll = 1
 RefPower.dual = false
