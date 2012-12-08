@@ -3,7 +3,7 @@
 aboutWindow	= Dialog("About", 50, 20, 280, 180)
 
 local origInfoStr = "Orig Code:\nFormulaPro v1.4a LGPL3\nJim Bauwens, Adrien \"Adriweb\" Bertrand, Levak\ntiplanet.org - inspired-lua.org"
-local aboutstr = infoStr..origInfoStr
+local aboutstr = infoStr.."\n"..origInfoStr
 local aboutButton	= sButton("OK")
 
 for i, line in ipairs(aboutstr:split("\n")) do
@@ -30,32 +30,32 @@ function on.help()
 end
 
 function errorPopup(gc)
-    
+
     errorHandler.display = false
     errorDialog = Dialog("Oops...", 50, 20, "85", "80")
 
     local textMessage	= [[PhysPro has encountered an error:
 Error at line ]]..errorHandler.errorLine
     local errorOKButton	= sButton("OK")
-    
+
     for i, line in ipairs(textMessage:split("\n")) do
         local errorLabel = sLabel(line)
         errorDialog:appendWidget(errorLabel, 10, 27 + i*14-12)
     end
-    
+
     errorDialog:appendWidget(errorOKButton,-10,-5)
-    
+
     function errorDialog:postPaint(gc)
         nativeBar(gc, self, self.h-40)
     end
-    
+
     errorOKButton:giveFocus()
-    
+
     function errorOKButton:action()
         remove_screen(errorDialog)
         errorHandler.errorMessage = nil
     end
-    
+
     push_screen_direct(errorDialog)
 end
 

@@ -6,14 +6,14 @@ function pprint(...)
         stdout(...)
         local out        = ""
         for _,v in ipairs({...}) do 
-                out        =        out .. (_==1 and "" or "    ") .. tostring(v)
+                out = out .. (_==1 and "" or "    ") .. tostring(v)
         end
         var.store("print", out)
 end
 
 
 function Pr(n, d, s, ex)
-        local nc        = tonumber(n)
+        local nc = tonumber(n)
         if nc and nc<math.abs(nc) then
                 return s-ex-(type(n)== "number" and math.abs(n) or (.01*s*math.abs(nc)))
         else
@@ -30,27 +30,27 @@ function addExtension(oldclass, extension)
         return newclass
 end
 
-clipRectData        = {}
+clipRectData = {}
 
 function gc_clipRect(gc, what, x, y, w, h)
         if what == "set" and clipRectData.current then
-                clipRectData.old        = clipRectData.current
+                clipRectData.old = clipRectData.current
                 
         elseif what == "subset" and clipRectData.current then
-                clipRectData.old        = clipRectData.current
-                x        = clipRectData.old.x<x and x or clipRectData.old.x
-                y        = clipRectData.old.y<y and y or clipRectData.old.y
-                h        = clipRectData.old.y+clipRectData.old.h > y+h and h or clipRectData.old.y+clipRectData.old.h-y
-                w        = clipRectData.old.x+clipRectData.old.w > x+w and w or clipRectData.old.x+clipRectData.old.w-x
+                clipRectData.old = clipRectData.current
+                x = clipRectData.old.x<x and x or clipRectData.old.x
+                y = clipRectData.old.y<y and y or clipRectData.old.y
+                h = clipRectData.old.y+clipRectData.old.h > y+h and h or clipRectData.old.y+clipRectData.old.h-y
+                w = clipRectData.old.x+clipRectData.old.w > x+w and w or clipRectData.old.x+clipRectData.old.w-x
                 what = "set"
                 
         elseif what == "restore" and clipRectData.old then
                 --gc:clipRect("reset")
                 what = "set"
-                x        = clipRectData.old.x
-                y        = clipRectData.old.y
-                h        = clipRectData.old.h
-                w        = clipRectData.old.w
+                x = clipRectData.old.x
+                y = clipRectData.old.y
+                h = clipRectData.old.h
+                w = clipRectData.old.w
         elseif what == "restore" then
                 what = "reset"
         end
@@ -63,9 +63,9 @@ end
 --                        Screen  Class                         --
 ------------------------------------------------------------------
 
-Screen        =        class(Object)
+Screen = class(Object)
 
-Screens        =        {}
+Screens = {}
 
 function scrollScreen(screen, d, callback)
   --  print("scrollScreen.  number of screens : ", #Screens)
@@ -123,14 +123,14 @@ end
 function only_screen(screen, ...)
    -- print("only_screen")
     remove_screen(current_screen())
-        Screens        =        {}
+        Screens = {}
         push_screen(screen, ...)
         platform.window:invalidate()
 end
 
 function only_screen_back(screen, ...)
  --   print("only_screen_back")
-    --Screens        =        {}
+    --Screens = {}
         push_screen_back(screen, ...)
         platform.window:invalidate()
 end
@@ -159,10 +159,10 @@ end
 
 function Screen:init(xx,yy,ww,hh)
 
-        self.yy        =        yy
-        self.xx        =        xx
-        self.hh        =        hh
-        self.ww        =        ww
+        self.yy = yy
+        self.xx = xx
+        self.hh = hh
+        self.ww = ww
         
         self:ext()
         self:size(0)
@@ -174,11 +174,11 @@ function Screen:ext()
 end
 
 function Screen:size()
-        local screenH        =        platform.window:height()
-        local screenW        =        platform.window:width()
+        local screenH = platform.window:height()
+        local screenW =  platform.window:width()
 
-        if screenH        == 0 then screenH=212 end
-        if screenW        == 0 then screenW=318 end
+        if screenH == 0 then screenH=212 end
+        if screenW == 0 then screenW=318 end
 
         self.x        =        math.floor(Pr(self.xx, 0, screenW)+.5)
         self.y        =        math.floor(Pr(self.yy, 0, screenH)+.5)
@@ -376,35 +376,37 @@ end
 
 function WidgetManager:charIn(char)
         if self.focus~=0 then
-                self:getWidget():charIn(char)
+            self:getWidget():charIn(char)
         end
         self:invalidate()
 end
 
 function WidgetManager:getWidgetIn(x, y)
-        for n, widget in pairs(self.widgets) do
-                local wox        = widget.ox or 0
-                local woy        = widget.oy or 0
-                if x>=widget.x-wox and y>=widget.y-wox and x<widget.x+widget.w-wox and y<widget.y+widget.h-woy then
-                        return n, widget
-                end
-        end 
+    for n, widget in pairs(self.widgets) do    
+        local wox        = widget.ox or 0
+        local woy        = widget.oy or 0
+        if x>=widget.x-wox and y>=widget.y-wox and x<widget.x+widget.w-wox and y<widget.y+widget.h-woy then
+            return n, widget
+        end
+    end 
 end
 
 function WidgetManager:mouseDown(x, y) 
-        local n, widget        =        self:getWidgetIn(x, y)
-        if n then
-                if self.focus~=0 and self.focus~=n then self:getWidget().hasFocus = false self:getWidget():loseFocus()  end
-                self.focus        =        n
-                
-                widget.hasFocus        =        true
-                widget:getFocus()
+    local n, widget        =        self:getWidgetIn(x, y)
+    if n then
+        if self.focus~=0 and self.focus~=n then self:getWidget().hasFocus = false self:getWidget():loseFocus()  end
+        self.focus = n
+        
+        widget.hasFocus = true
+        widget:getFocus()
 
-                widget:mouseDown(x, y)
-                self:focusChange()
+        widget:mouseDown(x, y)
+        self:focusChange()
         else
-                if self.focus~=0 then self:getWidget().hasFocus = false self:getWidget():loseFocus() end
-                self.focus        =        0
+            if self.focus~=0 then 
+            self:getWidget().hasFocus = false 
+            self:getWidget():loseFocus() end
+            self.focus        =        0
         end
 end
 
@@ -420,12 +422,10 @@ function WidgetManager:mouseUp(x, y)
 end
 
 function WidgetManager:mouseMove(x, y)
-        if self.focus~=0 then
-                self:getWidget():mouseMove(x, y)
-        end
+    if self.focus~=0 then
+        self:getWidget():mouseMove(x, y)
+    end
 end
-
-
 
 --------------------------
 -- Our new frankenstein --
@@ -435,7 +435,7 @@ WScreen        = addExtension(Screen, WidgetManager)
 
 --Dialog screen
 
-Dialog        =        class(WScreen)
+Dialog = class(WScreen)
 
 function Dialog:init(title,xx,yy,ww,hh)
 
