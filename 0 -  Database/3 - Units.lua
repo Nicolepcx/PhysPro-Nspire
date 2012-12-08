@@ -36,6 +36,7 @@ Mt.c = 100
 Mt.m = 1000
 Mt.u = 1000000
 Mt.n = 1000000000
+Mt.p = 1000000000000
 
 Ms = {}
 Ms.min = 60
@@ -60,6 +61,7 @@ Units["s"]["Frieds"] = { 108864000, 0}
 
 --Length
 Units["m"] = {}
+Units["m"]["pm"] = { Mt.p, 0}
 Units["m"]["nm"] = { Mt.n, 0}
 Units["m"][utf8(956).."m"] = { Mt.u, 0}
 Units["m"]["mm"] = { Mt.m, 0}
@@ -231,8 +233,20 @@ Units["amu"]["kg"] = { 0.000000000000000000000000001660538782, 0}
 Units["amu"]["g"] = { 0.000000000000000000000001660538782, 0}
 Units["amu"]["mg"] = { 0.000000000000000000001660538782, 0}
 
---something
+--Heat
 Units["J/kg*K"] = {}
+
+--Mole Energy
+Units["kJ/mol"] = {}
+
+--Density
+Units["kg/m3"] = {}
+
+--Thermal conductivity
+--Units["W/mK"] = {}
+
+--Electrical conductivity
+--Units["MS/m"] = {}
 
 --Degrees (Angle)
 Units[utf8(176)] = {}

@@ -1,7 +1,7 @@
 
 RefConstants = Screen()
 
-RefConstants.data = refCon(Constants)
+RefConstants.data = refCon()
 
 RefConstants.tmpScroll = 1
 RefConstants.leftRight = 1

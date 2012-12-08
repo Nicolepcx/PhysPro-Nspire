@@ -12,16 +12,16 @@ function numberToSub(w,n)
     return w..utf8(SubNumbers[tonumber(n)])
 end
 
-function refCon(t)
+function refCon()
     local t2 = {}
-    for k,v in ipairs(t) do	
+    for k,v in ipairs(Constants) do	
         t2[k] = {v.info,v.key,v.value.." "..v.unit}
     end
     return t2
 end
 
 Constants = {
-{key="g", info="Acceleration due to gravity", value="9.81", unit="m*s^-2"},
+{key="g", info="Acceleration due to gravity", value="-9.81", unit="m*s^2"},p
 {key="G", info="Gravitational constant", value="6.67*10^(-11)", unit="Nm^2/kg^-2"},
 {key="N", info="Avogadro's constant", value="6.022*10^(23)", unit="mol^-1"},
 {key="R", info="Gas constant", value="8.314", unit="J/((mol^-1)*(K^-1))"},
