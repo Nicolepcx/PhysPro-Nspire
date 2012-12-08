@@ -173,12 +173,18 @@ function manualSolver:postPaint(gc)
 end
 
 basicFuncsInited = false
+elementValuesInited = false
 
 function manualSolver:pushed(cid, sid)
 
     if not basicFuncsInited then
         initBasicFunctions()
         basicFuncsInited = true
+    end
+    
+    if not elementValuesInited then
+        initElementValues()
+        elementValuesInited = true
     end
 
     self.pl.widgets = {}
@@ -232,7 +238,7 @@ function manualSolver:pushed(cid, sid)
             end
 
             if variabledata then
-                if variabledata.unit ~= "unitless" then
+                if variabledata.unit ~= "nounit" then
                     --unitlbl = sLabel(variabledata.unit:gsub("([^%d]+)(%d)", numberToSub))
                     local itms = { variabledata.unit }
                     for k, _ in pairs(Units[variabledata.unit]) do
@@ -247,7 +253,7 @@ function manualSolver:pushed(cid, sid)
                     nodropdown = false
                     lastdropdown = inp.dropdown
                 else
-                    self.pl:appendWidget(sLabel("Unitless"), -32, i * 30 - 28)
+                    self.pl:appendWidget(sLabel(""), -32, i * 30 - 28)
                 end
             else
                 nodropdown = true
