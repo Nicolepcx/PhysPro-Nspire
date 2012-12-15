@@ -242,6 +242,9 @@ Units["kJ/mol"] = {}
 --Density
 Units["kg/m3"] = {}
 
+--Spring Constant
+Units["N/m"] = {}
+
 --Thermal conductivity
 --Units["W/mK"] = {}
 
