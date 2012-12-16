@@ -30,12 +30,13 @@ if [[ "$1" = "-luna" ]]; then
     cat 3\ -\ \ Reference\ Part/*.lua > build/big/reference.big.lua
 
     echo "Building the libraries"
-    cat Global\ Libraries/*.lua > ../build/big/lib.big.lua
+    cat Global\ Libraries/*.lua > build/big/lib.big.lua
 
     echo "Creating the whole thing..."
     cd build/big/
     cat database.big.lua lib.big.lua formulapro.big.lua reference.big.lua ../../main.lua > ../PhysPro.big.lua
     cd ..
+    cp PhysPro.big.lua PhysPro_src.lua.tns
     wine luna/luna.exe PhysPro.big.lua PhysPro-Nspire.tns
     echo "Done building PhysPro"
 elif [[ "$1" = "-etk" ]]; then

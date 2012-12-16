@@ -1,11 +1,6 @@
 
-References = {
-    { title="SI Prefixes", info="", screen=SIPrefixes },
-    { title="Greek Alphabet", info="", screen=Greek },
-    { title="Constants", info="", screen=RefConstants },
-    { title="Motion Variables", info="", screen=MotionVars },
-    { title="BoolAlg", info="", screen=RefBoolAlg },
-    { title="BoolExpr", info="", screen=RefBoolExpr },
+
+rUnits = {
     { title="Displacement Units", info="", screen=RefDisplacement },
     { title="Velocity Units", info="", screen=RefVelocity },
     { title="Acceleration Units", info="", screen=RefAcceleration },
@@ -23,7 +18,7 @@ RefList:setSize(-8, -32)
 Ref:appendWidget(RefList, 4, Ref.y+28)
 
 function Ref.addRefs()
-    for n, ref in ipairs(References) do
+    for n, ref in ipairs(rUnits) do
         if ref.screen then
             table.insert(RefList.items, ref.title)
         else
@@ -34,7 +29,7 @@ end
 
 function RefList:action(ref)
     if References[ref].screen then
-        push_screen(References[ref].screen)
+        push_screen(rUnits[ref].screen)
     end
 end
 
@@ -49,7 +44,7 @@ function Ref:paint(gc)
 end
 
 function Ref:tabKey()
-    push_screen(CategorySel)
+    push_screen(Ref)
 end
 
 Ref.escapeKey = Ref.tabKey

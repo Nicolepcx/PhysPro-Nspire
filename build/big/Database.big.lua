@@ -16,7 +16,7 @@ Jim Bauwens         Adrien Bertrand
 TI-Planet.org       Inspired-Lua.org
 ]]--
 
-pInfo={name="PhysPro", by="Mr. Kitty", ver="v0.8.1a", web="", license="LGPL3 License"}
+pInfo={name="PhysPro", by="Mr. Kitty", ver="v0.8.1a", web="http://github.com/alex3yoyo/physpro-nspire", license="LGPL3 License"}
 infoStr = pInfo["name"].." "..pInfo["ver"].."\nBy "..pInfo["by"].."\n"..pInfo["license"]
 print("\n.."..infoStr.."\n")
 
@@ -148,6 +148,7 @@ ct.mo = 1 -- Mechanics
 ct.th = 2 -- Thermodynamics
 ct.wa = 3 -- Oscillations & Waves
 ct.ch = 4 -- Chemistry
+ct.ex = 5 -- External Database
 
 function checkIfExists(table, name)
     for k,v in pairs(table) do
@@ -650,8 +651,10 @@ Units["amu"]["kg"] = { 0.000000000000000000000000001660538782, 0}
 Units["amu"]["g"] = { 0.000000000000000000000001660538782, 0}
 Units["amu"]["mg"] = { 0.000000000000000000001660538782, 0}
 
---Heat
+--Heat Capacity
 Units["J/kg*K"] = {}
+Units["J/kg*K"]["J/kg*C"] = { 1, 0}
+--Units["J/kg*K"]["Cal/kg*K"] = {}
 
 --Mole Energy
 Units["kJ/mol"] = {}
@@ -661,6 +664,18 @@ Units["kg/m3"] = {}
 
 --Spring Constant
 Units["N/m"] = {}
+
+--Planck
+--Units["J/s"] = {}
+
+--Charge
+--Units["C"] = {}
+
+--Boltzmann
+--Units["J/K"] = {}
+
+--Gas C
+--Units["J/mol*K"] = {}
 
 --Thermal conductivity
 --Units["W/mK"] = {}

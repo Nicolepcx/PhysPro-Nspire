@@ -16,7 +16,7 @@ Jim Bauwens         Adrien Bertrand
 TI-Planet.org       Inspired-Lua.org
 ]]--
 
-pInfo={name="PhysPro", by="Mr. Kitty", ver="v0.8.1a", web="", license="LGPL3 License"}
+pInfo={name="PhysPro", by="Mr. Kitty", ver="v0.8.1a", web="http://github.com/alex3yoyo/physpro-nspire", license="LGPL3 License"}
 infoStr = pInfo["name"].." "..pInfo["ver"].."\nBy "..pInfo["by"].."\n"..pInfo["license"]
 print("\n.."..infoStr.."\n")
 
@@ -148,6 +148,7 @@ ct.mo = 1 -- Mechanics
 ct.th = 2 -- Thermodynamics
 ct.wa = 3 -- Oscillations & Waves
 ct.ch = 4 -- Chemistry
+ct.ex = 5 -- External Database
 
 function checkIfExists(table, name)
     for k,v in pairs(table) do
@@ -650,8 +651,10 @@ Units["amu"]["kg"] = { 0.000000000000000000000000001660538782, 0}
 Units["amu"]["g"] = { 0.000000000000000000000001660538782, 0}
 Units["amu"]["mg"] = { 0.000000000000000000001660538782, 0}
 
---Heat
+--Heat Capacity
 Units["J/kg*K"] = {}
+Units["J/kg*K"]["J/kg*C"] = { 1, 0}
+--Units["J/kg*K"]["Cal/kg*K"] = {}
 
 --Mole Energy
 Units["kJ/mol"] = {}
@@ -661,6 +664,18 @@ Units["kg/m3"] = {}
 
 --Spring Constant
 Units["N/m"] = {}
+
+--Planck
+--Units["J/s"] = {}
+
+--Charge
+--Units["C"] = {}
+
+--Boltzmann
+--Units["J/K"] = {}
+
+--Gas C
+--Units["J/mol*K"] = {}
 
 --Thermal conductivity
 --Units["W/mK"] = {}
@@ -3052,6 +3067,140 @@ function RefAcceleration:paint(gc)
 end
 
 
+RefBoolAlg = Screen()
+
+RefBoolAlg.data = {
+    { "x+0=x", "x.1=x", "Identity" },
+    { "x+x'=1", "x.x'=0", "Inverse" },
+    { "x+x=x", "x.x=x", "Idempotent" },
+    { "x+1=1", "x.0=0", "Null Element" },
+    { "(x')'=x", "(x')'=x", "Involution" },
+    { "x+y=y+x", "x.y=y.x", "Commutative" },
+    { "x+(y+z)=(x+y)+z", "x.(y.z)=(x.y).z", "Associative" },
+    { "x.(y+z)=(x.y)+(x.z)", "x+(y.z)=(x+y).(x+z)", "Distributive" },
+    { "x+(x.y)=x", "x.(x+y)=x", "Absorption" },
+    { "(x+y+z)'=x'.y'.z'", "(x.y.z)'=x'+y'+z'", "DeMorgan's Law" },
+    { "(x.y)+(x'.z)+(y.z)=(x.y)+(x'.z)", "(x+y).(x'+z).(y+z)=(x+y).(x'+z)", "Consensus" }
+}
+
+RefBoolAlg.tmpScroll = 1
+RefBoolAlg.dual = false
+
+function RefBoolAlg:arrowKey(arrw)
+    if pww() < 330 then
+        if arrw == "up" then
+            RefBoolAlg.tmpScroll = RefBoolAlg.tmpScroll - test(RefBoolAlg.tmpScroll > 1)
+        end
+        if arrw == "down" then
+            RefBoolAlg.tmpScroll = RefBoolAlg.tmpScroll + test(RefBoolAlg.tmpScroll < (table.getn(RefBoolAlg.data) - 7))
+        end
+        screenRefresh()
+    end
+end
+
+function RefBoolAlg:enterKey()
+    RefBoolAlg.dual = not RefBoolAlg.dual
+    RefBoolAlg:invalidate()
+end
+
+function RefBoolAlg:escapeKey()
+    only_screen_back(Ref)
+end
+
+function RefBoolAlg:paint(gc)
+    gc:setColorRGB(255, 255, 255)
+    gc:fillRect(self.x, self.y, self.w, self.h)
+    gc:setColorRGB(0, 0, 0)
+
+    msg = "Boolean Algebra : "
+    gc:setFont("sansserif", "b", 12)
+    if RefBoolAlg.tmpScroll > 1 and pww() < 330 then
+        gc:drawString(utf8(9650), gc:getStringWidth(utf8(9664)) + 7, 0, "top")
+    end
+    if RefBoolAlg.tmpScroll < table.getn(RefBoolAlg.data) - 7 and pww() < 330 then
+        gc:drawString(utf8(9660), pww() - 4 * gc:getStringWidth(utf8(9654)) - 2, 0, "top")
+    end
+    drawXCenteredString(gc, msg, 0)
+    gc:setFont("sansserif", "i", 12)
+    drawXCenteredString(gc, "Press Enter for Dual ", 15)
+    gc:setFont("sansserif", "r", 12)
+
+    local tmp = 0
+    for k = RefBoolAlg.tmpScroll, table.getn(RefBoolAlg.data) do
+        tmp = tmp + 1
+        gc:setFont("sansserif", "b", 12)
+        gc:drawString(RefBoolAlg.data[k][3], 3, 10 + 22 * tmp, "top")
+        gc:setFont("sansserif", "r", 12)
+        gc:drawString(RefBoolAlg.data[k][1 + test(RefBoolAlg.dual)], 125 - 32 * test(k == 11) * test(pww() < 330) + 30 * test(pww() > 330) + 12, 10 + 22 * tmp, "top")
+    end
+end
+
+
+RefBoolExpr = Screen()
+
+RefBoolExpr.data = {
+{"F0","0","Null"},
+{"F1","x.y","AND"},
+{"F2","x.y'","Inhibition"},
+{"F3","x","Transfer"},
+{"F4","x'.y","Inhibition"},
+{"F5","y","Transfer"},
+{"F6","(x.y')+(x'.y)","Exclusive OR (XOR)"},
+{"F7","x+y","OR"},
+{"F8","(x+y)'","NOT OR (NOR)"},
+{"F9","(x.y)+(x'.y')","Equivalence (XNOR)"},
+{"F10","y'","Complement NOT"},
+{"F11","x+y'","Implication"},
+{"F12","x'","Complement (NOT)"},
+{"F13","x'+y","Implication"},
+{"F14","(x.y)'","NOT AND (NAND)"},
+{"F15","1","Identity"}
+}
+
+RefBoolExpr.tmpScroll = 1
+
+function RefBoolExpr:arrowKey(arrw)
+	if arrw == "up" then
+		RefBoolExpr.tmpScroll = RefBoolExpr.tmpScroll - test(RefBoolExpr.tmpScroll>1)
+	end
+	if arrw == "down" then
+		RefBoolExpr.tmpScroll = RefBoolExpr.tmpScroll + test(RefBoolExpr.tmpScroll<(table.getn(RefBoolExpr.data)-7))
+	end
+	screenRefresh()
+end
+
+function RefBoolExpr:paint(gc)
+	gc:setColorRGB(255,255,255)
+	gc:fillRect(self.x, self.y, self.w, self.h)
+	gc:setColorRGB(0,0,0)
+	
+	    msg = "Boolean Expressions : "
+        gc:setFont("sansserif","b",12)
+        if RefBoolExpr.tmpScroll > 1 then
+        	gc:drawString(utf8(9650),gc:getStringWidth(utf8(9664))+7,0,"top")
+        end
+        if RefBoolExpr.tmpScroll < table.getn(RefBoolExpr.data)-7 then
+        	gc:drawString(utf8(9660),pww()-4*gc:getStringWidth(utf8(9654))-2,0,"top")
+        end
+        drawXCenteredString(gc,msg,4)
+        gc:setFont("sansserif","r",12)
+        
+       	local tmp = 0
+       	for k=RefBoolExpr.tmpScroll,table.getn(RefBoolExpr.data) do
+       		tmp = tmp + 1
+       		gc:setFont("sansserif","b",12)
+            gc:drawString(RefBoolExpr.data[k][1], 5, 5+22*tmp, "top")
+        	gc:setFont("sansserif","r",12)
+            gc:drawString(RefBoolExpr.data[k][2], 40+30*test(pww()>330)+15, 5+22*tmp, "top")
+		    gc:drawString(RefBoolExpr.data[k][3], 134+50*test(pww()>330)+15, 5+22*tmp, "top")
+		end
+end
+
+function RefBoolExpr:escapeKey()
+	only_screen_back(Ref)
+end
+
+
 RefConstants = Screen()
 
 RefConstants.data = refCon()
@@ -3724,6 +3873,8 @@ References = {
     { title="Greek Alphabet", info="", screen=Greek },
     { title="Constants", info="", screen=RefConstants },
     { title="Motion Variables", info="", screen=MotionVars },
+    { title="BoolAlg", info="", screen=RefBoolAlg },
+    { title="BoolExpr", info="", screen=RefBoolExpr },
     { title="Displacement Units", info="", screen=RefDisplacement },
     { title="Velocity Units", info="", screen=RefVelocity },
     { title="Acceleration Units", info="", screen=RefAcceleration },
