@@ -233,8 +233,10 @@ Units["amu"]["kg"] = { 0.000000000000000000000000001660538782, 0}
 Units["amu"]["g"] = { 0.000000000000000000000001660538782, 0}
 Units["amu"]["mg"] = { 0.000000000000000000001660538782, 0}
 
---Heat
+--Heat Capacity
 Units["J/kg*K"] = {}
+Units["J/kg*K"]["J/kg*C"] = { 1, 0}
+--Units["J/kg*K"]["Cal/kg*K"] = {}
 
 --Mole Energy
 Units["kJ/mol"] = {}
@@ -244,6 +246,18 @@ Units["kg/m3"] = {}
 
 --Spring Constant
 Units["N/m"] = {}
+
+--Planck
+--Units["J/s"] = {}
+
+--Charge
+--Units["C"] = {}
+
+--Boltzmann
+--Units["J/K"] = {}
+
+--Gas C
+--Units["J/mol*K"] = {}
 
 --Thermal conductivity
 --Units["W/mK"] = {}
