@@ -1,6 +1,7 @@
 #!/bin/bash
 
-echo "Building $1"
+
+echo "Building with $1"
 
 if [[ "$3" = -b ]]; then
     echo "Backing up..."
@@ -29,9 +30,7 @@ if [[ "$1" = "-luna" ]]; then
     cat 3\ -\ \ Reference\ Part/*.lua > build/big/reference.big.lua
 
     echo "Building the libraries"
-    cd Global\ Libraries
-    cat *.lua > ../build/big/lib.big.lua
-    cd ..
+    cat Global\ Libraries/*.lua > ../build/big/lib.big.lua
 
     echo "Creating the whole thing..."
     cd build/big/
@@ -39,6 +38,8 @@ if [[ "$1" = "-luna" ]]; then
     cd ..
     wine luna/luna.exe PhysPro.big.lua PhysPro-Nspire.tns
     echo "Done building PhysPro"
+elif [[ "$1" = "-etk" ]]; then
+    echo "No done yet"
 fi
 
 if [[ "$2" = "-o" ]]; then

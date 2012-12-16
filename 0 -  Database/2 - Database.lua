@@ -8,6 +8,7 @@ ct.mo = 1 -- Mechanics
 ct.th = 2 -- Thermodynamics
 ct.wa = 3 -- Oscillations & Waves
 ct.ch = 4 -- Chemistry
+ct.ex = 5 -- External Database
 
 function checkIfExists(table, name)
     for k,v in pairs(table) do
