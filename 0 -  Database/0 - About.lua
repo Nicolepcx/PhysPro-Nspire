@@ -18,5 +18,5 @@ TI-Planet.org       Inspired-Lua.org
 
 pInfo={name="PhysPro", by="Mr. Kitty", ver="v0.8.1a", web="http://github.com/alex3yoyo/physpro-nspire", license="LGPL3 License"}
 infoStr = pInfo["name"].." "..pInfo["ver"].."\nBy "..pInfo["by"].."\n"..pInfo["license"]
-print("\n.."..infoStr.."\n")
+print("\n.."..infoStr.."\n") -- Prints info to console
 

@@ -1,4 +1,4 @@
-function initElementValues()
+function initElementValues() -- Stores elements into nspire documents variables
     local elementValues = {
         --["ch.atom"] = [[Define ch.atom = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118 }]],
         --["ch.name"] = [[Define ch.name = { "Hydrogen", "Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen", "Fluorine", "Neon", "Sodium", "Magnesium", "Aluminium", "Silicon", "Phosphorus", "Sulfur", "Chlorine", "Argon", "Potassium", "Calcium", "Scandium", "Titanium", "Vanadium", "Chromium", "Manganese", "Iron", "Cobalt", "Nickel", "Copper", "Zinc", "Gallium", "Germanium", "Arsenic", "Selenium", "Bromine", "Krypton", "Rubidium", "Strontium", "Yttrium", "Zirconium", "Niobium", "Molybdenum", "Technetium", "Ruthenium", "Rhodium", "Palladium", "Silver", "Cadmium", "Indium", "Tin", "Antimony", "Tellurium", "Iodine", "Xenon", "Caesium", "Barium", "Lanthanum", "Cerium", "Praseodymium", "Neodymium", "Promethium", "Samarium", "Europium", "Gadolinium", "Terbium", "Dysprosium", "Holmium", "Erbium", "Thulium", "Ytterbium", "Lutetium", "Hafnium", "Tantalum", "Tungsten", "Rhenium", "Osmium", "Iridium", "Platinum", "Gold", "Mercury", "Thallium", "Lead", "Bismuth", "Polonium", "Astatine", "Radon", "Francium", "Radium", "Actinium", "Thorium", "Protactinium", "Uranium", "Neptunium", "Plutonium", "Americium", "Curium", "Berkelium", "Californium", "Einsteinium", "Fermium", "Mendelevium", "Nobelium", "Lawrencium", "Rutherfordium", "Dubnium", "Seaborgium", "Bohrium", "Hassium", "Meitnerium", "Darmstadtium", "Roentgenium", "Ununbium", "Ununtrium", "Ununquadium", "Ununpentium", "Ununhexium", "Ununseptium", "Ununoctium" }]],
@@ -25,17 +25,17 @@ function initElementValues()
         --["ch.e_cond"] = [[Define ch.e_cond = { undef, undef, 11, 25, 0.0000000001, 0.1, undef, undef, undef, undef, 21, 23, 38, 0.001, 10, 1000000000000000000000, 0.00000001, undef, 14, 29, 1.8, 2.5, 5., 7.9, 0.62, 10, 17, 14, 59, 17, 7.1, 0.002, 3.3, undef, 0.0000000000000001, undef, 8.3, 7.7, 1.8, 2.4, 6.7, 20, 5., 14, 23, 10, 62, 14, 12, 9.1, 2.5, 0.01, 0.0000000000001, undef, 5, 2.9, 1.6, 1.4, 1.4, 1.6, 1.3, 1.1, 1.1, 0.77, 0.83, 1.1, 1.1, 1.2, 1.4, 3.6, 1.8, 3.3, 7.7, 20, 5.6, 12, 21, 9.4, 45, 1, 6.7, 4.8, 0.77, 2.3, undef, undef, undef, 1, undef, 6.7, 5.6, 3.6, 0.83, 0.67, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]]
     }
     for k,v in pairs(elementValues) do
-        math.eval(v)
-        math.eval("Lock "..k)
+        math.eval(v) -- stores
+        math.eval("Lock "..k) -- Locks the loaded lists
     end
 end
 
 --[[
 function getChem(k, v)
     if v >= 1 and v <= # ch.atom then
-		return ch[k][v]
-	else
-		return 0
-	end
+        return ch[k][v]
+    else
+        return 0
+    end
 end
 ]]--

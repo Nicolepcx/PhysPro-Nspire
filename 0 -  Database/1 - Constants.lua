@@ -12,7 +12,8 @@ function numberToSub(w,n)
     return w..utf8(SubNumbers[tonumber(n)])
 end
 
-g = {} -- The Greeks
+-- The Greeks
+g = {} -- Upper  ,   Lower  ,  Name
 g.al = {utf8(913), utf8(945), "Alpha"}
 g.be = {utf8(914), utf8(946), "Beta"}
 g.ga = {utf8(915), utf8(947), "Gamma"}
@@ -38,9 +39,16 @@ g.ch = {utf8(935), utf8(967), "Chi"}
 g.ps = {utf8(936), utf8(968), "Psi"}
 g.om = {utf8(937), utf8(969), "Omega"}
 
-function refCon()
+s = {} -- Symbols
+s.dg = utf8(176) -- degree symbol
+s.th = g.th[2] -- theta
+s.th0 = g.th[2].."0" -- theta0
+s.la = g.la[2] -- lambda
+s.la0 = g.la[2].."0" -- lambda0
+
+function refCon() -- Makes the constants reference page
     local t2 = {}
-    for k,v in ipairs(Constants) do	
+    for k,v in ipairs(Constants) do
         t2[k] = {v.info,v.key,v.val.." "..v.unit}
     end
     return t2
@@ -65,7 +73,7 @@ Constants = {
 {key=utf8(956).."0", info="Permeability of a vacuum", val="4*pi*10^(-7)", unit="N/A^-2"}
 }
 
-function con(i)
+function con(i) -- Shortcut for using constants in the database part
     for k,v in ipairs(Constants) do
         if Constants[k].key == i then
             return Constants[k].val

@@ -5,7 +5,7 @@
 -- Set the position of each section
 ct = {}
 ct.mo = 1 -- Mechanics
-ct.th = 2 -- Thermodynamics
+ct.th = 2 -- Thermal physics
 ct.wa = 3 -- Oscillations & Waves
 ct.ch = 4 -- Chemistry
 ct.ex = 5 -- External Database
@@ -30,8 +30,8 @@ function checkIfFormulaExists(table, formula)
     return false
 end
 
-Categories	=	{}
-Formulas	=	{}
+Categories = {}
+Formulas = {}
 
 function addCat(id,name,info)
     if not checkIfExists(Categories, name) then
@@ -54,8 +54,8 @@ function addSubCat(cid, id, name, info)
 end
 
 function aF(cid, sid, formula, variables) --add Formula
-	local fr	=	{category=cid, sub=sid, formula=formula, variables=variables}
-	-- In times like this we are happy that inserting tables just inserts a reference
+    local fr	=	{category=cid, sub=sid, formula=formula, variables=variables}
+    -- In times like this we are happy that inserting tables just inserts a reference
 
     if not checkIfFormulaExists(Formulas, fr.formula) then
         table.insert(Formulas, fr)
@@ -71,9 +71,9 @@ function aF(cid, sid, formula, variables) --add Formula
 end
 
 function U(...)
-    local out	= {}
+    local out = {}
     for i, p in ipairs({...}) do
-        out[p]	= true
+        out[p] = true
     end
     return out
 end
@@ -82,9 +82,9 @@ end
 -- Categories, Sub-Categories, & Formulas --
 --------------------------------------------
 
--- Almost all formulas are from the IB Physics HL Data Booklet, which contains the fundamental equations taught in the course. It does not contain every physics equation know to man.
+-- Almost all formulas are from the IB Physics HL Data Booklet, which contains the fundamental equations needed throughout the course. It does not contain every physics equation know to man, nor is every Data Booklet equation included in this database.
 
-addCat(ct.mo, "Mechanics", "Perform calculations of motion-related stuff")
+addCat(ct.mo, "Mechanics", "IB topic 2. Perform motion-related calculations")
 
 addCatVar(ct.mo, "u", "Intial velocity", "m/s")
 addCatVar(ct.mo, "v", "Final velocity", "m/s")
@@ -102,7 +102,7 @@ addCatVar(ct.mo, "pm", "Momentum", "N*s")
 addCatVar(ct.mo, "Ep", "Gravity PE", "J")
 addCatVar(ct.mo, "Ek", "Kinetic energy", "J")
 addCatVar(ct.mo, "E", "Total energy", "J")
-addCatVar(ct.mo, g.th, "Angle (Degrees)", utf8(176))
+addCatVar(ct.mo, s.th, "Angle (Degrees)", s.dg)
 addCatVar(ct.mo, "Tp", "Period", "s")
 addCatVar(ct.mo, "c", "Circumference", "m")
 addCatVar(ct.mo, "r", "Radius", "m")
@@ -133,7 +133,7 @@ aF(ct.mo, 3, "pm=m*v-m*u", U("pm", "m", "v", "u") )
 
 addSubCat(ct.mo, 4, "Work", "Solve for: W, F, s, m, a, "..g.th[2])
 aF(ct.mo, 4, "W=F*s*cos("..g.th[2]..")", U("W", "F", g.th[2], "s") )
-aF(ct.mo, 4, "W=(m*a)*cos("..g.th[2]..")*s", U("W", "m", "a", g.th, "s") )
+aF(ct.mo, 4, "W=(m*a)*cos("..g.th[2]&..")*s", U("W", "m", "a", g.th, "s") )
 aF(ct.mo, 4, "F=m*a", U("F", "m", "a") )
 aF(ct.mo, 4, "W=(1/2)*m*(v^(2)-u^(2))", U("W", "m", "v", "u") )
 
@@ -154,9 +154,9 @@ addSubCat(ct.mo, 7, "Centripital", "Solve for F, a, v, r, Tp (period), m, c" )
 aF(ct.mo, 7, "cF=(m*cv^2)/r", U("cF", "m", "cv", "r") )
 aF(ct.mo, 7, "ca=(4*pi^2*r)/Tp^2", U("ca", "r", "Tp") )
 aF(ct.mo, 7, "ca=cv^2/r^2", U("ca", "cv", "r") )
-aF(ct.mo, 7, "c=2*π*r", U("c", "r") )
+aF(ct.mo, 7, "c=2*pi*r", U("c", "r") )
 
-addCat(ct.th, "Thermodynamics", "Perform thermal related physics calculations")
+addCat(ct.th, "Thermal physics", "IB topic 3 & 10. Perform thermal related physics calculations")
 
 addCatVar(ct.th, "P", "Pressure", "Pa")
 addCatVar(ct.th, "V", "Volume", "m3")
@@ -191,7 +191,7 @@ addSubCat(ct.th, 4, "Capacity", "Solve for Q, T, m, c")
 aF(ct.th, 4, "Q=c*m*T", U("Q", "c", "m", "T") )
 aF(ct.th, 4, "Q=m*L", U("Q", "m", "L") )
 
-addCat(ct.wa, "Oscillations & Waves", "Waves related things") --[[ W.I.P. ]]--
+addCat(ct.wa, "Oscillations & Waves", "IB Topic 4. Waves related things") --[[ W.I.P. ]]--
 
 addCatVar(ct.wa, "F", "Force", "N")
 addCatVar(ct.wa, "K", "Spring constant", "N/m")
@@ -199,12 +199,35 @@ addCatVar(ct.wa, "x", "Displacement", "m")
 addCatVar(ct.wa, "m", "Mass", "kg")
 addCatVar(ct.wa, "a", "Acceleration", "m/s2")
 addCatVar(ct.wa, "Ep", "Elastic potential energy", "J")
+addCatVar(ct.wa, "T", "Period", "s")
+addCatVar(ct.wa, "fq", "Frequency", "Hz")
+addCatVar(ct.wa, "v" "Velocity", "m/s")
+addCatVar(ct.wa, "v0", "Velocity", "m/s")
+--addCatVar(ct.wa, "v1", "Velocity", "m/s")
+addCatVar(ct.wa, "n", "Refraction index", "nounit")
+addCatVar(ct.wa, "n0", "Refraction index", "nounit")
+--addCatVar(ct.wa, "n1", "Refraction index", "nounit")
+addCatVar(ct.wa, g.th[2], "Angle", s.dg)
+addCatVar(ct.wa, g.th[2].."0", "Angle", s.dg)
+--addCatVar(ct.wa, g.th[2].."1", "Angle", s.dg)
+addCatVar(ct.wa, g.la[2], "Wavelength", "nm")
+addCatVar(ct.wa, g.la[2].."0", "Wavelength", "nm")
+--addCatVar(ct.wa, g.la[2].."1", "Wavelength", "nm")
 
-addSubCat(ct.wa, 1, "Vibs", "Solve for F, K, m, a, x, Ep")
+addSubCat(ct.wa, 1, "Waves", "Solve for F, K, m, a, x, Ep")
 aF(ct.wa, 1, "F=m*a", U("F", "m", "a") )
 aF(ct.wa, 1, "F=-K*x", U("F", "K", "x") )
 aF(ct.wa, 1, "Ep=0.5*K*(x)^2", U("Ep", "K") )
 aF(ct.wa, 1, "a=(-K/m)*x", U("a", "K", "m", "x") )
+aF(ct.wa, 1, "T=2*pi*sqrt(m/K)", U("T", "m", "K") )
+aF(ct.wa, 1, "v=("..g.la[2]..")/T", U("v", g.la[2], "T") )
+aF(ct.wa, 1, "v=fq*"..g.la[2], U("v", "fq", g.la[2]) )
+
+addSubCat(ct.wa, 2, "Reflections & Refractions", "")
+aF(ct.wa, 2, "n=("..con("c")..")/v", U("n", "v") )
+aF(ct.wa, 2, "n0=("..con("c")..")/v0", U("n0", "v0") )
+aF(ct.wa, 2, "n/n0=sin("..s.th0..")/sin("..s.th..")=v0/v", U("n", "n0", s.th0, s.th, "v0", "v") )
+aF(ct.wa, 2, "v/"..s.la.."=fq=v0/"..s.la0, U("v", s.la, "fq", "v0", s.la0) )
 
 addCat(ct.ch, "Chemestry", "Chemistry related things that have some connection to physics")
 
