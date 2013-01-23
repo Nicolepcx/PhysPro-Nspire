@@ -1,9 +1,12 @@
 #!/bin/bash
 
+function EXIT (){
+    unset ARGS
+}
 
-echo "Building with $1"
+ARGS="$@"
 
-if [[ "$3" = -b ]]; then
+if [[ "$ARGS" == *"-b"* ]]; then
     echo "Backing up..."
     cd ..
     endTime=$(date +%F_%H.%M.%S)
@@ -14,7 +17,7 @@ if [[ "$3" = -b ]]; then
     echo "Backup complete"
 fi
 
-if [[ "$1" = "luna" ]]; then
+if [[ "$ARGS" == *"-luna"* ]]; then
     echo "Building PhysPro-Nspire..."
 
     echo "Building the Database"
@@ -39,11 +42,11 @@ if [[ "$1" = "luna" ]]; then
     cp PhysPro.big.lua PhysPro_src.lua.tns
     wine luna/luna.exe PhysPro.big.lua PhysPro-Nspire.tns
     echo "Done building PhysPro"
-elif [[ "$1" = "etk" ]]; then
-    echo "Not done yet"
+elif [[ "$ARGS" == *"-etk"* ]]; then
+    echo "Error: Not done with this part yet."
 fi
 
-if [[ "$2" = "-o" ]]; then
+if [[ "$ARGS" == *"-o"* ]]; then
     open PhysPro-Nspire.tns
 fi
 

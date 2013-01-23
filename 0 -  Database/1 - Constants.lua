@@ -45,6 +45,7 @@ s.th = g.th[2] -- theta
 s.th0 = g.th[2].."0" -- theta0
 s.la = g.la[2] -- lambda
 s.la0 = g.la[2].."0" -- lambda0
+s.dv = g.de[1].."v" -- Change in velocity (delta v)
 
 function refCon() -- Makes the constants reference page
     local t2 = {}
@@ -69,8 +70,8 @@ Constants = {
 {key="mp", info="Proton rest mass", val="1.6726*10^(-27)", unit="kg"},
 {key="mn", info="Neutron rest mass", val="1.675*10^(-27)", unit="kg"},
 {key="mu", info="Atomic mass unit", val="1.66*10^(-27)", unit="kg"},
-{key=utf8(949).."0", info="Permittivity of a vacuum", val="8.854*10^(-12)", unit="F/m^-1"},
-{key=utf8(956).."0", info="Permeability of a vacuum", val="4*pi*10^(-7)", unit="N/A^-2"}
+--{key=utf8(949).."0", info="Permittivity of a vacuum", val="8.854*10^(-12)", unit="F/m^-1"},
+--{key=utf8(956).."0", info="Permeability of a vacuum", val="4*pi*10^(-7)", unit="N/A^-2"}
 }
 
 function con(i) -- Shortcut for using constants in the database part

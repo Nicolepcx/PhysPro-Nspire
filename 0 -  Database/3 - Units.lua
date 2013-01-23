@@ -44,7 +44,7 @@ Ms.hr = 3600
 Ms.day = 86400
 Ms.wk = 604800
 Ms.fortn = 1209600
-Ms.month = 18144000 
+Ms.month = 18144000
 Ms.yr = 217728000
 
 --Time
@@ -229,9 +229,9 @@ Units["mol"] = {}
 
 --Molecular mass
 Units["amu"] = {}
-Units["amu"]["kg"] = { 0.000000000000000000000000001660538782, 0}
-Units["amu"]["g"] = { 0.000000000000000000000001660538782, 0}
-Units["amu"]["mg"] = { 0.000000000000000000001660538782, 0}
+Units["amu"]["kg"] = {0.000000000000000000000000001660538782, 0}
+Units["amu"]["g"] = {0.000000000000000000000001660538782, 0}
+Units["amu"]["mg"] = {0.000000000000000000001660538782, 0}
 
 --Heat Capacity
 Units["J/kg*K"] = {}
@@ -246,6 +246,14 @@ Units["kg/m3"] = {}
 
 --Spring Constant
 Units["N/m"] = {}
+
+--Frequency
+Units["Hz"] = {}
+Units["Hz"]["kHz"] = {Mt.k, 0}
+Units["Hz"]["MHz"] = {Mt.M, 0}
+Units["Hz"]["GHz"] = {Mt.G, 0}
+Units["Hz"]["mHz"] = {Mt.m, 0}
+Units["Hz"]["nHz"] = {Mt.n, 0}
 
 --Planck
 --Units["J/s"] = {}

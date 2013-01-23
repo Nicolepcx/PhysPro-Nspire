@@ -2,8 +2,8 @@
 
 0-------------------0
 |                   |
-|   PhysPro v0.8.1  |
-| (Nov. 21th 2012)  |
+|   PhysPro v0.9    |
+|  (Jan 22th 2013)  |
 |   LGLP 3 License  |
 |     alex3yoyo     |
 |                   |
@@ -16,10 +16,9 @@ Jim Bauwens         Adrien Bertrand
 TI-Planet.org       Inspired-Lua.org
 ]]--
 
-pInfo={name="PhysPro", by="Mr. Kitty", ver="v0.8.1a", web="http://github.com/alex3yoyo/physpro-nspire", license="LGPL3 License"}
-infoStr = pInfo["name"].." "..pInfo["ver"].."\nBy "..pInfo["by"].."\n"..pInfo["license"]
-print("\n.."..infoStr.."\n")
-
+pInfo={name="PhysPro-Nspire", by="Mr. Kitty", ver="v0.9", web="http://github.com/alex3yoyo/physpro-nspire", license="LGPL3 License"}
+infoStr = pInfo.name.." "..pInfo.ver.."\nBy "..pInfo.by.."\n"..pInfo.license.."\n"..pInfo.web
+print("\n"..infoStr.."\n") -- Prints info to console
 --------------------------------------------------------
 --                       Constants                    --
 --------------------------------------------------------
@@ -34,7 +33,8 @@ function numberToSub(w,n)
     return w..utf8(SubNumbers[tonumber(n)])
 end
 
-g = {} -- The Greeks
+-- The Greeks
+g = {} -- Upper  ,   Lower  ,  Name
 g.al = {utf8(913), utf8(945), "Alpha"}
 g.be = {utf8(914), utf8(946), "Beta"}
 g.ga = {utf8(915), utf8(947), "Gamma"}
@@ -60,9 +60,17 @@ g.ch = {utf8(935), utf8(967), "Chi"}
 g.ps = {utf8(936), utf8(968), "Psi"}
 g.om = {utf8(937), utf8(969), "Omega"}
 
-function refCon()
+s = {} -- Symbols
+s.dg = utf8(176) -- degree symbol
+s.th = g.th[2] -- theta
+s.th0 = g.th[2].."0" -- theta0
+s.la = g.la[2] -- lambda
+s.la0 = g.la[2].."0" -- lambda0
+s.dv = g.de[1].."v" -- Change in velocity (delta v)
+
+function refCon() -- Makes the constants reference page
     local t2 = {}
-    for k,v in ipairs(Constants) do	
+    for k,v in ipairs(Constants) do
         t2[k] = {v.info,v.key,v.val.." "..v.unit}
     end
     return t2
@@ -83,11 +91,11 @@ Constants = {
 {key="mp", info="Proton rest mass", val="1.6726*10^(-27)", unit="kg"},
 {key="mn", info="Neutron rest mass", val="1.675*10^(-27)", unit="kg"},
 {key="mu", info="Atomic mass unit", val="1.66*10^(-27)", unit="kg"},
-{key=utf8(949).."0", info="Permittivity of a vacuum", val="8.854*10^(-12)", unit="F/m^-1"},
-{key=utf8(956).."0", info="Permeability of a vacuum", val="4*pi*10^(-7)", unit="N/A^-2"}
+--{key=utf8(949).."0", info="Permittivity of a vacuum", val="8.854*10^(-12)", unit="F/m^-1"},
+--{key=utf8(956).."0", info="Permeability of a vacuum", val="4*pi*10^(-7)", unit="N/A^-2"}
 }
 
-function con(i)
+function con(i) -- Shortcut for using constants in the database part
     for k,v in ipairs(Constants) do
         if Constants[k].key == i then
             return Constants[k].val
@@ -97,7 +105,7 @@ function con(i)
 end
 
 
-function initElementValues()
+function initElementValues() -- Stores elements into nspire documents variables
     local elementValues = {
         --["ch.atom"] = [[Define ch.atom = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118 }]],
         --["ch.name"] = [[Define ch.name = { "Hydrogen", "Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen", "Fluorine", "Neon", "Sodium", "Magnesium", "Aluminium", "Silicon", "Phosphorus", "Sulfur", "Chlorine", "Argon", "Potassium", "Calcium", "Scandium", "Titanium", "Vanadium", "Chromium", "Manganese", "Iron", "Cobalt", "Nickel", "Copper", "Zinc", "Gallium", "Germanium", "Arsenic", "Selenium", "Bromine", "Krypton", "Rubidium", "Strontium", "Yttrium", "Zirconium", "Niobium", "Molybdenum", "Technetium", "Ruthenium", "Rhodium", "Palladium", "Silver", "Cadmium", "Indium", "Tin", "Antimony", "Tellurium", "Iodine", "Xenon", "Caesium", "Barium", "Lanthanum", "Cerium", "Praseodymium", "Neodymium", "Promethium", "Samarium", "Europium", "Gadolinium", "Terbium", "Dysprosium", "Holmium", "Erbium", "Thulium", "Ytterbium", "Lutetium", "Hafnium", "Tantalum", "Tungsten", "Rhenium", "Osmium", "Iridium", "Platinum", "Gold", "Mercury", "Thallium", "Lead", "Bismuth", "Polonium", "Astatine", "Radon", "Francium", "Radium", "Actinium", "Thorium", "Protactinium", "Uranium", "Neptunium", "Plutonium", "Americium", "Curium", "Berkelium", "Californium", "Einsteinium", "Fermium", "Mendelevium", "Nobelium", "Lawrencium", "Rutherfordium", "Dubnium", "Seaborgium", "Bohrium", "Hassium", "Meitnerium", "Darmstadtium", "Roentgenium", "Ununbium", "Ununtrium", "Ununquadium", "Ununpentium", "Ununhexium", "Ununseptium", "Ununoctium" }]],
@@ -124,18 +132,18 @@ function initElementValues()
         --["ch.e_cond"] = [[Define ch.e_cond = { undef, undef, 11, 25, 0.0000000001, 0.1, undef, undef, undef, undef, 21, 23, 38, 0.001, 10, 1000000000000000000000, 0.00000001, undef, 14, 29, 1.8, 2.5, 5., 7.9, 0.62, 10, 17, 14, 59, 17, 7.1, 0.002, 3.3, undef, 0.0000000000000001, undef, 8.3, 7.7, 1.8, 2.4, 6.7, 20, 5., 14, 23, 10, 62, 14, 12, 9.1, 2.5, 0.01, 0.0000000000001, undef, 5, 2.9, 1.6, 1.4, 1.4, 1.6, 1.3, 1.1, 1.1, 0.77, 0.83, 1.1, 1.1, 1.2, 1.4, 3.6, 1.8, 3.3, 7.7, 20, 5.6, 12, 21, 9.4, 45, 1, 6.7, 4.8, 0.77, 2.3, undef, undef, undef, 1, undef, 6.7, 5.6, 3.6, 0.83, 0.67, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]]
     }
     for k,v in pairs(elementValues) do
-        math.eval(v)
-        math.eval("Lock "..k)
+        math.eval(v) -- stores
+        math.eval("Lock "..k) -- Locks the loaded lists
     end
 end
 
 --[[
 function getChem(k, v)
     if v >= 1 and v <= # ch.atom then
-		return ch[k][v]
-	else
-		return 0
-	end
+        return ch[k][v]
+    else
+        return 0
+    end
 end
 ]]--
 --------------------------------------------------------
@@ -145,7 +153,7 @@ end
 -- Set the position of each section
 ct = {}
 ct.mo = 1 -- Mechanics
-ct.th = 2 -- Thermodynamics
+ct.th = 2 -- Thermal physics
 ct.wa = 3 -- Oscillations & Waves
 ct.ch = 4 -- Chemistry
 ct.ex = 5 -- External Database
@@ -170,8 +178,8 @@ function checkIfFormulaExists(table, formula)
     return false
 end
 
-Categories	=	{}
-Formulas	=	{}
+Categories = {}
+Formulas = {}
 
 function addCat(id,name,info)
     if not checkIfExists(Categories, name) then
@@ -194,8 +202,8 @@ function addSubCat(cid, id, name, info)
 end
 
 function aF(cid, sid, formula, variables) --add Formula
-	local fr	=	{category=cid, sub=sid, formula=formula, variables=variables}
-	-- In times like this we are happy that inserting tables just inserts a reference
+    local fr	=	{category=cid, sub=sid, formula=formula, variables=variables}
+    -- In times like this we are happy that inserting tables just inserts a reference
 
     if not checkIfFormulaExists(Formulas, fr.formula) then
         table.insert(Formulas, fr)
@@ -203,7 +211,7 @@ function aF(cid, sid, formula, variables) --add Formula
     if not checkIfFormulaExists(Categories[cid].sub[sid].formulas, fr.formula) then
         table.insert(Categories[cid].sub[sid].formulas, fr)
     end
-    
+
     -- This function might need to be merged with U(...)
     for variable,_ in pairs(variables) do
         Categories[cid].sub[sid].variables[variable] = true
@@ -211,9 +219,9 @@ function aF(cid, sid, formula, variables) --add Formula
 end
 
 function U(...)
-    local out	= {}
+    local out = {}
     for i, p in ipairs({...}) do
-        out[p]	= true
+        out[p] = true
     end
     return out
 end
@@ -222,9 +230,9 @@ end
 -- Categories, Sub-Categories, & Formulas --
 --------------------------------------------
 
--- Almost all formulas are from the IB Physics HL Data Booklet, which contains the fundamental equations taught in the course. It does not contain every physics equation know to man.
+-- Almost all formulas are from the IB Physics HL Data Booklet, which contains the fundamental equations needed throughout the course. It does not contain every physics equation know to man, nor is every Data Booklet equation included in this database.
 
-addCat(ct.mo, "Mechanics", "Perform calculations of motion-related stuff")
+addCat(ct.mo, "Mechanics", "IB topic 2. Perform motion-related calculations")
 
 addCatVar(ct.mo, "u", "Intial velocity", "m/s")
 addCatVar(ct.mo, "v", "Final velocity", "m/s")
@@ -242,7 +250,7 @@ addCatVar(ct.mo, "pm", "Momentum", "N*s")
 addCatVar(ct.mo, "Ep", "Gravity PE", "J")
 addCatVar(ct.mo, "Ek", "Kinetic energy", "J")
 addCatVar(ct.mo, "E", "Total energy", "J")
-addCatVar(ct.mo, g.th, "Angle (Degrees)", utf8(176))
+addCatVar(ct.mo, s.th, "Angle (Degrees)", s.dg)
 addCatVar(ct.mo, "Tp", "Period", "s")
 addCatVar(ct.mo, "c", "Circumference", "m")
 addCatVar(ct.mo, "r", "Radius", "m")
@@ -261,27 +269,27 @@ addSubCat(ct.mo, 2, "Force", "Solve for F, gF, m, a")
 aF(ct.mo, 2, "F=m*a", U("F", "m", "a")  )
 aF(ct.mo, 2, "gF=m*("..con("g")..")", U("gF", "m") )
 
-addSubCat(ct.mo, 3, "Impulse", "Solve for: pm, Imp, F, t, dv, m, v, u")
-aF(ct.mo, 3, "Imp=F*t", U("Imp", "F", "t") )
-aF(ct.mo, 3, "Imp=m*t", U("Imp", "m", "t") )
+addSubCat(ct.mo, 3, "Impulse", "Solve for: pm, imp, F, t, m, v, u, ")
+aF(ct.mo, 3, "imp=F*t", U("imp", "F", "t") )
+aF(ct.mo, 3, "imp=m*t", U("imp", "m", "t") )
 aF(ct.mo, 3, "pm=m*v", U("pm", "m", "v") )
-aF(ct.mo, 3, "F=m*(dv/t)", U("F", "m", "dv", "t") )
-aF(ct.mo, 3, "F*t=m*dv", U("F", "t", "m", "dv") )
-aF(ct.mo, 3, "dv=v-u", U("dv", "v", "u") )
+aF(ct.mo, 3, "F=pm/t", U("F", "pm", "t") )
+aF(ct.mo, 3, "F*t=m*"..s.dv, U("F", "t", "m", s.dv) )
+aF(ct.mo, 3, s.dv.."=v-u", U(s.dv, "v", "u") )
 aF(ct.mo, 3, "F*t=m*v-m*u", U("F", "t", "m", "v", "u") )
 aF(ct.mo, 3, "pm=m*v-m*u", U("pm", "m", "v", "u") )
 
-addSubCat(ct.mo, 4, "Work", "Solve for: W, F, s, m, a, "..g.th[2])
-aF(ct.mo, 4, "W=F*s*cos("..g.th[2]..")", U("W", "F", g.th[2], "s") )
-aF(ct.mo, 4, "W=(m*a)*cos("..g.th[2]..")*s", U("W", "m", "a", g.th, "s") )
+addSubCat(ct.mo, 4, "Work", "Solve for: W, F, s, m, a, "..s.th)
+aF(ct.mo, 4, "W=F*s*cos("..s.th..")", U("W", "F", s.th, "s") )
+aF(ct.mo, 4, "W=(m*a)*cos("..s.th..")*s", U("W", "m", "a", s.th, "s") )
 aF(ct.mo, 4, "F=m*a", U("F", "m", "a") )
 aF(ct.mo, 4, "W=(1/2)*m*(v^(2)-u^(2))", U("W", "m", "v", "u") )
 
-addSubCat(ct.mo, 5, "Power", "Solve for: P, W, t, F, m, a, s, "..g.th[2])
+addSubCat(ct.mo, 5, "Power", "Solve for: P, W, t, F, m, a, s, "..s.th)
 aF(ct.mo, 5, "P=W/t", U("P", "W", "t") )
-aF(ct.mo, 5, "P=F*v*cos("..g.th[2]..")", U("P", "F", "v", g.th[2]) )
-aF(ct.mo, 5, "P=F*cos("..g.th[2]..")*(s/t)", U("P", "F", g.th[2], "s", "t") )
-aF(ct.mo, 5, "W=F*s*cos("..g.th[2]..")", U("W", "F", "s", g.th[2]) )
+aF(ct.mo, 5, "P=F*v*cos("..s.th..")", U("P", "F", "v", s.th) )
+aF(ct.mo, 5, "P=F*cos("..s.th..")*(s/t)", U("P", "F", s.th, "s", "t") )
+aF(ct.mo, 5, "W=F*s*cos("..s.th..")", U("W", "F", "s", s.th) )
 aF(ct.mo, 5, "F=m*a", U("F", "m", "a") )
 
 addSubCat(ct.mo, 6, "Energy", "Solve for: Ek, Ep, E, m, v, h, g")
@@ -294,9 +302,9 @@ addSubCat(ct.mo, 7, "Centripital", "Solve for F, a, v, r, Tp (period), m, c" )
 aF(ct.mo, 7, "cF=(m*cv^2)/r", U("cF", "m", "cv", "r") )
 aF(ct.mo, 7, "ca=(4*pi^2*r)/Tp^2", U("ca", "r", "Tp") )
 aF(ct.mo, 7, "ca=cv^2/r^2", U("ca", "cv", "r") )
-aF(ct.mo, 7, "c=2*π*r", U("c", "r") )
+aF(ct.mo, 7, "c=2*pi*r", U("c", "r") )
 
-addCat(ct.th, "Thermodynamics", "Perform thermal related physics calculations")
+addCat(ct.th, "Thermal physics", "IB topic 3 & 10. Perform thermal related physics calculations")
 
 addCatVar(ct.th, "P", "Pressure", "Pa")
 addCatVar(ct.th, "V", "Volume", "m3")
@@ -313,25 +321,26 @@ addCatVar(ct.th, "Ek", "Kinetic energy", "J")
 addCatVar(ct.th, "Q", "Heat", "J")
 addCatVar(ct.th, "c", "Specific heat capacity", "J/kg*K")
 addCatVar(ct.th, "L", "Latent heat", "nounit")
+--addCatVar(ct.th, "Ep", "Potential energy", "J")
 
 addSubCat(ct.th, 1, "Tempurature", "Convert between the different tempurature scales")
 aF(ct.th, 1, "tF=(9/5)*tC+32", U("tC", "tF") )
 aF(ct.th, 1, "tK=tC+273.15", U("tK", "tC") )
 
-addSubCat(ct.th, 2, "Thermal", "Solve for P, V, T, n, m, M")
+addSubCat(ct.th, 2, "Thermal", "Solve for P, V, T, n, m, amu")
 aF(ct.th, 2, "P*V=n*("..con("R")..")*T", U("P", "V", "n", "T") )
 aF(ct.th, 2, "n=m/amu", U("n", "m", "amu") )
 aF(ct.th, 2, "P=F/A", U("P", "F", "A") )
 
-addSubCat(ct.th, 3, "Energy", "Solve for Ek, T")
+addSubCat(ct.th, 3, "Energy", "Solve for Ek, Ep T, m, h")
 aF(ct.th, 3, "Ek=(3/2)*("..con("k1")..")*T", U("Ek", "T") )
-aF(ct.th, 3, "Ep=m*h*("..con("g")..")", U("Ep", "m", "h") )
+--aF(ct.th, 3, "Ep=m*h*("..con("g")..")", U("Ep", "m", "h") )
 
-addSubCat(ct.th, 4, "Capacity", "Solve for Q, T, m, c")
+addSubCat(ct.th, 4, "Capacity", "Solve for Q, T, m, c, L")
 aF(ct.th, 4, "Q=c*m*T", U("Q", "c", "m", "T") )
 aF(ct.th, 4, "Q=m*L", U("Q", "m", "L") )
 
-addCat(ct.wa, "Oscillations & Waves", "Waves related things") --[[ W.I.P. ]]--
+addCat(ct.wa, "Oscillations & Waves", "IB Topic 4. Waves related things") --[[ W.I.P. ]]--
 
 addCatVar(ct.wa, "F", "Force", "N")
 addCatVar(ct.wa, "K", "Spring constant", "N/m")
@@ -339,12 +348,37 @@ addCatVar(ct.wa, "x", "Displacement", "m")
 addCatVar(ct.wa, "m", "Mass", "kg")
 addCatVar(ct.wa, "a", "Acceleration", "m/s2")
 addCatVar(ct.wa, "Ep", "Elastic potential energy", "J")
+addCatVar(ct.wa, "T", "Period", "s")
+addCatVar(ct.wa, "fq", "Frequency", "Hz")
+addCatVar(ct.wa, "v", "Velocity", "m/s")
+addCatVar(ct.wa, "v0", "Velocity", "m/s")
+--addCatVar(ct.wa, "v1", "Velocity", "m/s")
+addCatVar(ct.wa, "n", "Refraction index", "nounit")
+addCatVar(ct.wa, "n0", "Refraction index", "nounit")
+--addCatVar(ct.wa, "n1", "Refraction index", "nounit")
+addCatVar(ct.wa, s.th, "Angle", s.dg)
+addCatVar(ct.wa, s.th0, "Angle", s.dg)
+--addCatVar(ct.wa, s.th.."1", "Angle", s.dg)
+addCatVar(ct.wa, s.la, "Wavelength", "m")
+addCatVar(ct.wa, s.la0, "Wavelength", "m")
+--addCatVar(ct.wa, s.la.."1", "Wavelength", "nm")
 
-addSubCat(ct.wa, 1, "Vibs", "Solve for F, K, m, a, x, Ep")
+addSubCat(ct.wa, 1, "Waves", "Solve for F, K, m, a, x, Ep")
 aF(ct.wa, 1, "F=m*a", U("F", "m", "a") )
 aF(ct.wa, 1, "F=-K*x", U("F", "K", "x") )
 aF(ct.wa, 1, "Ep=0.5*K*(x)^2", U("Ep", "K") )
 aF(ct.wa, 1, "a=(-K/m)*x", U("a", "K", "m", "x") )
+aF(ct.wa, 1, "T=2*pi*sqrt(m/K)", U("T", "m", "K") )
+aF(ct.wa, 1, "v="..s.la.."/T", U("v", s.la, "T") )
+aF(ct.wa, 1, "v=fq*"..s.la, U("v", "fq", s.la) )
+
+addSubCat(ct.wa, 2, "Reflections & Refractions", "Solve for n, v, n0, v0, fq") -- PROBLEMS!!!!!!
+aF(ct.wa, 2, "n/n0=sin("..s.th0..")/sin("..s.th..")=v0/v", U("n", "n0", s.th0, s.th, "v0", "v") )
+--aF(ct.wa, 2, "v/"..s.la.."=v0/"..s.la0, U("v", "v0", s.la, s.la0) )
+aF(ct.wa, 2, "n=("..con("C")..")/v", U("n", "v") )
+aF(ct.wa, 2, "n0=("..con("C")..")/v0", U("n0", "v0") )
+aF(ct.wa, 1, "v=fq*"..s.la, U("v", "fq", s.la) )
+aF(ct.wa, 1, "v0=fq*"..s.la0, U("v0", "fq", s.la0) )
 
 addCat(ct.ch, "Chemestry", "Chemistry related things that have some connection to physics")
 
@@ -462,7 +496,7 @@ Ms.hr = 3600
 Ms.day = 86400
 Ms.wk = 604800
 Ms.fortn = 1209600
-Ms.month = 18144000 
+Ms.month = 18144000
 Ms.yr = 217728000
 
 --Time
@@ -647,9 +681,9 @@ Units["mol"] = {}
 
 --Molecular mass
 Units["amu"] = {}
-Units["amu"]["kg"] = { 0.000000000000000000000000001660538782, 0}
-Units["amu"]["g"] = { 0.000000000000000000000001660538782, 0}
-Units["amu"]["mg"] = { 0.000000000000000000001660538782, 0}
+Units["amu"]["kg"] = {0.000000000000000000000000001660538782, 0}
+Units["amu"]["g"] = {0.000000000000000000000001660538782, 0}
+Units["amu"]["mg"] = {0.000000000000000000001660538782, 0}
 
 --Heat Capacity
 Units["J/kg*K"] = {}
@@ -664,6 +698,14 @@ Units["kg/m3"] = {}
 
 --Spring Constant
 Units["N/m"] = {}
+
+--Frequency
+Units["Hz"] = {}
+Units["Hz"]["kHz"] = {Mt.k, 0}
+Units["Hz"]["MHz"] = {Mt.M, 0}
+Units["Hz"]["GHz"] = {Mt.G, 0}
+Units["Hz"]["mHz"] = {Mt.m, 0}
+Units["Hz"]["nHz"] = {Mt.n, 0}
 
 --Planck
 --Units["J/s"] = {}
