@@ -34,11 +34,10 @@ Categories = {}
 Formulas = {}
 
 function addCat(id,name,info)
-    if not checkIfExists(Categories, name) then
-        return table.insert(Categories, id, {id=id, name=name, info=info, sub={}, varlink={}})
-    else
-        return -1
+    if checkIfExists(Categories, name) then
+        print("Warning ! This category appears to exist already ! Adding anyway....")
     end
+    return table.insert(Categories, id, {id=id, name=name, info=info, sub={}, varlink={}})
 end
 
 function addCatVar(cid, var, info, unit)
@@ -46,34 +45,34 @@ function addCatVar(cid, var, info, unit)
 end
 
 function addSubCat(cid, id, name, info)
-    if not checkIfExists(Categories[cid].sub, name) then
-        return table.insert(Categories[cid].sub, id, {category=cid, id=id, name=name, info=info, formulas={}, variables={}})
-    else
-        return -1
+    if checkIfExists(Categories[cid].sub, name) then
+        print("Warning ! This subcategory appears to exist already ! Adding anyway....")
     end
+    return table.insert(Categories[cid].sub, id, {category=cid, id=id, name=name, info=info, formulas={}, variables={}})
 end
 
 function aF(cid, sid, formula, variables) --add Formula
-    local fr	=	{category=cid, sub=sid, formula=formula, variables=variables}
+    local fr    =   {category=cid, sub=sid, formula=formula, variables=variables}
     -- In times like this we are happy that inserting tables just inserts a reference
 
-    if not checkIfFormulaExists(Formulas, fr.formula) then
+    -- commented out this check because only the subcategory duplicates should be avoided, and not on the whole db.
+    --if not checkIfFormulaExists(Formulas, fr.formula) then
         table.insert(Formulas, fr)
-    end
+    --end
     if not checkIfFormulaExists(Categories[cid].sub[sid].formulas, fr.formula) then
         table.insert(Categories[cid].sub[sid].formulas, fr)
     end
 
     -- This function might need to be merged with U(...)
     for variable,_ in pairs(variables) do
-        Categories[cid].sub[sid].variables[variable] = true
+        Categories[cid].sub[sid].variables[variable]    = true
     end
 end
 
 function U(...)
-    local out = {}
+    local out   = {}
     for i, p in ipairs({...}) do
-        out[p] = true
+        out[p]  = true
     end
     return out
 end
@@ -229,8 +228,8 @@ aF(ct.wa, 2, "n/n0=sin("..s.th0..")/sin("..s.th..")=v0/v", U("n", "n0", s.th0, s
 --aF(ct.wa, 2, "v/"..s.la.."=v0/"..s.la0, U("v", "v0", s.la, s.la0) )
 aF(ct.wa, 2, "n=("..con("C")..")/v", U("n", "v") )
 aF(ct.wa, 2, "n0=("..con("C")..")/v0", U("n0", "v0") )
-aF(ct.wa, 1, "v=fq*"..s.la, U("v", "fq", s.la) )
-aF(ct.wa, 1, "v0=fq*"..s.la0, U("v0", "fq", s.la0) )
+aF(ct.wa, 1, "v=fq*"..s.la, U("v", "fq", s.la ) )
+aF(ct.wa, 1, "v0=fq*"..s.la0, U("v0", "fq", s.la0 ) )
 
 addCat(ct.ch, "Chemestry", "Chemistry related things that have some connection to physics")
 

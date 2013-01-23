@@ -10,8 +10,8 @@
 0-------------------0
 
 Orignal code:
-(Oct. 29th 2012)
-FormulaPro v1.4a    LGLP 3 License
+(Jan 18th 2013)
+FormulaPro v1.4b    LGLP 3 License
 Jim Bauwens         Adrien Bertrand
 TI-Planet.org       Inspired-Lua.org
 ]]--
