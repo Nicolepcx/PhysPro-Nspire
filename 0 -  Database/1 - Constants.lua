@@ -46,6 +46,9 @@ s.th0 = g.th[2].."0" -- theta0
 s.la = g.la[2] -- lambda
 s.la0 = g.la[2].."0" -- lambda0
 s.dv = g.de[1].."v" -- Change in velocity (delta v)
+s.dpm = g.de[1].."pm" -- Change in momentum
+s.dt = g.de[1].."t" -- Change in time
+s.dh = g.de[1].."h" -- change in height
 
 function refCon() -- Makes the constants reference page
     local t2 = {}
