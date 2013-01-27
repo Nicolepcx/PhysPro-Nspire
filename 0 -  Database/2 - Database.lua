@@ -150,7 +150,7 @@ aF(ct.mo, 5, "TME=Ek+Epg", U("TME", "Ek", "Epg") ) -- total mechanical energy
 addSubCat(ct.mo, 6, "Power", "Solve for: P, W, F, m, a, s, "..s.th..", "..s.dt)
 aF(ct.mo, 6, "P=W/"..s.dt, U("P", "W", s.dt) ) -- power (work/time)
 aF(ct.mo, 6, "P=F*(s/"..s.dt, U("P", "F", "s", s.dt) ) -- power (force*(displacement/time))
-aF(ct.mo, 6, "W=F*s*cos("..s.th..")", U("W", "F", "s", s.th) ) -- work
+aF(ct.mo, 6, "W=F*v", U("W", "F", "v") ) -- work
 aF(ct.mo, 6, "F=m*a", U("F", "m", "a") ) -- force
 aF(ct.mo, 6, s.dv.."=s/"..s.dt, U(s.dv, "s", s.dt) )
 
