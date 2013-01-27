@@ -40,7 +40,8 @@ if [[ "$ARGS" == *"-luna"* ]]; then
     cat database.big.lua lib.big.lua formulapro.big.lua reference.big.lua ../../main.lua > ../PhysPro.big.lua
     cd ..
     cp PhysPro.big.lua PhysPro_src.lua.tns
-    wine luna/luna.exe PhysPro.big.lua PhysPro-Nspire.tns
+    # wine luna/luna.exe PhysPro.big.lua PhysPro-Nspire.tns
+    luna PhysPro.big.lua PhysPro-Nspire.tns
     echo "Done building PhysPro"
 elif [[ "$ARGS" == *"-etk"* ]]; then
     echo "Error: Not done with this part yet."
