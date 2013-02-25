@@ -7,8 +7,9 @@ ct = {}
 ct.mo = 1 -- Mechanics
 ct.th = 2 -- Thermal physics
 ct.wa = 3 -- Oscillations & Waves
-ct.ch = 4 -- Chemistry
-ct.ex = 5 -- External Database
+ct.ec = 4 -- Electric cuurents
+ct.ch = 5 -- Chemistry
+ct.ex = 6 -- External Database
 
 function checkIfExists(table, name)
     for k,v in pairs(table) do
@@ -231,6 +232,17 @@ aF(ct.wa, 2, "n=("..con("C")..")/v", U("n", "v") )
 aF(ct.wa, 2, "n0=("..con("C")..")/v0", U("n0", "v0") )
 aF(ct.wa, 2, "v=fq*"..s.la, U("v", "fq", s.la ) )
 aF(ct.wa, 2, "v0=fq*"..s.la0, U("v0", "fq", s.la0 ) )
+
+addCat(ct.ec, "Electric Cuurents", "IB Topic 5.")
+addCatVar(ct.ec, "Ve", "Energy", "J")
+addCatVar(ct.ec, "I", "Current", "A")
+addCatVar(ct.ec, "q", "Charge", "C")
+addCatVar(ct.ec, "t", "Time", "s")
+addCatVar(ct.ec, "R", "Resistence", s.oh)
+addCatVar(ct.ec, "V", "Voltage", "V")
+addCatVar(ct.ec, "A", "Cross-sectional area", "m2")
+addCatVar(ct.ec, "l", "Length", "m")
+addCatVar(ct.ec, "m", "Mass", "kg")
 
 addCat(ct.ch, "Chemestry", "Chemistry related things that have some connection to physics")
 

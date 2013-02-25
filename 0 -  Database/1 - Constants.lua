@@ -49,6 +49,9 @@ s.dv = g.de[1].."v" -- Change in velocity (delta v)
 s.dpm = g.de[1].."pm" -- Change in momentum
 s.dt = g.de[1].."t" -- Change in time
 s.dh = g.de[1].."h" -- change in height
+s.om = g.om[1] -- Resistance
+s.omm = g.om[1].."*m" -- Resistivity unit (ohms * meter)
+s.rh = g.rh[2] -- Resistivity
 
 function refCon() -- Makes the constants reference page
     local t2 = {}
