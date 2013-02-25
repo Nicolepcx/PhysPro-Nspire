@@ -2,18 +2,18 @@
 RefAcceleration = Screen()
 
 RefAcceleration.data = {
-    { "Base",                   "meters/sec/sec",               "m/s2"      },
-    { "1000 m/s2",              "kilometers/sec/sec",           "km/s2"     },
-    { "0.01 m/s2",              "centimeters/sec/sec",          "cm/s2"     },
-    { "0.001 m/s2",             "millimeters/sec/sec",          "mm/s2"     },
-    { "0.000277778 m/s2",       "meters/hr/hr",                 "m/hr2"     },
-    { "0.277778 m/s2",          "kilometers/hr/hr",             "km/hr2"    },
-    { "16.6667 m/s2",           "kilometers/min/min",           "km/min2"   },
-    { "0.3048 m/s2",            "feet/sec/sec",                 "ft/s2"     },
-    { "0.00508 m/s2",           "feet/min/min",                 "ft/min2"   },
-    { "26.8224 m/s2",           "miles/min/min",                "mi/min2"   },
-    { "0.44704 m/s2",           "miles/hr/hr",                  "mi/hr2"    },
-    { "0.514444 m/s2",          "knatical mile/hr/hr",          "knot2"     }
+    {"Base",                "meters/sec/sec",       "m/s2" },
+    {"1000 m/s2",           "kilometers/sec/sec",   "km/s2" },
+    {"0.01 m/s2",           "centimeters/sec/sec",  "cm/s2" },
+    {"0.001 m/s2",          "millimeters/sec/sec",  "mm/s2" },
+    {"0.000277778 m/s2",    "meters/hr/hr",         "m/hr2" },
+    {"0.277778 m/s2",       "kilometers/hr/hr",     "km/hr2" },
+    {"16.6667 m/s2",        "kilometers/min/min",   "km/min2" },
+    {"0.3048 m/s2",         "feet/sec/sec",         "ft/s2" },
+    {"0.00508 m/s2",        "feet/min/min",         "ft/min2" },
+    {"26.8224 m/s2",        "miles/min/min",        "mi/min2" },
+    {"0.44704 m/s2",        "miles/hr/hr",          "mi/hr2" },
+    {"0.514444 m/s2",       "knatical mile/hr/hr",  "knot2" }
 }
 
 RefAcceleration.tmpScroll = 1

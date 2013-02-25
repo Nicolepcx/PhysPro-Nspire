@@ -2,16 +2,16 @@
 RefTime = Screen()
 
 RefTime.data = {
-    { "Base",           "second",       "s"             },
-    { "60 s",           "minute",       "min"           },
-    { "3600 s",         "hour",         "hr"            },
-    { "86400 s",        "day",          "day"           },
-    { "604800 s",       "week",         "wk"            },
-    { "1209600 s",      "fortnight",    "fortn"         },
-    { "18144000 s",     "month",        "month"         },
-    { "217728000 s",    "year",         "yr"            },
-    { "52 minutes",     "microcentury", utf8(956).."Ce" },
-    { "6 months",       "Friend",           "Friends"   }
+    {"Base",            "second",       "s" },
+    {"60 s",            "minute",       "min" },
+    {"3600 s",          "hour",         "hr" },
+    {"86400 s",         "day",          "day" },
+    {"604800 s",        "week",         "wk" },
+    {"1209600 s",       "fortnight",    "fortn" },
+    {"18144000 s",      "month",        "month" },
+    {"217728000 s",     "year",         "yr" },
+    {"52 minutes",      "microcentury", utf8(956).."Ce" },
+    {"6 months",        "Freind",       "Freinds" }
 }
 
 RefTime.tmpScroll = 1
