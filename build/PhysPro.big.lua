@@ -2,8 +2,8 @@
 
 0-------------------0
 |                   |
-|   PhysPro v0.9    |
-|  (Jan 22th 2013)  |
+|   PhysPro v1.1.1  |
+|  (Jan 27th 2013)  |
 |   LGLP 3 License  |
 |     alex3yoyo     |
 |                   |
@@ -16,7 +16,7 @@ Jim Bauwens         Adrien Bertrand
 TI-Planet.org       Inspired-Lua.org
 ]]--
 
-pInfo={name="PhysPro-Nspire", by="Mr. Kitty", ver="v0.9", web="http://github.com/alex3yoyo/physpro-nspire", license="LGPL3 License"}
+pInfo={name="PhysPro-Nspire", by="Mr. Kitty", ver="v1.1.1", web="http://github.com/alex3yoyo/physpro-nspire", license="LGPL3 License"}
 infoStr = pInfo.name.." "..pInfo.ver.."\nBy "..pInfo.by.."\n"..pInfo.license.."\n"..pInfo.web
 print("\n"..infoStr.."\n") -- Prints info to console
 --------------------------------------------------------
@@ -33,8 +33,11 @@ function numberToSub(w,n)
     return w..utf8(SubNumbers[tonumber(n)])
 end
 
+-- Symbols
+----------
+
 -- The Greeks
-g = {} -- Upper  ,   Lower  ,  Name
+g = {} -- Big    , Little   , Name
 g.al = {utf8(913), utf8(945), "Alpha"}
 g.be = {utf8(914), utf8(946), "Beta"}
 g.ga = {utf8(915), utf8(947), "Gamma"}
@@ -61,15 +64,18 @@ g.ps = {utf8(936), utf8(968), "Psi"}
 g.om = {utf8(937), utf8(969), "Omega"}
 
 s = {} -- Symbols
-s.dg = utf8(176) -- degree symbol
-s.th = g.th[2] -- theta
-s.th0 = g.th[2].."0" -- theta0
-s.la = g.la[2] -- lambda
-s.la0 = g.la[2].."0" -- lambda0
-s.dv = g.de[1].."v" -- Change in velocity (delta v)
-s.dpm = g.de[1].."pm" -- Change in momentum
-s.dt = g.de[1].."t" -- Change in time
-s.dh = g.de[1].."h" -- change in height
+s.dg    = utf8(176)     -- degree symbol
+s.th    = g.th[2]       -- theta
+s.th0   = g.th[2].."0"  -- theta0
+s.la    = g.la[2]       -- lambda
+s.la0   = g.la[2].."0"  -- lambda0
+s.dv    = g.de[1].."v"  -- Change in velocity (delta v)
+s.dpm   = g.de[1].."pm" -- Change in momentum
+s.dt    = g.de[1].."t"  -- Change in time
+s.dh    = g.de[1].."h"  -- change in height
+s.om    = g.om[1]       -- Resistance
+s.omm   = g.om[1].."*m" -- Resistivity unit (ohms * meter)
+s.rh    = g.rh[2]       -- Resistivity
 
 function refCon() -- Makes the constants reference page
     local t2 = {}
@@ -80,20 +86,20 @@ function refCon() -- Makes the constants reference page
 end
 
 Constants = {
-{key="g", info="Acceleration due to gravity", val="-9.81", unit="m/s^2"},
-{key="G", info="Gravitational constant", val="6.67*10^(-11)", unit="Nm^2/kg^-2"},
-{key="N", info="Avogadro's constant", val="6.022*10^(23)", unit="mol^-1"},
-{key="R", info="Gas constant", val="8.314", unit="J/((mol^-1)*(K^-1))"},
-{key="k1", info="Boltzmann's constant", val="1.38*10^(-23)", unit="J/K^-1"},
-{key="k2", info="Stefan-Boltzmann constant", val="5.67 * 10^-8", unit="W*m^-2*K^-1"},
-{key="k3", info="Coulomb constant", val="8.99 * 10^9", unit="N*m^2*C^-2"},
-{key="C", info="Speed of light in vacuum", val="2.9979*10^(8)", unit="m/s"},
-{key="h", info="Planck constant", val="6.626*10^(-34)", unit="J/s"},
-{key="q", info="Elementary charge", val="1.60218*10^(-19)", unit="C"},
-{key="me", info="Electron rest mass", val="9.109*10^(-31)", unit="kg"},
-{key="mp", info="Proton rest mass", val="1.6726*10^(-27)", unit="kg"},
-{key="mn", info="Neutron rest mass", val="1.675*10^(-27)", unit="kg"},
-{key="mu", info="Atomic mass unit", val="1.66*10^(-27)", unit="kg"},
+{key="g",   info="Acceleration due to gravity", val="-9.81",            unit="m/s^2"},
+{key="G",   info="Gravitational constant",      val="6.67*10^(-11)",    unit="Nm^2/kg^-2"},
+{key="N",   info="Avogadro's constant",         val="6.022*10^(23)",    unit="mol^-1"},
+{key="R",   info="Gas constant",                val="8.314",            unit="J/((mol^-1)*(K^-1))"},
+{key="k1",  info="Boltzmann's constant",        val="1.38*10^(-23)",    unit="J/K^-1"},
+{key="k2",  info="Stefan-Boltzmann constant",   val="5.67 * 10^-8",     unit="W*m^-2*K^-1"},
+{key="k3",  info="Coulomb constant",            val="8.99 * 10^9",      unit="N*m^2*C^-2"},
+{key="C",   info="Speed of light in vacuum",    val="2.9979*10^(8)",    unit="m/s"},
+{key="h",   info="Planck constant",             val="6.626*10^(-34)",   unit="J/s"},
+{key="q",   info="Elementary charge",           val="1.60218*10^(-19)", unit="C"},
+{key="me",  info="Electron rest mass",          val="9.109*10^(-31)",   unit="kg"},
+{key="mp",  info="Proton rest mass",            val="1.6726*10^(-27)",  unit="kg"},
+{key="mn",  info="Neutron rest mass",           val="1.675*10^(-27)",   unit="kg"},
+{key="mu",  info="Atomic mass unit",            val="1.66*10^(-27)",    unit="kg"},
 --{key=utf8(949).."0", info="Permittivity of a vacuum", val="8.854*10^(-12)", unit="F/m^-1"},
 --{key=utf8(956).."0", info="Permeability of a vacuum", val="4*pi*10^(-7)", unit="N/A^-2"}
 }
@@ -158,8 +164,9 @@ ct = {}
 ct.mo = 1 -- Mechanics
 ct.th = 2 -- Thermal physics
 ct.wa = 3 -- Oscillations & Waves
-ct.ch = 4 -- Chemistry
-ct.ex = 5 -- External Database
+ct.ec = 4 -- Electric cuurents
+ct.ch = 5 -- Chemistry
+ct.ex = 6 -- External Database
 
 function checkIfExists(table, name)
     for k,v in pairs(table) do
@@ -203,7 +210,7 @@ function addSubCat(cid, id, name, info)
 end
 
 function aF(cid, sid, formula, variables) --add Formula
-    local fr    =   {category=cid, sub=sid, formula=formula, variables=variables}
+    local fr = {category=cid, sub=sid, formula=formula, variables=variables}
     -- In times like this we are happy that inserting tables just inserts a reference
 
     -- commented out this check because only the subcategory duplicates should be avoided, and not on the whole db.
@@ -216,14 +223,14 @@ function aF(cid, sid, formula, variables) --add Formula
 
     -- This function might need to be merged with U(...)
     for variable,_ in pairs(variables) do
-        Categories[cid].sub[sid].variables[variable]    = true
+        Categories[cid].sub[sid].variables[variable] = true
     end
 end
 
 function U(...)
-    local out   = {}
+    local out = {}
     for i, p in ipairs({...}) do
-        out[p]  = true
+        out[p] = true
     end
     return out
 end
@@ -236,33 +243,33 @@ end
 
 addCat(ct.mo, "Mechanics", "IB topic 2. Perform motion-related calculations")
 
-addCatVar(ct.mo, "u", "Intial velocity", "m/s")
-addCatVar(ct.mo, "v", "Final velocity", "m/s")
-addCatVar(ct.mo, s.dv, "Change in velocity", "m/s")
-addCatVar(ct.mo, "s", "Displacement", "m")
-addCatVar(ct.mo, "t", "Final time", "s")
-addCatVar(ct.mo, "t0", "Initial time", "s")
-addCatVar(ct.mo, s.dt, "Change in time", "s")
-addCatVar(ct.mo, "a", "Accleration", "m/s2")
-addCatVar(ct.mo, "F", "Force", "N")
-addCatVar(ct.mo, "m", "Mass", "kg")
-addCatVar(ct.mo, "W", "Work", "J")
-addCatVar(ct.mo, "P", "Power", "W")
-addCatVar(ct.mo, s.dh, "Change in height", "m")
+addCatVar(ct.mo, "u",   "Intial velocity", "m/s")
+addCatVar(ct.mo, "v",   "Final velocity", "m/s")
+addCatVar(ct.mo, s.dv,  "Change in velocity", "m/s")
+addCatVar(ct.mo, "s",   "Displacement", "m")
+addCatVar(ct.mo, "t",   "Final time", "s")
+addCatVar(ct.mo, "t0",  "Initial time", "s")
+addCatVar(ct.mo, s.dt,  "Change in time", "s")
+addCatVar(ct.mo, "a",   "Accleration", "m/s2")
+addCatVar(ct.mo, "F",   "Force", "N")
+addCatVar(ct.mo, "m",   "Mass", "kg")
+addCatVar(ct.mo, "W",   "Work", "J")
+addCatVar(ct.mo, "P",   "Power", "W")
+addCatVar(ct.mo, s.dh,  "Change in height", "m")
 addCatVar(ct.mo, "imp", "Impulse", "N*s")
-addCatVar(ct.mo, "pm", "Final momentum", "N*s")
+addCatVar(ct.mo, "pm",  "Final momentum", "N*s")
 addCatVar(ct.mo, "pm0", "Initial momentum", "N*s")
 addCatVar(ct.mo, s.dpm, "Change in momentum", "N*s")
 addCatVar(ct.mo, "Epg", "gravitational potential energy", "J")
-addCatVar(ct.mo, "Ek", "Kinetic energy (translational)", "J")
+addCatVar(ct.mo, "Ek",  "Kinetic energy (translational)", "J")
 addCatVar(ct.mo, "TME", "Total mechanical energy", "J")
-addCatVar(ct.mo, s.th, "Angle", s.dg)
-addCatVar(ct.mo, "Tp", "Period", "s")
-addCatVar(ct.mo, "c", "Circumference", "m")
-addCatVar(ct.mo, "r", "Radius", "m")
-addCatVar(ct.mo, "ca", "Centripital acceleration", "m/s2")
-addCatVar(ct.mo, "cF", "Centripital force", "N")
-addCatVar(ct.mo, "cv", "Centripital velocity", "m/s")
+addCatVar(ct.mo, s.th,  "Angle", s.dg)
+addCatVar(ct.mo, "Tp",  "Period", "s")
+addCatVar(ct.mo, "c",   "Circumference", "m")
+addCatVar(ct.mo, "r",   "Radius", "m")
+addCatVar(ct.mo, "ca",  "Centripital acceleration", "m/s2")
+addCatVar(ct.mo, "cF",  "Centripital force", "N")
+addCatVar(ct.mo, "cv",  "Centripital velocity", "m/s")
 
 addSubCat(ct.mo, 1, "Kinematics", "Solve for: u, v, s, a, "..s.dt)
 aF(ct.mo, 1, "s=((u+v)/2)*"..s.dt, U("s", "u", "v", s.dt) )
@@ -313,21 +320,21 @@ aF(ct.mo, 7, "c=2*pi*r", U("c", "r") )
 
 addCat(ct.th, "Thermal physics", "IB topic 3 & 10. Perform thermal related physics calculations")
 
-addCatVar(ct.th, "P", "Pressure", "Pa")
-addCatVar(ct.th, "V", "Volume", "m3")
-addCatVar(ct.th, "T", "Tempturature", "K")
-addCatVar(ct.th, "n", "Amount", "mol")
-addCatVar(ct.th, "m", "Mass", "kg")
+addCatVar(ct.th, "P",   "Pressure", "Pa")
+addCatVar(ct.th, "V",   "Volume", "m3")
+addCatVar(ct.th, "T",   "Tempturature", "K")
+addCatVar(ct.th, "n",   "Amount", "mol")
+addCatVar(ct.th, "m",   "Mass", "kg")
 addCatVar(ct.th, "amu", "Molecular mass", "amu")
-addCatVar(ct.th, "tK", "Kelvin", "nounit")
-addCatVar(ct.th, "tC", "Celcius", "nounit")
-addCatVar(ct.th, "tF", "Farhenhiet", "nounit")
-addCatVar(ct.th, "F", "Force", "N")
-addCatVar(ct.th, "A", "Area", "m2")
-addCatVar(ct.th, "Ek", "Kinetic energy (translational)", "J")
-addCatVar(ct.th, "Q", "Heat", "J")
-addCatVar(ct.th, "c", "Specific heat capacity", "J/kg*K")
-addCatVar(ct.th, "L", "Latent heat", "nounit")
+addCatVar(ct.th, "tK",  "Kelvin", "nounit")
+addCatVar(ct.th, "tC",  "Celcius", "nounit")
+addCatVar(ct.th, "tF",  "Farhenhiet", "nounit")
+addCatVar(ct.th, "F",   "Force", "N")
+addCatVar(ct.th, "A",   "Area", "m2")
+addCatVar(ct.th, "Ek",  "Kinetic energy (translational)", "J")
+addCatVar(ct.th, "Q",   "Heat", "J")
+addCatVar(ct.th, "c",   "Specific heat capacity", "J/kg*K")
+addCatVar(ct.th, "L",   "Latent heat", "nounit")
 
 addSubCat(ct.th, 1, "Tempurature", "Convert between the different tempurature scales")
 aF(ct.th, 1, "tF=(9/5)*tC+32", U("tC", "tF") )
@@ -345,26 +352,22 @@ aF(ct.th, 3, "Q=m*L", U("Q", "m", "L") )
 
 addCat(ct.wa, "Oscillations & Waves", "IB Topic 4. Perform wave-related calculations")
 
-addCatVar(ct.wa, "F", "Force", "N")
-addCatVar(ct.wa, "K", "Spring constant", "N/m")
-addCatVar(ct.wa, "x", "Displacement", "m")
-addCatVar(ct.wa, "m", "Mass", "kg")
-addCatVar(ct.wa, "a", "Acceleration", "m/s2")
-addCatVar(ct.wa, "Ep", "Elastic potential energy", "J")
-addCatVar(ct.wa, "T", "Period", "s")
-addCatVar(ct.wa, "fq", "Frequency", "Hz")
-addCatVar(ct.wa, "v", "Velocity", "m/s")
-addCatVar(ct.wa, "v0", "Velocity", "m/s")
---addCatVar(ct.wa, "v1", "Velocity", "m/s")
-addCatVar(ct.wa, "n", "Refraction index", "nounit")
-addCatVar(ct.wa, "n0", "Refraction index", "nounit")
---addCatVar(ct.wa, "n1", "Refraction index", "nounit")
-addCatVar(ct.wa, s.th, "Angle", s.dg)
+addCatVar(ct.wa, "F",   "Force", "N")
+addCatVar(ct.wa, "K",   "Spring constant", "N/m")
+addCatVar(ct.wa, "x",   "Displacement", "m")
+addCatVar(ct.wa, "m",   "Mass", "kg")
+addCatVar(ct.wa, "a",   "Acceleration", "m/s2")
+addCatVar(ct.wa, "Ep",  "Elastic potential energy", "J")
+addCatVar(ct.wa, "T",   "Period", "s")
+addCatVar(ct.wa, "fq",  "Frequency", "Hz")
+addCatVar(ct.wa, "v",   "Velocity", "m/s")
+addCatVar(ct.wa, "v0",  "Velocity", "m/s")
+addCatVar(ct.wa, "n",   "Refraction index", "nounit")
+addCatVar(ct.wa, "n0",  "Refraction index", "nounit")
+addCatVar(ct.wa, s.th,  "Angle", s.dg)
 addCatVar(ct.wa, s.th0, "Angle", s.dg)
---addCatVar(ct.wa, s.th.."1", "Angle", s.dg)
-addCatVar(ct.wa, s.la, "Wavelength", "m")
+addCatVar(ct.wa, s.la,  "Wavelength", "m")
 addCatVar(ct.wa, s.la0, "Wavelength", "m")
---addCatVar(ct.wa, s.la.."1", "Wavelength", "nm")
 
 addSubCat(ct.wa, 1, "Waves", "Solve for F, K, m, a, x, Ep")
 aF(ct.wa, 1, "F=m*a", U("F", "m", "a") ) -- force
@@ -383,31 +386,43 @@ aF(ct.wa, 2, "n0=("..con("C")..")/v0", U("n0", "v0") )
 aF(ct.wa, 2, "v=fq*"..s.la, U("v", "fq", s.la ) )
 aF(ct.wa, 2, "v0=fq*"..s.la0, U("v0", "fq", s.la0 ) )
 
+addCat(ct.ec, "Electric Cuurents", "IB Topic 5.")
+addCatVar(ct.ec, "Ve",  "Energy", "J")
+addCatVar(ct.ec, "I",   "Current", "A")
+addCatVar(ct.ec, "q",   "Charge", "C")
+addCatVar(ct.ec, "t",   "Time", "s")
+addCatVar(ct.ec, "R",   "Resistence", s.oh)
+addCatVar(ct.ec, "V",   "Voltage", "V")
+addCatVar(ct.ec, "A",   "Cross-sectional area", "m2")
+addCatVar(ct.ec, "l",   "Length", "m")
+addCatVar(ct.ec, "m",   "Mass", "kg")
+addCatVar(ct.ec, "", "", "")
+
 addCat(ct.ch, "Chemestry", "Chemistry related things that have some connection to physics")
 
-addCatVar(ct.ch, "atom", "Atomic number", "nounit")
-addCatVar(ct.ch, "mass", "Mass", "amu")
-addCatVar(ct.ch, "dens", "Density", "kg/m3")
-addCatVar(ct.ch, "c", "Specific heat", "J/kg*K")
-addCatVar(ct.ch, "melt", "Melting point", "K")
-addCatVar(ct.ch, "boil", "Boiling point", "K")
-addCatVar(ct.ch, "h_fus", "Heat of fusion", "kJ/mol")
-addCatVar(ct.ch, "h_vap", "Heat of vaporization", "kJ/mol")
---addCatVar(ct.ch, "name", "Name", "nounit")
---addCatVar(ct.ch, "sym", "Symbol", "nounit")
---addCatVar(ct.ch, "type", "Type", "nounit")
---addCatVar(ct.ch, "state", "State at 273K", "nounit")
---addCatVar(ct.ch, "group", "Group", "nounit")
---addCatVar(ct.ch, "period", "Period", "nounit")
---addCatVar(ct.ch, "e_conf", "Electron configuration", "nounit")
---addCatVar(ct.ch, "v_elec", "Valence electrons", "nounit")
---addCatVar(ct.ch, "i_eng", "1st ionization energy", "kJ/mol")
---addCatVar(ct.ch, "e_neg", "Electronegativity", "nounit")
---addCatVar(ct.ch, "e_aff", "Electron affinity", "nounit")
---addCatVar(ct.ch, "a_rad", "Atomic radius", "pm")
---addCatVar(ct.ch, "c_rad", "Covalent radius", "pm")
---addCatVar(ct.ch, "t_cond", "Thermal conductivity", "W/mK")
---addCatVar(ct.ch, "e_cond", "Electrical conductivity", "MS/m")
+addCatVar(ct.ch, "atom",    "Atomic number", "nounit")
+addCatVar(ct.ch, "mass",    "Mass", "amu")
+addCatVar(ct.ch, "dens",    "Density", "kg/m3")
+addCatVar(ct.ch, "c",       "Specific heat", "J/kg*K")
+addCatVar(ct.ch, "melt",    "Melting point", "K")
+addCatVar(ct.ch, "boil",    "Boiling point", "K")
+addCatVar(ct.ch, "h_fus",   "Heat of fusion", "kJ/mol")
+addCatVar(ct.ch, "h_vap",   "Heat of vaporization", "kJ/mol")
+addCatVar(ct.ch, "name",    "Name", "nounit")
+addCatVar(ct.ch, "sym",     "Symbol", "nounit")
+addCatVar(ct.ch, "type",    "Type", "nounit")
+addCatVar(ct.ch, "state",   "State at 273K", "nounit")
+addCatVar(ct.ch, "group",   "Group", "nounit")
+addCatVar(ct.ch, "period",  "Period", "nounit")
+addCatVar(ct.ch, "e_conf",  "Electron configuration", "nounit")
+addCatVar(ct.ch, "v_elec",  "Valence electrons", "nounit")
+addCatVar(ct.ch, "i_eng",   "1st ionization energy", "kJ/mol")
+addCatVar(ct.ch, "e_neg",   "Electronegativity", "nounit")
+addCatVar(ct.ch, "e_aff",   "Electron affinity", "nounit")
+addCatVar(ct.ch, "a_rad",   "Atomic radius", "pm")
+addCatVar(ct.ch, "c_rad",   "Covalent radius", "pm")
+addCatVar(ct.ch, "t_cond",  "Thermal conductivity", "W/mK")
+addCatVar(ct.ch, "e_cond",  "Electrical conductivity", "MS/m")
 
 addSubCat(ct.ch, 1, "Elements", "Obtain information relating to the periodic elements")
 aF(ct.ch, 1, "mass=ch.mass[atom]", U( "mass", "atom") )
@@ -3045,18 +3060,18 @@ end
 RefAcceleration = Screen()
 
 RefAcceleration.data = {
-    { "Base",                   "meters/sec/sec",               "m/s2"      },
-    { "1000 m/s2",              "kilometers/sec/sec",           "km/s2"     },
-    { "0.01 m/s2",              "centimeters/sec/sec",          "cm/s2"     },
-    { "0.001 m/s2",             "millimeters/sec/sec",          "mm/s2"     },
-    { "0.000277778 m/s2",       "meters/hr/hr",                 "m/hr2"     },
-    { "0.277778 m/s2",          "kilometers/hr/hr",             "km/hr2"    },
-    { "16.6667 m/s2",           "kilometers/min/min",           "km/min2"   },
-    { "0.3048 m/s2",            "feet/sec/sec",                 "ft/s2"     },
-    { "0.00508 m/s2",           "feet/min/min",                 "ft/min2"   },
-    { "26.8224 m/s2",           "miles/min/min",                "mi/min2"   },
-    { "0.44704 m/s2",           "miles/hr/hr",                  "mi/hr2"    },
-    { "0.514444 m/s2",          "knatical mile/hr/hr",          "knot2"     }
+    {"Base",                "meters/sec/sec",       "m/s2" },
+    {"1000 m/s2",           "kilometers/sec/sec",   "km/s2" },
+    {"0.01 m/s2",           "centimeters/sec/sec",  "cm/s2" },
+    {"0.001 m/s2",          "millimeters/sec/sec",  "mm/s2" },
+    {"0.000277778 m/s2",    "meters/hr/hr",         "m/hr2" },
+    {"0.277778 m/s2",       "kilometers/hr/hr",     "km/hr2" },
+    {"16.6667 m/s2",        "kilometers/min/min",   "km/min2" },
+    {"0.3048 m/s2",         "feet/sec/sec",         "ft/s2" },
+    {"0.00508 m/s2",        "feet/min/min",         "ft/min2" },
+    {"26.8224 m/s2",        "miles/min/min",        "mi/min2" },
+    {"0.44704 m/s2",        "miles/hr/hr",          "mi/hr2" },
+    {"0.514444 m/s2",       "knatical mile/hr/hr",  "knot2" }
 }
 
 RefAcceleration.tmpScroll = 1
@@ -3721,29 +3736,29 @@ end
 SIPrefixes = Screen()
 
 SIPrefixes.prefixes1 = {
-	{ "Y", "Yotta", "24" },
-	{ "Z", "Zetta", "21" },
-	{ "E", "Exa", "18" },
-	{ "P", "Peta", "15" },
-	{ "T", "Tera", "12" },
-	{ "G", "Giga", "9" },
-	{ "M", "Mega", "6" },
-	{ "k", "Kilo", "3" },
-	{ "h", "Hecto", "2" },
-	{ "da", "Deka", "1" }
+	{"Y",  "Yotta",    "24" },
+	{"Z",  "Zetta",    "21" },
+	{"E",  "Exa",      "18" },
+	{"P",  "Peta",     "15" },
+	{"T",  "Tera",     "12" },
+	{"G",  "Giga",     "9" },
+	{"M",  "Mega",     "6" },
+	{"k",  "Kilo",     "3" },
+	{"h",  "Hecto",    "2" },
+	{"da", "Deka",     "1" }
 }
 
 SIPrefixes.prefixes2 = {
-	{ "d", "Deci", "-1" },
-	{ "c","Centi", "-2" },
-	{ "m", "Milli", "-3" },
-	{ utf8(956), "Micro", "-6" },
-	{ "n", "Nano", "-9" },
-	{ "p", "Pico", "-12" },
-	{ "f", "Femto", "-15" },
-	{ "a", "Atto", "-18" },
-	{ "z", "Zepto", "-21" },
-	{ "y", "Yocto", "-24" }
+	{"d",  "Deci", "-1" },
+	{"c",  "Centi", "-2" },
+	{"m",  "Milli", "-3" },
+	{utf8(956), "Micro", "-6" },
+	{"n", "Nano", "-9" },
+	{"p", "Pico", "-12" },
+	{"f", "Femto", "-15" },
+	{"a", "Atto", "-18" },
+	{"z", "Zepto", "-21" },
+	{"y", "Yocto", "-24" }
 }
 
 function SIPrefixes:paint(gc)
@@ -3777,16 +3792,16 @@ end
 RefTime = Screen()
 
 RefTime.data = {
-    { "Base",           "second",       "s"             },
-    { "60 s",           "minute",       "min"           },
-    { "3600 s",         "hour",         "hr"            },
-    { "86400 s",        "day",          "day"           },
-    { "604800 s",       "week",         "wk"            },
-    { "1209600 s",      "fortnight",    "fortn"         },
-    { "18144000 s",     "month",        "month"         },
-    { "217728000 s",    "year",         "yr"            },
-    { "52 minutes",     "microcentury", utf8(956).."Ce" },
-    { "6 months",       "Friend",           "Friends"   }
+    {"Base",            "second",       "s" },
+    {"60 s",            "minute",       "min" },
+    {"3600 s",          "hour",         "hr" },
+    {"86400 s",         "day",          "day" },
+    {"604800 s",        "week",         "wk" },
+    {"1209600 s",       "fortnight",    "fortn" },
+    {"18144000 s",      "month",        "month" },
+    {"217728000 s",     "year",         "yr" },
+    {"52 minutes",      "microcentury", utf8(956).."Ce" },
+    {"6 months",        "Freind",       "Freinds" }
 }
 
 RefTime.tmpScroll = 1
@@ -3845,19 +3860,19 @@ end
 RefVelocity = Screen()
 
 RefVelocity.data = {
-    { "Base",               "meters/second",        "m/s"       },
-    { "1000 m/s",           "kilometers/sec",       "km/s"      },
-    { "0.01 m/s",           "centimeters/sec",      "cm/s"      },
-    { "0.001 m/s",          "millimeters/sec",      "mm/s"      },
-    { "0.000277778 m/s",    "meters/hour",          "m/hr"      },
-    { "0.277778 m/s",       "kilometers/hour",      "km/hr"     },
-    { "16.6667",            "kilometers/min",       "km/min"    },
-    { "0.3048 m/s",         "feet/second",          "ft/s"      },
-    { "0.00508 m/s",        "feet/minute",          "ft/min"    },
-    { "26.8224 m/s",        "miles/minute",         "mi/min"    },
-    { "0.44704 m/s",        "miles/hour",           "mi/hr"     },
-    { "0.514444 m/s",       "knatical mile/hour",   "knot"      },
-    { "0.000000005 m/s",    "bears-sec/second",     "brds/sec"  },
+    {"Base",            "meters/second",        "m/s" },
+    {"1000 m/s",        "kilometers/sec",       "km/s" },
+    {"0.01 m/s",        "centimeters/sec",      "cm/s" },
+    {"0.001 m/s",       "millimeters/sec",      "mm/s" },
+    {"0.000277778 m/s", "meters/hour",          "m/hr" },
+    {"0.277778 m/s",    "kilometers/hour",      "km/hr" },
+    {"16.6667",         "kilometers/min",       "km/min" },
+    {"0.3048 m/s",      "feet/second",          "ft/s" },
+    {"0.00508 m/s",     "feet/minute",          "ft/min" },
+    {"26.8224 m/s",     "miles/minute",         "mi/min" },
+    {"0.44704 m/s",     "miles/hour",           "mi/hr" },
+    {"0.514444 m/s",    "knatical mile/hour",   "knot" },
+    {"0.000000005 m/s", "bears-sec/second",     "brds/sec" },
 }
 
 RefVelocity.tmpScroll = 1
@@ -3914,19 +3929,19 @@ end
 
 
 References = {
-    { title="SI Prefixes", info="", screen=SIPrefixes },
-    { title="Greek Alphabet", info="", screen=Greek },
-    { title="Constants", info="", screen=RefConstants },
-    { title="Motion Variables", info="", screen=MotionVars },
-    { title="BoolAlg", info="", screen=RefBoolAlg },
-    { title="BoolExpr", info="", screen=RefBoolExpr },
-    { title="Displacement Units", info="", screen=RefDisplacement },
-    { title="Velocity Units", info="", screen=RefVelocity },
-    { title="Acceleration Units", info="", screen=RefAcceleration },
-    { title="Time Units", info="", screen=RefTime },
-    { title="Force Units", info="", screen=RefForce },
-    { title="Energy Units", info="", screen=RefEnergy },
-    { title="Power Units", info="", screen=RefPower }
+    {title="SI Prefixes",           info="",    screen=SIPrefixes },
+    {title="Greek Alphabet",        info="",    screen=Greek },
+    {title="Constants",             info="",    screen=RefConstants },
+    {title="Motion Variables",      info="",    screen=MotionVars },
+    {title="BoolAlg",               info="",    screen=RefBoolAlg },
+    {title="BoolExpr",              info="",    screen=RefBoolExpr },
+    {title="Displacement Units",    info="",    screen=RefDisplacement },
+    {title="Velocity Units",        info="",    screen=RefVelocity },
+    {title="Acceleration Units",    info="",    screen=RefAcceleration },
+    {title="Time Units",            info="",    screen=RefTime },
+    {title="Force Units",           info="",    screen=RefForce },
+    {title="Energy Units",          info="",    screen=RefEnergy },
+    {title="Power Units",           info="",    screen=RefPower }
 }
 
 Ref = WScreen()
@@ -3941,7 +3956,7 @@ function Ref.addRefs()
         if ref.screen then
             table.insert(RefList.items, ref.title)
         else
-            table.insert(RefList.items, ref.title .. " (Not yet done)")
+            table.insert(RefList.items, ref.title .. " (WIP)")
         end
     end
 end

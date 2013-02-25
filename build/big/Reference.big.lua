@@ -2,18 +2,18 @@
 RefAcceleration = Screen()
 
 RefAcceleration.data = {
-    { "Base",                   "meters/sec/sec",               "m/s2"      },
-    { "1000 m/s2",              "kilometers/sec/sec",           "km/s2"     },
-    { "0.01 m/s2",              "centimeters/sec/sec",          "cm/s2"     },
-    { "0.001 m/s2",             "millimeters/sec/sec",          "mm/s2"     },
-    { "0.000277778 m/s2",       "meters/hr/hr",                 "m/hr2"     },
-    { "0.277778 m/s2",          "kilometers/hr/hr",             "km/hr2"    },
-    { "16.6667 m/s2",           "kilometers/min/min",           "km/min2"   },
-    { "0.3048 m/s2",            "feet/sec/sec",                 "ft/s2"     },
-    { "0.00508 m/s2",           "feet/min/min",                 "ft/min2"   },
-    { "26.8224 m/s2",           "miles/min/min",                "mi/min2"   },
-    { "0.44704 m/s2",           "miles/hr/hr",                  "mi/hr2"    },
-    { "0.514444 m/s2",          "knatical mile/hr/hr",          "knot2"     }
+    {"Base",                "meters/sec/sec",       "m/s2" },
+    {"1000 m/s2",           "kilometers/sec/sec",   "km/s2" },
+    {"0.01 m/s2",           "centimeters/sec/sec",  "cm/s2" },
+    {"0.001 m/s2",          "millimeters/sec/sec",  "mm/s2" },
+    {"0.000277778 m/s2",    "meters/hr/hr",         "m/hr2" },
+    {"0.277778 m/s2",       "kilometers/hr/hr",     "km/hr2" },
+    {"16.6667 m/s2",        "kilometers/min/min",   "km/min2" },
+    {"0.3048 m/s2",         "feet/sec/sec",         "ft/s2" },
+    {"0.00508 m/s2",        "feet/min/min",         "ft/min2" },
+    {"26.8224 m/s2",        "miles/min/min",        "mi/min2" },
+    {"0.44704 m/s2",        "miles/hr/hr",          "mi/hr2" },
+    {"0.514444 m/s2",       "knatical mile/hr/hr",  "knot2" }
 }
 
 RefAcceleration.tmpScroll = 1
@@ -678,29 +678,29 @@ end
 SIPrefixes = Screen()
 
 SIPrefixes.prefixes1 = {
-	{ "Y", "Yotta", "24" },
-	{ "Z", "Zetta", "21" },
-	{ "E", "Exa", "18" },
-	{ "P", "Peta", "15" },
-	{ "T", "Tera", "12" },
-	{ "G", "Giga", "9" },
-	{ "M", "Mega", "6" },
-	{ "k", "Kilo", "3" },
-	{ "h", "Hecto", "2" },
-	{ "da", "Deka", "1" }
+	{"Y",  "Yotta",    "24" },
+	{"Z",  "Zetta",    "21" },
+	{"E",  "Exa",      "18" },
+	{"P",  "Peta",     "15" },
+	{"T",  "Tera",     "12" },
+	{"G",  "Giga",     "9" },
+	{"M",  "Mega",     "6" },
+	{"k",  "Kilo",     "3" },
+	{"h",  "Hecto",    "2" },
+	{"da", "Deka",     "1" }
 }
 
 SIPrefixes.prefixes2 = {
-	{ "d", "Deci", "-1" },
-	{ "c","Centi", "-2" },
-	{ "m", "Milli", "-3" },
-	{ utf8(956), "Micro", "-6" },
-	{ "n", "Nano", "-9" },
-	{ "p", "Pico", "-12" },
-	{ "f", "Femto", "-15" },
-	{ "a", "Atto", "-18" },
-	{ "z", "Zepto", "-21" },
-	{ "y", "Yocto", "-24" }
+	{"d",  "Deci", "-1" },
+	{"c",  "Centi", "-2" },
+	{"m",  "Milli", "-3" },
+	{utf8(956), "Micro", "-6" },
+	{"n", "Nano", "-9" },
+	{"p", "Pico", "-12" },
+	{"f", "Femto", "-15" },
+	{"a", "Atto", "-18" },
+	{"z", "Zepto", "-21" },
+	{"y", "Yocto", "-24" }
 }
 
 function SIPrefixes:paint(gc)
@@ -734,16 +734,16 @@ end
 RefTime = Screen()
 
 RefTime.data = {
-    { "Base",           "second",       "s"             },
-    { "60 s",           "minute",       "min"           },
-    { "3600 s",         "hour",         "hr"            },
-    { "86400 s",        "day",          "day"           },
-    { "604800 s",       "week",         "wk"            },
-    { "1209600 s",      "fortnight",    "fortn"         },
-    { "18144000 s",     "month",        "month"         },
-    { "217728000 s",    "year",         "yr"            },
-    { "52 minutes",     "microcentury", utf8(956).."Ce" },
-    { "6 months",       "Friend",           "Friends"   }
+    {"Base",            "second",       "s" },
+    {"60 s",            "minute",       "min" },
+    {"3600 s",          "hour",         "hr" },
+    {"86400 s",         "day",          "day" },
+    {"604800 s",        "week",         "wk" },
+    {"1209600 s",       "fortnight",    "fortn" },
+    {"18144000 s",      "month",        "month" },
+    {"217728000 s",     "year",         "yr" },
+    {"52 minutes",      "microcentury", utf8(956).."Ce" },
+    {"6 months",        "Freind",       "Freinds" }
 }
 
 RefTime.tmpScroll = 1
@@ -802,19 +802,19 @@ end
 RefVelocity = Screen()
 
 RefVelocity.data = {
-    { "Base",               "meters/second",        "m/s"       },
-    { "1000 m/s",           "kilometers/sec",       "km/s"      },
-    { "0.01 m/s",           "centimeters/sec",      "cm/s"      },
-    { "0.001 m/s",          "millimeters/sec",      "mm/s"      },
-    { "0.000277778 m/s",    "meters/hour",          "m/hr"      },
-    { "0.277778 m/s",       "kilometers/hour",      "km/hr"     },
-    { "16.6667",            "kilometers/min",       "km/min"    },
-    { "0.3048 m/s",         "feet/second",          "ft/s"      },
-    { "0.00508 m/s",        "feet/minute",          "ft/min"    },
-    { "26.8224 m/s",        "miles/minute",         "mi/min"    },
-    { "0.44704 m/s",        "miles/hour",           "mi/hr"     },
-    { "0.514444 m/s",       "knatical mile/hour",   "knot"      },
-    { "0.000000005 m/s",    "bears-sec/second",     "brds/sec"  },
+    {"Base",            "meters/second",        "m/s" },
+    {"1000 m/s",        "kilometers/sec",       "km/s" },
+    {"0.01 m/s",        "centimeters/sec",      "cm/s" },
+    {"0.001 m/s",       "millimeters/sec",      "mm/s" },
+    {"0.000277778 m/s", "meters/hour",          "m/hr" },
+    {"0.277778 m/s",    "kilometers/hour",      "km/hr" },
+    {"16.6667",         "kilometers/min",       "km/min" },
+    {"0.3048 m/s",      "feet/second",          "ft/s" },
+    {"0.00508 m/s",     "feet/minute",          "ft/min" },
+    {"26.8224 m/s",     "miles/minute",         "mi/min" },
+    {"0.44704 m/s",     "miles/hour",           "mi/hr" },
+    {"0.514444 m/s",    "knatical mile/hour",   "knot" },
+    {"0.000000005 m/s", "bears-sec/second",     "brds/sec" },
 }
 
 RefVelocity.tmpScroll = 1
@@ -871,19 +871,19 @@ end
 
 
 References = {
-    { title="SI Prefixes", info="", screen=SIPrefixes },
-    { title="Greek Alphabet", info="", screen=Greek },
-    { title="Constants", info="", screen=RefConstants },
-    { title="Motion Variables", info="", screen=MotionVars },
-    { title="BoolAlg", info="", screen=RefBoolAlg },
-    { title="BoolExpr", info="", screen=RefBoolExpr },
-    { title="Displacement Units", info="", screen=RefDisplacement },
-    { title="Velocity Units", info="", screen=RefVelocity },
-    { title="Acceleration Units", info="", screen=RefAcceleration },
-    { title="Time Units", info="", screen=RefTime },
-    { title="Force Units", info="", screen=RefForce },
-    { title="Energy Units", info="", screen=RefEnergy },
-    { title="Power Units", info="", screen=RefPower }
+    {title="SI Prefixes",           info="",    screen=SIPrefixes },
+    {title="Greek Alphabet",        info="",    screen=Greek },
+    {title="Constants",             info="",    screen=RefConstants },
+    {title="Motion Variables",      info="",    screen=MotionVars },
+    {title="BoolAlg",               info="",    screen=RefBoolAlg },
+    {title="BoolExpr",              info="",    screen=RefBoolExpr },
+    {title="Displacement Units",    info="",    screen=RefDisplacement },
+    {title="Velocity Units",        info="",    screen=RefVelocity },
+    {title="Acceleration Units",    info="",    screen=RefAcceleration },
+    {title="Time Units",            info="",    screen=RefTime },
+    {title="Force Units",           info="",    screen=RefForce },
+    {title="Energy Units",          info="",    screen=RefEnergy },
+    {title="Power Units",           info="",    screen=RefPower }
 }
 
 Ref = WScreen()
@@ -898,7 +898,7 @@ function Ref.addRefs()
         if ref.screen then
             table.insert(RefList.items, ref.title)
         else
-            table.insert(RefList.items, ref.title .. " (Not yet done)")
+            table.insert(RefList.items, ref.title .. " (WIP)")
         end
     end
 end

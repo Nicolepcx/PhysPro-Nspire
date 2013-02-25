@@ -20,20 +20,20 @@ fi
 if [[ "$ARGS" == *"-luna"* ]]; then
     echo "Building PhysPro-Nspire..."
 
-    echo "Building the Database"
-    cat 0\ -\ \ Database/*.lua > build/big/database.big.lua
+    echo "Building the database"
+    cat database/*.lua > build/big/database.big.lua
 
     # echo "Building the analysis"
-    # cat 1\ -\ \ Analysis\ Part/*.lua > /build/big/analysis.big.lua
+    # cat analysis/*.lua > /build/big/analysis.big.lua
 
     echo "Building the FormulaPro core"
-    cat 2\ -\ \ FormulaPro/*.lua > build/big/formulapro.big.lua
+    cat FormulaPro/*.lua > build/big/formulapro.big.lua
 
-    echo "Building Reference"
-    cat 3\ -\ \ Reference\ Part/*.lua > build/big/reference.big.lua
+    echo "Building the reference"
+    cat reference/*.lua > build/big/reference.big.lua
 
     echo "Building the libraries"
-    cat Global\ Libraries/*.lua > build/big/lib.big.lua
+    cat lib/*.lua > build/big/lib.big.lua
 
     echo "Creating the whole thing..."
     cd build/big/
