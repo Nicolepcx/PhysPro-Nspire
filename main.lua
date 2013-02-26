@@ -1,4 +1,12 @@
 
+--include "about.lua"
+--include "database/database.lua"
+--include "lib/animation.lua"
+--include "lib/globals.lua"
+--include "lib/screen.lua"
+--include "lib/widgets.lua"
+--include "FormulaPro/FPMain.lua"
+--include "reference/ReferenceMain.lua"
 
 aboutWindow	= Dialog("About", 50, 20, 280, 180)
 

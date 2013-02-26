@@ -6,7 +6,7 @@ function EXIT (){
 
 ARGS="$@"
 
-if [[ "$ARGS" == *"-b"* ]]; then
+if [[ "$ARGS" == *"-bk"* ]]; then
     echo "Backing up..."
     cd ..
     endTime=$(date +%F_%H.%M.%S)
@@ -37,17 +37,23 @@ if [[ "$ARGS" == *"-luna"* ]]; then
 
     echo "Creating the whole thing..."
     cd build/big/
-    cat database.big.lua lib.big.lua formulapro.big.lua reference.big.lua ../../main.lua > ../PhysPro.big.lua
+    cat database.big.lua lib.big.lua formulapro.big.lua reference.big.lua ../../main.lua > ../PhysPro.src.lua
     cd ..
-    cp PhysPro.big.lua PhysPro_src.lua.tns
-    # wine luna/luna.exe PhysPro.big.lua PhysPro-Nspire.tns
-    luna PhysPro.big.lua PhysPro-Nspire.tns
+    luna PhysPro.src.lua PhysPro-Nspire.tns
+    cp PhysPro.src.lua PhysPro.src.lua.tns
     echo "Done building PhysPro"
 elif [[ "$ARGS" == *"-etk"* ]]; then
-    echo "Error: Not done with this part yet."
+    build/etk main.lua build/PhysPro-Nspire.tns
+    mv big.main.lua build/PhysPro.src.lua
+    cp build/PhysPro.src.lua build/PhysPro.src.lua.tns
 fi
 
-if [[ "$ARGS" == *"-o"* ]]; then
+if [[ "$ARGS" == *"-send"* ]]; then
+    echo "WIP"; exit 99
+    # tilp -transfer_to_nspire build/PhysPro-Nspire.tns
+fi
+
+if [[ "$ARGS" == *"-open"* ]]; then
     open PhysPro-Nspire.tns
 fi
 

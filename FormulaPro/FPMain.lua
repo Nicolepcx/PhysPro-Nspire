@@ -1,6 +1,6 @@
---------------------------------------------
---                 MAIN                   --
---------------------------------------------
+
+--include "FPSolver.lua"
+--include "FPGui.lua"
 
 function initBasicFunctions()
     local basicFunctions = {

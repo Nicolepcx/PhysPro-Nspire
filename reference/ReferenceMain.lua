@@ -1,4 +1,18 @@
 
+--include "REFSIPrefixes.lua"
+--include "REFGreekAlphabet.lua"
+--include "REFConstants.lua"
+--include "REFMotionVars.lua"
+--include "REFBoolAlg.lua"
+--include "REFBoolExpr.lua"
+--include "REFDisplacement.lua"
+--include "REFVelocity.lua"
+--include "REFAcceleration.lua"
+--include "REFTime.lua"
+--include "REFForce.lua"
+--include "REFEnergy.lua"
+--include "REFPower.lua"
+
 References = {
     {title="SI Prefixes",           info="",    screen=SIPrefixes },
     {title="Greek Alphabet",        info="",    screen=Greek },

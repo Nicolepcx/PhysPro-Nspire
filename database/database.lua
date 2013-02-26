@@ -1,6 +1,5 @@
---------------------------------------------------------
---                      Database                      --
---------------------------------------------------------
+
+--include "values.lua"
 
 -- Set the position of each section
 ct = {}
@@ -291,3 +290,6 @@ aF(ct.ch, 1, "h_vap=ch.h_vap[atom]", U( "h_vap", "atom") )
 --aF(ct.ch, 1, "c_rad=ch.c_rad[atom]", U( "c_rad", "atom") )
 --aF(ct.ch, 1, "t_cond=ch.t_cond[atom]", U( "t_cond", "atom") )
 --aF(ct.ch, 1, "e_cond=ch.e_cond[atom]", U( "e_cond", "atom") )
+
+--include "exdb.lua"
+--include "units.lua"
