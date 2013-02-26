@@ -228,7 +228,7 @@ aF(ct.wa, 2, "n0=("..con("C")..")/v0", U("n0", "v0") )
 aF(ct.wa, 2, "v=fq*"..s.la, U("v", "fq", s.la ) )
 aF(ct.wa, 2, "v0=fq*"..s.la0, U("v0", "fq", s.la0 ) )
 
-addCat(ct.ec, "Electric Cuurents", "IB Topic 5.")
+addCat(ct.ec, "Electric Curents", "IB Topic 5.")
 addCatVar(ct.ec, "Ve",  "Energy", "J")
 addCatVar(ct.ec, "I",   "Current", "A")
 addCatVar(ct.ec, "q",   "Charge", "C")
@@ -239,6 +239,13 @@ addCatVar(ct.ec, "A",   "Cross-sectional area", "m2")
 addCatVar(ct.ec, "l",   "Length", "m")
 addCatVar(ct.ec, "m",   "Mass", "kg")
 addCatVar(ct.ec, "", "", "")
+
+addSubCat(ct.ec, 1, "Electrostatic?", "Static electricity")
+aF(ct.ec, 1, "Ve=0.5*m*v^2", U( "Ve", "m", "v") )
+
+addSubCat(ct.ec, 2, "Electricity", "normal electricity")
+aF(ct.ec, 2, "R=V/I", U("R", "V", "I") )
+aF(ct.ec, 2, "R=(p*L)/A", U("R", "p", "L", "A") )
 
 addCat(ct.ch, "Chemestry", "Chemistry related things that have some connection to physics")
 
