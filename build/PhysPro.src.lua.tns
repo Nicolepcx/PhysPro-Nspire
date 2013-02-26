@@ -1,3 +1,4 @@
+
 ------------------------
 -- Start of about.lua --
 ------------------------
@@ -29,12 +30,10 @@ print("\n"..infoStr.."\n") -- Prints info to console
 ------------------------------------
 -- Start of database/database.lua --
 ------------------------------------
+
 ----------------------------------
 -- Start of database/values.lua --
 ----------------------------------
---------------------------------------------------------
---                       Constants                    --
---------------------------------------------------------
 
 function utf8(n)
     return string.uchar(n)
@@ -172,10 +171,6 @@ end
 -- End of database/values.lua --
 --------------------------------
 
-
---------------------------------------------------------
---                      Database                      --
---------------------------------------------------------
 
 -- Set the position of each section
 ct = {}
@@ -426,21 +421,21 @@ addCatVar(ct.ch, "melt",    "Melting point", "K")
 addCatVar(ct.ch, "boil",    "Boiling point", "K")
 addCatVar(ct.ch, "h_fus",   "Heat of fusion", "kJ/mol")
 addCatVar(ct.ch, "h_vap",   "Heat of vaporization", "kJ/mol")
-addCatVar(ct.ch, "name",    "Name", "nounit")
-addCatVar(ct.ch, "sym",     "Symbol", "nounit")
-addCatVar(ct.ch, "type",    "Type", "nounit")
-addCatVar(ct.ch, "state",   "State at 273K", "nounit")
-addCatVar(ct.ch, "group",   "Group", "nounit")
-addCatVar(ct.ch, "period",  "Period", "nounit")
-addCatVar(ct.ch, "e_conf",  "Electron configuration", "nounit")
-addCatVar(ct.ch, "v_elec",  "Valence electrons", "nounit")
-addCatVar(ct.ch, "i_eng",   "1st ionization energy", "kJ/mol")
-addCatVar(ct.ch, "e_neg",   "Electronegativity", "nounit")
-addCatVar(ct.ch, "e_aff",   "Electron affinity", "nounit")
-addCatVar(ct.ch, "a_rad",   "Atomic radius", "pm")
-addCatVar(ct.ch, "c_rad",   "Covalent radius", "pm")
-addCatVar(ct.ch, "t_cond",  "Thermal conductivity", "W/mK")
-addCatVar(ct.ch, "e_cond",  "Electrical conductivity", "MS/m")
+-- addCatVar(ct.ch, "name",    "Name", "nounit")
+-- addCatVar(ct.ch, "sym",     "Symbol", "nounit")
+-- addCatVar(ct.ch, "type",    "Type", "nounit")
+-- addCatVar(ct.ch, "state",   "State at 273K", "nounit")
+-- addCatVar(ct.ch, "group",   "Group", "nounit")
+-- addCatVar(ct.ch, "period",  "Period", "nounit")
+-- addCatVar(ct.ch, "e_conf",  "Electron configuration", "nounit")
+-- addCatVar(ct.ch, "v_elec",  "Valence electrons", "nounit")
+-- addCatVar(ct.ch, "i_eng",   "1st ionization energy", "kJ/mol")
+-- addCatVar(ct.ch, "e_neg",   "Electronegativity", "nounit")
+-- addCatVar(ct.ch, "e_aff",   "Electron affinity", "nounit")
+-- addCatVar(ct.ch, "a_rad",   "Atomic radius", "pm")
+-- addCatVar(ct.ch, "c_rad",   "Covalent radius", "pm")
+-- addCatVar(ct.ch, "t_cond",  "Thermal conductivity", "W/mK")
+-- addCatVar(ct.ch, "e_cond",  "Electrical conductivity", "MS/m")
 
 addSubCat(ct.ch, 1, "Elements", "Obtain information relating to the periodic elements")
 aF(ct.ch, 1, "mass=ch.mass[atom]", U( "mass", "atom") )
@@ -497,9 +492,6 @@ end
 ---------------------------------
 -- Start of database/units.lua --
 ---------------------------------
----------------
---   Units   --
----------------
 
 local mathpi = math.pi
 
@@ -2587,6 +2579,7 @@ end
 ------------------------------------
 -- Start of FormulaPro/FPMain.lua --
 ------------------------------------
+
 --------------------------------------
 -- Start of FormulaPro/FPSolver.lua --
 --------------------------------------
@@ -3142,6 +3135,7 @@ end
 ------------------------------------------
 -- Start of reference/ReferenceMain.lua --
 ------------------------------------------
+
 ------------------------------------------
 -- Start of reference/REFSIPrefixes.lua --
 ------------------------------------------
@@ -4165,7 +4159,6 @@ Ref.addRefs()
 ----------------------------------------
 -- End of reference/ReferenceMain.lua --
 ----------------------------------------
-
 
 
 aboutWindow	= Dialog("About", 50, 20, 280, 180)
