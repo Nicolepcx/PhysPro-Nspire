@@ -1,8 +1,11 @@
+--@@  REFGreekAlphabet.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 Greek = Screen()
- 
+
 Greek.font = "serif"
-  
+
 Greek.alphabet1 = {
     {utf8(913), utf8(945), "Alpha"},
     {utf8(914), utf8(946), "Beta"},
@@ -33,12 +36,12 @@ Greek.alphabet3 = {
     {utf8(936), utf8(968), "Psi"},
     {utf8(937), utf8(969), "Omega"}
 }
- 
+
 function Greek:paint(gc)
     gc:setColorRGB(255,255,255)
     gc:fillRect(self.x, self.y, self.w, self.h)
     gc:setColorRGB(0,0,0)
-    
+
         local msg = "Greek Alphabet"
         gc:setFont("sansserif","b",12)
         drawXCenteredString(gc,msg,5)
@@ -53,7 +56,7 @@ function Greek:paint(gc)
                 gc:drawString(v[3] .. " : " .. v[1] .. " " .. v[2], 5+.67*pww(), 10+22*k, "top")
         end
 end
- 
+
 function Greek:enterKey()
     Greek.font = Greek.font == "serif" and "sansserif" or "serif"
     Greek:invalidate()

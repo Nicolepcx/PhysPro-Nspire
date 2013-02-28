@@ -1,3 +1,6 @@
+--@@  REFEnergy.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 RefEnergy = Screen()
 

@@ -1,3 +1,6 @@
+--@@  REFMotionVars.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 MotionVars = Screen()
 
@@ -39,7 +42,7 @@ function MotionVars:paint(gc)
     gc:setColorRGB(255,255,255)
     gc:fillRect(self.x, self.y, self.w, self.h)
     gc:setColorRGB(0,0,0)
-    
+
         msg = "Motion Variables : "
         gc:setFont("sansserif","b",12)
         if MotionVars.tmpScroll > 1 then
@@ -50,7 +53,7 @@ function MotionVars:paint(gc)
         end
         drawXCenteredString(gc,msg,4)
         gc:setFont("sansserif","r",12)
-        
+
            local tmp = 0
            for k=MotionVars.tmpScroll,table.getn(MotionVars.data) do
                tmp = tmp + 1

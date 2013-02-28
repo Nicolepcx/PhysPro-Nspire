@@ -1,3 +1,6 @@
+--@@  REFBoolExpr.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 RefBoolExpr = Screen()
 
@@ -36,7 +39,7 @@ function RefBoolExpr:paint(gc)
 	gc:setColorRGB(255,255,255)
 	gc:fillRect(self.x, self.y, self.w, self.h)
 	gc:setColorRGB(0,0,0)
-	
+
 	    msg = "Boolean Expressions : "
         gc:setFont("sansserif","b",12)
         if RefBoolExpr.tmpScroll > 1 then
@@ -47,7 +50,7 @@ function RefBoolExpr:paint(gc)
         end
         drawXCenteredString(gc,msg,4)
         gc:setFont("sansserif","r",12)
-        
+
        	local tmp = 0
        	for k=RefBoolExpr.tmpScroll,table.getn(RefBoolExpr.data) do
        		tmp = tmp + 1

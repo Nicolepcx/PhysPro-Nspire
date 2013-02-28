@@ -1,3 +1,6 @@
+--@@  REFAcceleration.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 RefAcceleration = Screen()
 

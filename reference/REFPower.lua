@@ -1,3 +1,6 @@
+--@@  REFPower.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 RefPower = Screen()
 

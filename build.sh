@@ -6,19 +6,10 @@ function EXIT (){
 
 ARGS="$@"
 
-if [[ "$ARGS" == *"-bk"* ]]; then
-    echo "Backing up..."
-    cd ..
-    endTime=$(date +%F_%H.%M.%S)
-    backupName="PhysPro-"$endTime".tar.bz2"
-    tar -jcvf $backupName "PhysPro-Nspire"
-    --mv $backupName bk/
-    cd PhysPro-Nspire/
-    echo "Backup complete"
-fi
-
 if [[ "$ARGS" == *"-luna"* ]]; then
     echo "Building PhysPro-Nspire..."
+
+    [[ ! -d "build/big" ]] && mkdir build/big
 
     echo "Building the database"
     cat database/*.lua > build/big/database.big.lua
@@ -44,16 +35,17 @@ if [[ "$ARGS" == *"-luna"* ]]; then
     echo "Done building PhysPro"
 elif [[ "$ARGS" == *"-etk"* ]]; then
     build/etk main.lua build/PhysPro-Nspire.tns
-    mv big.main.lua build/PhysPro.src.lua
+    sed "/--@@/ d" big.main.lua > build/PhysPro.src.lua
+    echo "Concatenated sources"
+    echo "Removed source headers"
+    rm big.main.lua
     cp build/PhysPro.src.lua build/PhysPro.src.lua.tns
 fi
 
 if [[ "$ARGS" == *"-send"* ]]; then
     echo "WIP"; exit 99
-    # tilp -transfer_to_nspire build/PhysPro-Nspire.tns
-fi
-
-if [[ "$ARGS" == *"-open"* ]]; then
+    # tilp --transfer_to_nspire build/PhysPro-Nspire.tns
+elif [[ "$ARGS" == *"-open"* ]]; then
     open PhysPro-Nspire.tns
 fi
 

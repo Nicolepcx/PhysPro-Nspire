@@ -1,3 +1,7 @@
+--@@  globals.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
+
 ------------------------------------------------------------------
 --                  Overall Global Variables                    --
 ------------------------------------------------------------------
@@ -5,53 +9,53 @@
 -- Uses BetterLuaAPI : https://github.com/adriweb/BetterLuaAPI-for-TI-Nspire
 --
 
-a_acute = string.uchar(225)
-a_circ  = string.uchar(226)
-a_tilde = string.uchar(227)
-a_diaer = string.uchar(228)
-a_ring  = string.uchar(229)
-e_acute = string.uchar(233)
-e_grave = string.uchar(232)
-o_acute = string.uchar(243) 
-o_circ  = string.uchar(244)
-l_alpha = string.uchar(945)
-l_beta = string.uchar(946)
-l_omega = string.uchar(2126)
-sup_plus = string.uchar(8314)
-sup_minus = string.uchar(8315)
+a_acute     = string.uchar(225)
+a_circ      = string.uchar(226)
+a_tilde     = string.uchar(227)
+a_diaer     = string.uchar(228)
+a_ring      = string.uchar(229)
+e_acute     = string.uchar(233)
+e_grave     = string.uchar(232)
+o_acute     = string.uchar(243)
+o_circ      = string.uchar(244)
+l_alpha     = string.uchar(945)
+l_beta      = string.uchar(946)
+l_omega     = string.uchar(2126)
+sup_plus    = string.uchar(8314)
+sup_minus   = string.uchar(8315)
 right_arrow = string.uchar(8594)
 
 
 Color = {
-    ["black"] = {0, 0, 0},
-    ["red"] = {255, 0, 0},
-    ["green"] = {0, 255, 0},
-    ["blue "] = {0, 0, 255},
-    ["white"] = {255, 255, 255},
-    ["brown"] = {165,42,42},
-    ["cyan"] = {0,255,255},
-    ["darkblue"] = {0,0,139},
-    ["darkred"] = {139,0,0},
-    ["fuchsia"] = {255,0,255},
-    ["gold"] = {255,215,0},
-    ["gray"] = {127,127,127},
-    ["grey"] = {127,127,127},
-    ["lightblue"] = {173,216,230},
+    ["black"]      = {0, 0, 0},
+    ["red"]        = {255, 0, 0},
+    ["green"]      = {0, 255, 0},
+    ["blue "]      = {0, 0, 255},
+    ["white"]      = {255, 255, 255},
+    ["brown"]      = {165,42,42},
+    ["cyan"]       = {0,255,255},
+    ["darkblue"]   = {0,0,139},
+    ["darkred"]    = {139,0,0},
+    ["fuchsia"]    = {255,0,255},
+    ["gold"]       = {255,215,0},
+    ["gray"]       = {127,127,127},
+    ["grey"]       = {127,127,127},
+    ["lightblue"]  = {173,216,230},
     ["lightgreen"] = {144,238,144},
-    ["magenta"] = {255,0,255},
-    ["maroon"] = {128,0,0},
-    ["navyblue"] = {159,175,223},
-    ["orange"] = {255,165,0},
-    ["palegreen"] = {152,251,152},
-    ["pink"] = {255,192,203},
-    ["purple"] = {128,0,128},
-    ["royalblue"] = {65,105,225},
-    ["salmon"] = {250,128,114},
-    ["seagreen"] = {46,139,87},
-    ["silver"] = {192,192,192},
-    ["turquoise"] = {64,224,208},
-    ["violet"] = {238,130,238},
-    ["yellow"] = {255,255,0}
+    ["magenta"]    = {255,0,255},
+    ["maroon"]     = {128,0,0},
+    ["navyblue"]   = {159,175,223},
+    ["orange"]     = {255,165,0},
+    ["palegreen"]  = {152,251,152},
+    ["pink"]       = {255,192,203},
+    ["purple"]     = {128,0,128},
+    ["royalblue"]  = {65,105,225},
+    ["salmon"]     = {250,128,114},
+    ["seagreen"]   = {46,139,87},
+    ["silver"]     = {192,192,192},
+    ["turquoise"]  = {64,224,208},
+    ["violet"]     = {238,130,238},
+    ["yellow"]     = {255,255,0}
 }
 Color.mt = {__index = function () return {0,0,0} end}
 setmetatable(Color,Color.mt)
@@ -66,7 +70,7 @@ end
 
 function deepcopy(t) -- This function recursively copies a table's contents, and ensures that metatables are preserved. That is, it will correctly clone a pure Lua object.
     if type(t) ~= 'table' then return t end
-    local mt = getmetatable(t)
+    local mt  = getmetatable(t)
     local res = {}
     for k,v in pairs(t) do
         if type(v) == 'table' then

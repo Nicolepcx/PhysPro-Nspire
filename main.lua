@@ -1,21 +1,24 @@
+--@@  main.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 --include "about.lua"
---include "database/database.lua"
+--include "database/dbmain.lua"
 --include "lib/animation.lua"
 --include "lib/globals.lua"
 --include "lib/screen.lua"
 --include "lib/widgets.lua"
 --include "FormulaPro/FPMain.lua"
---include "reference/ReferenceMain.lua"
+--include "reference/RefMain.lua"
 
 aboutWindow	= Dialog("About", 50, 20, 280, 180)
 
 local origInfoStr = "Orig Code:\nFormulaPro v1.4a LGPL3\nJim Bauwens, Adrien \"Adriweb\" Bertrand, Levak\ntiplanet.org - inspired-lua.org"
-local aboutstr = infoStr.."\n"..origInfoStr
-local aboutButton	= sButton("OK")
+local aboutstr    = infoStr.."\n"..origInfoStr
+local aboutButton = sButton("OK")
 
 for i, line in ipairs(aboutstr:split("\n")) do
-    local aboutlabel	= sLabel(line)
+    local aboutlabel = sLabel(line)
     aboutWindow:appendWidget(aboutlabel, 10, 27 + i*14-12)
 end
 
@@ -40,9 +43,9 @@ end
 function errorPopup(gc)
 
     errorHandler.display = false
-    errorDialog = Dialog("Oops...", 50, 20, "85", "80")
+    errorDialog          = Dialog("Oops...", 50, 20, "85", "80")
 
-    local textMessage	= [[PhysPro has encountered an error:
+    local textMessage = [[PhysPro has encountered an error:
 Error at line ]]..errorHandler.errorLine
     local errorOKButton	= sButton("OK")
 
@@ -81,11 +84,11 @@ errorHandler = {}
 
 function handleError(line, errMsg, callStack, locals)
     print("Error handled!", errMsg)
-    errorHandler.display = true
+    errorHandler.display      = true
     errorHandler.errorMessage = errMsg
-    errorHandler.errorLine = line
-    errorHandler.callStack = callStack
-    errorHandler.locals = locals
+    errorHandler.errorLine    = line
+    errorHandler.callStack    = callStack
+    errorHandler.locals       = locals
     platform.window:invalidate()
     return true --go on....
 end

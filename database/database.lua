@@ -1,85 +1,6 @@
-
---include "values.lua"
-
--- Set the position of each section
-ct = {}
-ct.mo = 1 -- Mechanics
-ct.th = 2 -- Thermal physics
-ct.wa = 3 -- Oscillations & Waves
-ct.ec = 4 -- Electric cuurents
-ct.ch = 5 -- Chemistry
-ct.ex = 6 -- External Database
-
-function checkIfExists(table, name)
-    for k,v in pairs(table) do
-        if (v.name == name) or (v == name) then
-            print("Conflict (elements appearing twice) detected when loading Database. Skipping the item.")
-            return true
-        end
-    end
-    return false
-end
-
-function checkIfFormulaExists(table, formula)
-    for k,v in pairs(table) do
-        if (v.formula == formula)  then
-            print("Conflict (formula appearing twice) detected when loading Database. Skipping the item.")
-            return true
-        end
-    end
-    return false
-end
-
-Categories = {}
-Formulas = {}
-
-function addCat(id,name,info)
-    if checkIfExists(Categories, name) then
-        print("Warning ! This category appears to exist already ! Adding anyway....")
-    end
-    return table.insert(Categories, id, {id=id, name=name, info=info, sub={}, varlink={}})
-end
-
-function addCatVar(cid, var, info, unit)
-    Categories[cid].varlink[var] = {unit=unit, info=info }
-end
-
-function addSubCat(cid, id, name, info)
-    if checkIfExists(Categories[cid].sub, name) then
-        print("Warning ! This subcategory appears to exist already ! Adding anyway....")
-    end
-    return table.insert(Categories[cid].sub, id, {category=cid, id=id, name=name, info=info, formulas={}, variables={}})
-end
-
-function aF(cid, sid, formula, variables) --add Formula
-    local fr = {category=cid, sub=sid, formula=formula, variables=variables}
-    -- In times like this we are happy that inserting tables just inserts a reference
-
-    -- commented out this check because only the subcategory duplicates should be avoided, and not on the whole db.
-    --if not checkIfFormulaExists(Formulas, fr.formula) then
-        table.insert(Formulas, fr)
-    --end
-    if not checkIfFormulaExists(Categories[cid].sub[sid].formulas, fr.formula) then
-        table.insert(Categories[cid].sub[sid].formulas, fr)
-    end
-
-    -- This function might need to be merged with U(...)
-    for variable,_ in pairs(variables) do
-        Categories[cid].sub[sid].variables[variable] = true
-    end
-end
-
-function U(...)
-    local out = {}
-    for i, p in ipairs({...}) do
-        out[p] = true
-    end
-    return out
-end
-
---------------------------------------------
--- Categories, Sub-Categories, & Formulas --
---------------------------------------------
+--@@  database.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 -- Almost all formulas are from the IB Physics HL Data Booklet, which contains the fundamental equations needed throughout the course. It does not contain every physics equation know to man, nor is every Data Booklet equation included in this database.
 
@@ -92,7 +13,7 @@ addCatVar(ct.mo, "s",   "Displacement", "m")
 addCatVar(ct.mo, "t",   "Final time", "s")
 addCatVar(ct.mo, "t0",  "Initial time", "s")
 addCatVar(ct.mo, s.dt,  "Change in time", "s")
-addCatVar(ct.mo, "a",   "Accleration", "m/s2")
+addCatVar(ct.mo, "a",   "Accleration", "m/s"..s.s2)
 addCatVar(ct.mo, "F",   "Force", "N")
 addCatVar(ct.mo, "m",   "Mass", "kg")
 addCatVar(ct.mo, "W",   "Work", "J")
@@ -109,7 +30,7 @@ addCatVar(ct.mo, s.th,  "Angle", s.dg)
 addCatVar(ct.mo, "Tp",  "Period", "s")
 addCatVar(ct.mo, "c",   "Circumference", "m")
 addCatVar(ct.mo, "r",   "Radius", "m")
-addCatVar(ct.mo, "ca",  "Centripital acceleration", "m/s2")
+addCatVar(ct.mo, "ca",  "Centripital acceleration", "m/s"..s.s2)
 addCatVar(ct.mo, "cF",  "Centripital force", "N")
 addCatVar(ct.mo, "cv",  "Centripital velocity", "m/s")
 
@@ -163,7 +84,7 @@ aF(ct.mo, 7, "c=2*pi*r", U("c", "r") )
 addCat(ct.th, "Thermal physics", "IB topic 3 & 10. Perform thermal related physics calculations")
 
 addCatVar(ct.th, "P",   "Pressure", "Pa")
-addCatVar(ct.th, "V",   "Volume", "m3")
+addCatVar(ct.th, "V",   "Volume", "m"..s.s3)
 addCatVar(ct.th, "T",   "Tempturature", "K")
 addCatVar(ct.th, "n",   "Amount", "mol")
 addCatVar(ct.th, "m",   "Mass", "kg")
@@ -172,7 +93,7 @@ addCatVar(ct.th, "tK",  "Kelvin", "nounit")
 addCatVar(ct.th, "tC",  "Celcius", "nounit")
 addCatVar(ct.th, "tF",  "Farhenhiet", "nounit")
 addCatVar(ct.th, "F",   "Force", "N")
-addCatVar(ct.th, "A",   "Area", "m2")
+addCatVar(ct.th, "A",   "Area", "m"..s.s2)
 addCatVar(ct.th, "Ek",  "Kinetic energy (translational)", "J")
 addCatVar(ct.th, "Q",   "Heat", "J")
 addCatVar(ct.th, "c",   "Specific heat capacity", "J/kg*K")
@@ -198,7 +119,7 @@ addCatVar(ct.wa, "F",   "Force", "N")
 addCatVar(ct.wa, "K",   "Spring constant", "N/m")
 addCatVar(ct.wa, "x",   "Displacement", "m")
 addCatVar(ct.wa, "m",   "Mass", "kg")
-addCatVar(ct.wa, "a",   "Acceleration", "m/s2")
+addCatVar(ct.wa, "a",   "Acceleration", "m/s"..s.s2)
 addCatVar(ct.wa, "Ep",  "Elastic potential energy", "J")
 addCatVar(ct.wa, "T",   "Period", "s")
 addCatVar(ct.wa, "fq",  "Frequency", "Hz")
@@ -228,7 +149,7 @@ aF(ct.wa, 2, "n0=("..con("C")..")/v0", U("n0", "v0") )
 aF(ct.wa, 2, "v=fq*"..s.la, U("v", "fq", s.la ) )
 aF(ct.wa, 2, "v0=fq*"..s.la0, U("v0", "fq", s.la0 ) )
 
-addCat(ct.ec, "Electric Curents", "IB Topic 5.")
+addCat(ct.ec, "Electric Curents", "IB Topic 5. Electricity.")
 addCatVar(ct.ec, "Ve",  "Energy", "J")
 addCatVar(ct.ec, "I",   "Current", "A")
 addCatVar(ct.ec, "q",   "Charge", "C")
@@ -238,20 +159,26 @@ addCatVar(ct.ec, "V",   "Voltage", "V")
 addCatVar(ct.ec, "A",   "Cross-sectional area", "m2")
 addCatVar(ct.ec, "l",   "Length", "m")
 addCatVar(ct.ec, "m",   "Mass", "kg")
-addCatVar(ct.ec, "", "", "")
+addCatVar(ct.ec, "v",   "Velocity", "m/s")
 
-addSubCat(ct.ec, 1, "Electrostatic?", "Static electricity")
+addSubCat(ct.ec, 1, "Electrostatic", "Solve for")
 aF(ct.ec, 1, "Ve=0.5*m*v^2", U( "Ve", "m", "v") )
 
-addSubCat(ct.ec, 2, "Electricity", "normal electricity")
+addSubCat(ct.ec, 2, "Electricity", "Solve for")
 aF(ct.ec, 2, "R=V/I", U("R", "V", "I") )
 aF(ct.ec, 2, "R=(p*L)/A", U("R", "p", "L", "A") )
+
+addCat(ct.fo, "Forces & Fields", "IB Topic 6. Forces and fields.")
+
+addSubCat(ct.fo, 1, "Forces", "Solve for")
+
+addSubCat(ct.fo, 1, "Fields", "Solve for")
 
 addCat(ct.ch, "Chemestry", "Chemistry related things that have some connection to physics")
 
 addCatVar(ct.ch, "atom",    "Atomic number", "nounit")
 addCatVar(ct.ch, "mass",    "Mass", "amu")
-addCatVar(ct.ch, "dens",    "Density", "kg/m3")
+addCatVar(ct.ch, "dens",    "Density", "kg/m"..s.s3)
 addCatVar(ct.ch, "c",       "Specific heat", "J/kg*K")
 addCatVar(ct.ch, "melt",    "Melting point", "K")
 addCatVar(ct.ch, "boil",    "Boiling point", "K")
@@ -297,6 +224,3 @@ aF(ct.ch, 1, "h_vap=ch.h_vap[atom]", U( "h_vap", "atom") )
 --aF(ct.ch, 1, "c_rad=ch.c_rad[atom]", U( "c_rad", "atom") )
 --aF(ct.ch, 1, "t_cond=ch.t_cond[atom]", U( "t_cond", "atom") )
 --aF(ct.ch, 1, "e_cond=ch.e_cond[atom]", U( "e_cond", "atom") )
-
---include "exdb.lua"
---include "units.lua"

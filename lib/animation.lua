@@ -1,3 +1,6 @@
+--@@  animation.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 ----------
 
@@ -25,6 +28,7 @@ end
 function on.timer()
     --current_screen():timer()
     local j = 1
+
     while j <= #timer.tasks do -- for each task
         if timer.tasks[j][2]() then -- delete it if has ended
             table.remove(timer.tasks, j)
@@ -48,6 +52,7 @@ timer.addTask = function(object, task) timer.start(0.01) table.insert(timer.task
 
 function timer.purgeTasks(object)
     local j = 1
+
     while j <= #timer.tasks do
         if timer.tasks[j][1] == object then
             table.remove(timer.tasks, j)
@@ -61,12 +66,12 @@ end
 ---------- Animable Object class
 Object = class()
 function Object:init(x, y, w, h, r)
-    self.tasks = {}
-    self.x = x
-    self.y = y
-    self.w = w
-    self.h = h
-    self.r = r
+    self.tasks   = {}
+    self.x       = x
+    self.y       = y
+    self.w       = w
+    self.h       = h
+    self.r       = r
     self.visible = true
 end
 
@@ -75,6 +80,7 @@ function Object:PushTask(task, t, ms, callback)
     timer.start(0.01)
     if #self.tasks == 1 then
         local ok = task(self, t, ms, callback)
+
         if not ok then table.remove(self.tasks, 1) end
     end
 end
@@ -84,6 +90,7 @@ function Object:PopTask()
     if #self.tasks > 0 then
         local task, t, ms, callback = unpack(self.tasks[1])
         local ok = task(self, t, ms, callback)
+
         if not ok then table.remove(self.tasks, 1) end
     end
 end
@@ -108,32 +115,34 @@ function Object:__Animate(t, ms, callback)
     if not ms then ms = 50 end
     if ms < 0 then print("Error: Invalid time divisor (must be >= 0)") return end
     ms = ms / timer.multiplier
-    if ms == 0 then ms = 1 end
+    if ms               == 0 then ms = 1 end
     if not t or type(t) ~= "table" then print("Error: Target position is " .. type(t)) return end
     if not t.x then t.x = self.x end
     if not t.y then t.y = self.y end
     if not t.w then t.w = self.w end
     if not t.h then t.h = self.h end
     if not t.r then t.r = self.r else t.r = math.pi * t.r / 180 end
-    local xinc = (t.x - self.x) / ms
+    local xinc  = (t.x - self.x) / ms
     local xside = xinc >= 0 and 1 or -1
-    local yinc = (t.y - self.y) / ms
+    local yinc  = (t.y - self.y) / ms
     local yside = yinc >= 0 and 1 or -1
-    local winc = (t.w - self.w) / ms
+    local winc  = (t.w - self.w) / ms
     local wside = winc >= 0 and 1 or -1
-    local hinc = (t.h - self.h) / ms
+    local hinc  = (t.h - self.h) / ms
     local hside = hinc >= 0 and 1 or -1
-    local rinc = (t.r - self.r) / ms
+    local rinc  = (t.r - self.r) / ms
     local rside = rinc >= 0 and 1 or -1
+
     timer.addTask(self, function()
         local b1, b2, b3, b4, b5 = false, false, false, false, false
+
         if (self.x + xinc * speed) * xside < t.x * xside then self.x = self.x + xinc * speed else b1 = true end
-        if self.y * yside < t.y * yside then self.y = self.y + yinc * speed else b2 = true end
-        if self.w * wside < t.w * wside then self.w = self.w + winc * speed else b3 = true end
-        if self.h * hside < t.h * hside then self.h = self.h + hinc * speed else b4 = true end
-        if self.r * rside < t.r * rside then self.r = self.r + rinc * speed else b5 = true end
-        if self.w < 0 then self.w = 0 end
-        if self.h < 0 then self.h = 0 end
+        if self.y * yside < t.y * yside then self.y                  = self.y + yinc * speed else b2 = true end
+        if self.w * wside < t.w * wside then self.w                  = self.w + winc * speed else b3 = true end
+        if self.h * hside < t.h * hside then self.h                  = self.h + hinc * speed else b4 = true end
+        if self.r * rside < t.r * rside then self.r                  = self.r + rinc * speed else b5 = true end
+        if self.w < 0 then self.w                                    = 0 end
+        if self.h < 0 then self.h                                    = 0 end
         if b1 and b2 and b3 and b4 and b5 then
             self.x, self.y, self.w, self.h, self.r = t.x, t.y, t.w, t.h, t.r
             self:PopTask()
@@ -151,6 +160,7 @@ function Object:__Delay(_, ms, callback)
     ms = ms / timer.multiplier
     if ms == 0 then ms = 1 end
     local t = 0
+
     timer.addTask(self, function()
         if t < ms then
             t = t + 1

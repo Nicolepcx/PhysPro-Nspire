@@ -1,3 +1,6 @@
+--@@  REFForce.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 RefForce = Screen()
 

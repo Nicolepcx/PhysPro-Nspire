@@ -1,8 +1,11 @@
+--@@  FPGui.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 CategorySel = WScreen()
 
-CategorySel.iconS = 48
-CategorySel.sublist = sList()
+CategorySel.iconS       = 48
+CategorySel.sublist     = sList()
 CategorySel:appendWidget(CategorySel.sublist, 5, 5 + 24)
 CategorySel.sublist:setSize(-10, -70)
 CategorySel.sublist.cid = 0
@@ -23,7 +26,7 @@ function CategorySel:paint(gc)
     gc:setColorRGB(255, 255, 255)
     gc:fillRect(self.x, self.y, self.w, self.h)
 
-    if not kIsInSubCatScreen then 
+    if not kIsInSubCatScreen then
         gc:setColorRGB(0, 0, 0)
         gc:setFont("sansserif", "r", 16)
         gc:drawString(pInfo["name"], self.x + 5, 0, "top")
@@ -49,6 +52,7 @@ end
 
 function CategorySel:pushed()
     local items = {}
+
     for cid, cat in ipairs(Categories) do
         table.insert(items, cat.name)
     end
@@ -64,10 +68,10 @@ end
 
 SubCatSel = WScreen()
 
-SubCatSel.sel = 1
-SubCatSel.sublist = sList()
+SubCatSel.sel         = 1
+SubCatSel.sublist     = sList()
 SubCatSel:appendWidget(SubCatSel.sublist, 5, 5 + 24)
-SubCatSel.back = sButton(utf8(9664) .. " Back")
+SubCatSel.back        = sButton(utf8(9664) .. " Back")
 SubCatSel:appendWidget(SubCatSel.back, 5, -5)
 SubCatSel.sublist:setSize(-10, -66)
 SubCatSel.sublist.cid = 0
@@ -94,7 +98,7 @@ end
 function SubCatSel:pushed(sel)
 
     kIsInSubCatScreen = true
-    self.cid = sel
+    self.cid          = sel
     local items = {}
     for sid, subcat in ipairs(Categories[sel].sub) do
         table.insert(items, subcat.name .. (#subcat.formulas == 0 and " (Empty)" or ""))
@@ -120,7 +124,7 @@ end
 -- Manual solver --
 -------------------
 
-manualSolver = WScreen()
+manualSolver    = WScreen()
 manualSolver.pl = sScreen(-20, -50)
 manualSolver:appendWidget(manualSolver.pl, 2, 4)
 
@@ -154,10 +158,10 @@ function manualSolver:paint(gc)
 
     gc:setFont("sansserif", "r", 10)
     local name = self.sub.name
-    local len = gc:getStringWidth(name)
+    local len  = gc:getStringWidth(name)
     if len >= .7*self.w then name = string.sub(name, 1, -10) .. ". " end
     local len = gc:getStringWidth(name)
-    local x = self.x + (self.w - len) / 2
+    local x   = self.x + (self.w - len) / 2
 
     --gc:setColorRGB(255,255,255)
     --gc:fillRect(x-3, 10, len+6, 18)
@@ -172,7 +176,7 @@ function manualSolver:postPaint(gc)
     --gc:drawRect(self.x, self.y, self.w, self.h-46)
 end
 
-basicFuncsInited = false
+basicFuncsInited    = false
 elementValuesInited = false
 
 function manualSolver:pushed(cid, sid)
@@ -181,21 +185,21 @@ function manualSolver:pushed(cid, sid)
         initBasicFunctions()
         basicFuncsInited = true
     end
-    
+
     if not elementValuesInited then
         initElementValues()
         elementValuesInited = true
     end
 
     self.pl.widgets = {}
-    self.pl.focus = 0
-    self.cid = cid
-    self.sid = sid
-    self.sub = Categories[cid].sub[sid]
-    self.pl.oy = 0
-    self.known = {}
-    self.inputs = {}
-    self.constants = {}
+    self.pl.focus   = 0
+    self.cid        = cid
+    self.sid        = sid
+    self.sub        = Categories[cid].sub[sid]
+    self.pl.oy      = 0
+    self.known      = {}
+    self.inputs     = {}
+    self.constants  = {}
 
     local inp, lbl
     local i = 0
@@ -220,10 +224,10 @@ function manualSolver:pushed(cid, sid)
             end
 
             self.inputs[variable] = inp
-            inp.ww = -145
+            inp.ww        = -145
             inp.focusDown = 4
-            inp.focusUp = -2
-            lbl = sLabel(variable, inp)
+            inp.focusUp   = -2
+            lbl           = sLabel(variable, inp)
 
             self.pl:appendWidget(inp, 60, i * 30 - 28)
             self.pl:appendWidget(lbl, 2, i * 30 - 28)
@@ -244,23 +248,23 @@ function manualSolver:pushed(cid, sid)
                     for k, _ in pairs(Units[variabledata.unit]) do
                         table.insert(itms, k)
                     end
-                    inp.dropdown = sDropdown(itms)
-                    inp.dropdown.unitmode = true
-                    inp.dropdown.change = self.update
-                    inp.dropdown.focusUp = nodropdown and -5 or -4
+                    inp.dropdown           = sDropdown(itms)
+                    inp.dropdown.unitmode  = true
+                    inp.dropdown.change    = self.update
+                    inp.dropdown.focusUp   = nodropdown and -5 or -4
                     inp.dropdown.focusDown = 2
                     self.pl:appendWidget(inp.dropdown, -2, i * 30 - 28)
-                    nodropdown = false
-                    lastdropdown = inp.dropdown
+                    nodropdown             = false
+                    lastdropdown           = inp.dropdown
                 else
                     self.pl:appendWidget(sLabel(""), -32, i * 30 - 28)
                 end
             else
-                nodropdown = true
+                nodropdown    = true
                 inp.focusDown = 1
                 if lastdropdown then
                     lastdropdown.focusDown = 1
-                    lastdropdown = false
+                    lastdropdown           = false
                 end
             end
 
@@ -275,7 +279,7 @@ function manualSolver:pushed(cid, sid)
     manualSolver.sb:update(0, math.floor(self.pl.h / 30 + .5), i)
     self.pl:giveFocus()
 
-    self.pl.focus = 1
+    self.pl.focus                = 1
     self.pl:getWidget().hasFocus = true
     self.pl:getWidget():getFocus()
 end
@@ -287,14 +291,14 @@ end
 function manualSolver:preSolve(input)
     local res, err
     res, err = math.eval(input.value)
-    res = res and round(res, 4)
+    res      = res and round(res, 4)
     print("Presolve : ", input.value .. " = " .. tostring(res), "(err ? = " .. tostring(err) .. ")")
     input.value = res and tostring(res) or input.value
     return res and 1 or false
 end
 
 function manualSolver:solve()
-    local inputed = {}
+    local inputed  = {}
     local disabled = {}
 
     for variable, input in pairs(self.inputs) do
@@ -323,8 +327,8 @@ function manualSolver:solve()
     for variable, value in pairs(self.known) do
         if (not inputed[variable] and self.inputs[variable]) then
             local variabledata = Categories[self.cid].varlink[variable]
-            local result = tostring(value)
-            local input = self.inputs[variable]
+            local result       = tostring(value)
+            local input        = self.inputs[variable]
 
             if input.dropdown and input.dropdown.rvalue ~= variabledata.unit then
                 result = Units.mainToSub(variabledata.unit, input.dropdown.rvalue, result)
@@ -412,7 +416,7 @@ function usedFormulas:removed()
         usedFormulas.ed:resize(1, 1)
         usedFormulas.ed:move(-10, -10)
     end
-    usedFormulas.ed = nil
+    usedFormulas.ed  = nil
     doNotDisplayIcon = false
 end
 

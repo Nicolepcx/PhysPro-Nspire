@@ -1,3 +1,7 @@
+--@@  exdb.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
+
 --This part is supposed to load external formulas stored in a string from a file in MyLib.
 --WIP
 

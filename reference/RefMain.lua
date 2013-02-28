@@ -1,3 +1,6 @@
+--@@  RefMain.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 --include "REFSIPrefixes.lua"
 --include "REFGreekAlphabet.lua"

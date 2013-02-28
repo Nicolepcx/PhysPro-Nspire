@@ -1,3 +1,6 @@
+--@@  REFBoolAlg.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 RefBoolAlg = Screen()
 

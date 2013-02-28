@@ -2,6 +2,7 @@
 ------------------------
 -- Start of about.lua --
 ------------------------
+
 --[[
 
 0-------------------0
@@ -20,20 +21,27 @@ Jim Bauwens         Adrien Bertrand
 TI-Planet.org       Inspired-Lua.org
 ]]--
 
-pInfo={name="PhysPro-Nspire", by="Mr. Kitty", ver="v1.2.0", web="http://github.com/alex3yoyo/physpro-nspire", license="LGPL3 License"}
+pInfo = {
+    name="PhysPro-Nspire",
+    by="alex3yoyo",
+    ver="v1.2.0",
+    web="http://github.com/alex3yoyo/physpro-nspire",
+    license="LGPL3 License"
+}
+
 infoStr = pInfo.name.." "..pInfo.ver.."\nBy "..pInfo.by.."\n"..pInfo.license.."\n"..pInfo.web
 print("\n"..infoStr.."\n") -- Prints info to console
 ----------------------
 -- End of about.lua --
 ----------------------
 
-------------------------------------
--- Start of database/database.lua --
-------------------------------------
+----------------------------------
+-- Start of database/dbmain.lua --
+----------------------------------
 
-----------------------------------
--- Start of database/values.lua --
-----------------------------------
+-----------------------------------
+-- Start of database/symbols.lua --
+-----------------------------------
 
 function utf8(n)
     return string.uchar(n)
@@ -45,11 +53,8 @@ function numberToSub(w,n)
     return w..utf8(SubNumbers[tonumber(n)])
 end
 
--- Symbols
-----------
-
 -- The Greeks
-g = {} -- Big    , Little   , Name
+g    = {} -- Big    , Little   , Name
 g.al = {utf8(913), utf8(945), "Alpha"}
 g.be = {utf8(914), utf8(946), "Beta"}
 g.ga = {utf8(915), utf8(947), "Gamma"}
@@ -75,45 +80,51 @@ g.ch = {utf8(935), utf8(967), "Chi"}
 g.ps = {utf8(936), utf8(968), "Psi"}
 g.om = {utf8(937), utf8(969), "Omega"}
 
-s = {} -- Symbols
-s.dg    = utf8(176)     -- degree symbol
-s.th    = g.th[2]       -- theta
-s.th0   = g.th[2].."0"  -- theta0
-s.la    = g.la[2]       -- lambda
-s.la0   = g.la[2].."0"  -- lambda0
-s.dv    = g.de[1].."v"  -- Change in velocity (delta v)
-s.dpm   = g.de[1].."pm" -- Change in momentum
-s.dt    = g.de[1].."t"  -- Change in time
-s.dh    = g.de[1].."h"  -- change in height
-s.om    = g.om[1]       -- Resistance
-s.omm   = g.om[1].."*m" -- Resistivity unit (ohms * meter)
-s.rh    = g.rh[2]       -- Resistivity
+s     = {} -- Symbols
+s.dg  = utf8(176)       -- degree symbol
+s.ph  = utf8(8315)      -- superscript "-"
+s.p1  = utf8(185)       -- superscript "1"
+s.p1h = s.ph..s.p1
+s.p2  = utf8(178)       -- superscript "2"
+s.p2h = s.ph..s.p2
+s.p3  = utf8(179)       -- superscript "3"
+s.th  = g.th[2]         -- theta
+s.th0 = g.th[2].."0"    -- theta0
+s.la  = g.la[2]         -- lambda
+s.la0 = g.la[2].."0"    -- lambda0
+s.dv  = g.de[1].."v"    -- Change in velocity (delta v)
+s.dpm = g.de[1].."pm"   -- Change in momentum
+s.dt  = g.de[1].."t"    -- Change in time
+s.dh  = g.de[1].."h"    -- change in height
+s.om  = g.om[1]         -- Resistance
+s.omm = g.om[1].."*m"   -- Resistivity unit (ohms * meter)
+s.rh  = g.rh[2]         -- Resistivity
+s.mu  = g.mu[2]         -- Mu greek character
+---------------------------------
+-- End of database/symbols.lua --
+---------------------------------
 
-function refCon() -- Makes the constants reference page
-    local t2 = {}
-    for k,v in ipairs(Constants) do
-        t2[k] = {v.info,v.key,v.val.." "..v.unit}
-    end
-    return t2
-end
+-------------------------------------
+-- Start of database/constants.lua --
+-------------------------------------
 
 Constants = {
-{key="g",   info="Acceleration due to gravity", val="-9.81",            unit="m/s^2"},
-{key="G",   info="Gravitational constant",      val="6.67*10^(-11)",    unit="Nm^2/kg^-2"},
-{key="N",   info="Avogadro's constant",         val="6.022*10^(23)",    unit="mol^-1"},
-{key="R",   info="Gas constant",                val="8.314",            unit="J/((mol^-1)*(K^-1))"},
-{key="k1",  info="Boltzmann's constant",        val="1.38*10^(-23)",    unit="J/K^-1"},
-{key="k2",  info="Stefan-Boltzmann constant",   val="5.67 * 10^-8",     unit="W*m^-2*K^-1"},
-{key="k3",  info="Coulomb constant",            val="8.99 * 10^9",      unit="N*m^2*C^-2"},
-{key="C",   info="Speed of light in vacuum",    val="2.9979*10^(8)",    unit="m/s"},
-{key="h",   info="Planck constant",             val="6.626*10^(-34)",   unit="J/s"},
-{key="q",   info="Elementary charge",           val="1.60218*10^(-19)", unit="C"},
-{key="me",  info="Electron rest mass",          val="9.109*10^(-31)",   unit="kg"},
-{key="mp",  info="Proton rest mass",            val="1.6726*10^(-27)",  unit="kg"},
-{key="mn",  info="Neutron rest mass",           val="1.675*10^(-27)",   unit="kg"},
-{key="mu",  info="Atomic mass unit",            val="1.66*10^(-27)",    unit="kg"},
---{key=utf8(949).."0", info="Permittivity of a vacuum", val="8.854*10^(-12)", unit="F/m^-1"},
---{key=utf8(956).."0", info="Permeability of a vacuum", val="4*pi*10^(-7)", unit="N/A^-2"}
+{key="g",   info="Acceleration due to gravity", val="-9.81",                unit="m/s"..s.p2},
+{key="G",   info="Gravitational constant",      val="6.67*10^(-11)",        unit="Nm"..s.p2.."/kg"..s.p2h},
+{key="N",   info="Avogadro's constant",         val="6.022*10^(23)",        unit="mol"..s.p1h},
+{key="R",   info="Gas constant",                val="8.314",                unit="J/((mol"..s.p1h..")*(K"..s.p1h.."))"},
+{key="k1",  info="Boltzmann's constant",        val="1.38*10^(-23)",        unit="J/K"..s.p1h},
+{key="k2",  info="Stefan-Boltzmann constant",   val="5.67*10^-8",           unit="W*m"..s.p2h.."*K"..s.p1h},
+{key="k3",  info="Coulomb constant",            val="8.99*10^9",            unit="N*m"..s.p2.."*C"..s.p2h},
+{key="C",   info="Speed of light in vacuum",    val="2.9979*10^(8)",        unit="m/s"},
+{key="h",   info="Planck constant",             val="6.626*10^(-34)",       unit="J/s"},
+{key="q",   info="Elementary charge",           val="1.60218*10^(-19)",     unit="C"},
+{key="me",  info="Electron rest mass",          val="9.109*10^(-31)",       unit="kg"},
+{key="mp",  info="Proton rest mass",            val="1.6726*10^(-27)",      unit="kg"},
+{key="mn",  info="Neutron rest mass",           val="1.675*10^(-27)",       unit="kg"},
+{key="mu",  info="Atomic mass unit",            val="1.66*10^(-27)",        unit="kg"},
+{key=utf8(949).."0", info="Permittivity of a vacuum", val="8.854*10^(-12)", unit="F/m"..s.p1h},
+{key=utf8(956).."0", info="Permeability of a vacuum", val="4*pi*10^(-7)",   unit="N/A"..s.p2h}
 }
 
 function con(i) -- Shortcut for using constants in the database part
@@ -125,30 +136,46 @@ function con(i) -- Shortcut for using constants in the database part
     return "undef"
 end
 
+function refCon() -- Makes the constants reference page
+    local t2 = {}
+
+    for k,v in ipairs(Constants) do
+        t2[k] = {v.info,v.key,v.val.." "..v.unit}
+    end
+    return t2
+end
+-----------------------------------
+-- End of database/constants.lua --
+-----------------------------------
+
+--------------------------------
+-- Start of database/chem.lua --
+--------------------------------
+
 -- Chemistry values
 function initElementValues() -- Stores elements into nspire documents variables
     local elementValues = {
-        --["ch.atom"] = [[Define ch.atom = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118 }]],
-        --["ch.name"] = [[Define ch.name = { "Hydrogen", "Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen", "Fluorine", "Neon", "Sodium", "Magnesium", "Aluminium", "Silicon", "Phosphorus", "Sulfur", "Chlorine", "Argon", "Potassium", "Calcium", "Scandium", "Titanium", "Vanadium", "Chromium", "Manganese", "Iron", "Cobalt", "Nickel", "Copper", "Zinc", "Gallium", "Germanium", "Arsenic", "Selenium", "Bromine", "Krypton", "Rubidium", "Strontium", "Yttrium", "Zirconium", "Niobium", "Molybdenum", "Technetium", "Ruthenium", "Rhodium", "Palladium", "Silver", "Cadmium", "Indium", "Tin", "Antimony", "Tellurium", "Iodine", "Xenon", "Caesium", "Barium", "Lanthanum", "Cerium", "Praseodymium", "Neodymium", "Promethium", "Samarium", "Europium", "Gadolinium", "Terbium", "Dysprosium", "Holmium", "Erbium", "Thulium", "Ytterbium", "Lutetium", "Hafnium", "Tantalum", "Tungsten", "Rhenium", "Osmium", "Iridium", "Platinum", "Gold", "Mercury", "Thallium", "Lead", "Bismuth", "Polonium", "Astatine", "Radon", "Francium", "Radium", "Actinium", "Thorium", "Protactinium", "Uranium", "Neptunium", "Plutonium", "Americium", "Curium", "Berkelium", "Californium", "Einsteinium", "Fermium", "Mendelevium", "Nobelium", "Lawrencium", "Rutherfordium", "Dubnium", "Seaborgium", "Bohrium", "Hassium", "Meitnerium", "Darmstadtium", "Roentgenium", "Ununbium", "Ununtrium", "Ununquadium", "Ununpentium", "Ununhexium", "Ununseptium", "Ununoctium" }]],
-        --["ch.sym"] = [[Define ch.sym = { "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Uub", "Uut", "Uuq", "Uup", "Uuh", "Uus", "Uuo" }]],
-        ["ch.mass"] = [[Define ch.mass = { 1.00794, 4.002602, 6.941, 9.012182, 10.811, 12.0107, 14.00674, 15.9994, 18.9984032, 20.1797, 22.98976928, 24.305, 26.9815386, 28.0855, 30.973762, 32.065, 35.4527, 39.948, 39.0983, 40.078, 44.955912, 47.867, 50.9415, 51.9961, 54.938045, 55.845, 58.933195, 58.6934, 63.546, 65.409, 69.723, 72.64, 74.9216, 78.96, 79.904, 83.798, 85.4678, 87.62, 88.90585, 91.224, 92.90638, 95.96, 98, 101.07, 102.9055, 106.42, 107.8682, 112.411, 114.818, 118.71, 121.76, 127.6, 126.90447, 131.293, 132.9054519, 137.327, 138.90547, 140.116, 140.90765, 144.242, 145, 150.36, 151.964, 157.25, 158.92535, 162.5, 164.93032, 167.259, 168.93421, 173.054, 174.9668, 178.49, 180.94788, 183.84, 186.207, 190.23, 192.217, 195.084, 196.966569, 200.59, 204.3833, 207.2, 208.9804, 209, 210, 222, 223, 226, 227, 232.03806, 231.03588, 238.02891, 237, 244, 243, 247, 247, 251, 252, 257, 258, 259, 262, 261, 262, 266, 264, 277, 268, 271, 272, 285, 284, 289, 288, 293, undef, 294 }]],
-        --["ch.type"] = [[Define ch.type = { "Nonmetal", "Noble", "Alkali", "Alkaline", "Metalloid", "Nonmetal", "Nonmetal", "Nonmetal", "Halogen", "Noble", "Alkali", "Alkaline", "Other metals", "Metalloid", "Nonmetal", "Nonmetal", "Halogen", "Noble", "Alkali", "Alkaline", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Other metals", "Metalloid", "Metalloid", "Nonmetal", "Halogen", "Noble", "Alkali", "Alkaline", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Other metals", "Other metals", "Metalloid", "Metalloid", "Halogen", "Noble", "Alkali", "Alkaline", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Other metals", "Other metals", "Other metals", "Metalloid", "Halogen", "Noble", "Alkali", "Alkaline", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Other metals", "Other metals", "Other metals", "Other metals", undef, "Noble" }]],
-        --["ch.state"] = [[Define ch.state = { "Gas", "Gas", "Solid", "Solid", "Solid", "Solid", "Gas", "Gas", "Gas", "Gas", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Gas", "Gas", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Liquid", "Gas", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Gas", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Liquid", "Solid", "Solid", "Solid", "Solid", "Solid", "Gas", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown" }]],
-        --["ch.group"] = [[Define ch.group = { "Group 1 (I A)","Group 2 (II A)","Group 3 (III B)","Group 4 (IV B)","Group 5 (V B)","Group 6 (VI B)","Group 7 (VII B)","Group 8 (VIII B)","Group 9 (VIII B)","Group 10 (VIII B)","Group 11 (I B)","Group 12 (II B)","Group 13 (III A)","Group 14 (IV A)","Group 15 (V A)","Group 16 (VI A)","Group 17 (VII A)","Group 18 (VIII A)","Lanthanides","Actinides"}]],
-        --["ch.group"] = [[Define ch.period = {}]],
+        --["ch.atom"]   = [[Define ch.atom = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118 }]],
+        --["ch.name"]   = [[Define ch.name = { "Hydrogen", "Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen", "Fluorine", "Neon", "Sodium", "Magnesium", "Aluminium", "Silicon", "Phosphorus", "Sulfur", "Chlorine", "Argon", "Potassium", "Calcium", "Scandium", "Titanium", "Vanadium", "Chromium", "Manganese", "Iron", "Cobalt", "Nickel", "Copper", "Zinc", "Gallium", "Germanium", "Arsenic", "Selenium", "Bromine", "Krypton", "Rubidium", "Strontium", "Yttrium", "Zirconium", "Niobium", "Molybdenum", "Technetium", "Ruthenium", "Rhodium", "Palladium", "Silver", "Cadmium", "Indium", "Tin", "Antimony", "Tellurium", "Iodine", "Xenon", "Caesium", "Barium", "Lanthanum", "Cerium", "Praseodymium", "Neodymium", "Promethium", "Samarium", "Europium", "Gadolinium", "Terbium", "Dysprosium", "Holmium", "Erbium", "Thulium", "Ytterbium", "Lutetium", "Hafnium", "Tantalum", "Tungsten", "Rhenium", "Osmium", "Iridium", "Platinum", "Gold", "Mercury", "Thallium", "Lead", "Bismuth", "Polonium", "Astatine", "Radon", "Francium", "Radium", "Actinium", "Thorium", "Protactinium", "Uranium", "Neptunium", "Plutonium", "Americium", "Curium", "Berkelium", "Californium", "Einsteinium", "Fermium", "Mendelevium", "Nobelium", "Lawrencium", "Rutherfordium", "Dubnium", "Seaborgium", "Bohrium", "Hassium", "Meitnerium", "Darmstadtium", "Roentgenium", "Ununbium", "Ununtrium", "Ununquadium", "Ununpentium", "Ununhexium", "Ununseptium", "Ununoctium" }]],
+        --["ch.sym"]    = [[Define ch.sym = { "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Uub", "Uut", "Uuq", "Uup", "Uuh", "Uus", "Uuo" }]],
+        ["ch.mass"]     = [[Define ch.mass = { 1.00794, 4.002602, 6.941, 9.012182, 10.811, 12.0107, 14.00674, 15.9994, 18.9984032, 20.1797, 22.98976928, 24.305, 26.9815386, 28.0855, 30.973762, 32.065, 35.4527, 39.948, 39.0983, 40.078, 44.955912, 47.867, 50.9415, 51.9961, 54.938045, 55.845, 58.933195, 58.6934, 63.546, 65.409, 69.723, 72.64, 74.9216, 78.96, 79.904, 83.798, 85.4678, 87.62, 88.90585, 91.224, 92.90638, 95.96, 98, 101.07, 102.9055, 106.42, 107.8682, 112.411, 114.818, 118.71, 121.76, 127.6, 126.90447, 131.293, 132.9054519, 137.327, 138.90547, 140.116, 140.90765, 144.242, 145, 150.36, 151.964, 157.25, 158.92535, 162.5, 164.93032, 167.259, 168.93421, 173.054, 174.9668, 178.49, 180.94788, 183.84, 186.207, 190.23, 192.217, 195.084, 196.966569, 200.59, 204.3833, 207.2, 208.9804, 209, 210, 222, 223, 226, 227, 232.03806, 231.03588, 238.02891, 237, 244, 243, 247, 247, 251, 252, 257, 258, 259, 262, 261, 262, 266, 264, 277, 268, 271, 272, 285, 284, 289, 288, 293, undef, 294 }]],
+        ["ch.dens"]     = [[Define ch.dens = { 0.0899, 0.1785, 535, 1848, 2460, 2260, 1.251, 1.429, 1.696, 0.9, 968, 1738, 2700, 2330, 1823, 1960, 3.214, 1.784, 856, 1550, 2985, 4507, 6110, 7140, 7470, 7874, 8900, 8908, 8920, 7140, 5904, 5323, 5727, 4819, 3120, 3.75, 1532, 2630, 4472, 6511, 8570, 10280, 11500, 12370, 12450, 12023, 10490, 8650, 7310, 7310, 6697, 6240, 4940, 5.9, 1879, 3510, 6146, 6689, 6640, 7010, 7264, 7353, 5244, 7901, 8219, 8551, 8795, 9066, 9321, 6570, 9841, 13310, 16650, 19250, 21020, 22610, 22650, 21090, 19300, 13534, 11850, 11340, 9780, 9196, undef, 9.73, undef, 5000, 10070, 11724, 15370, 19050, 20450, 19816, undef, 13510, 14780, 15100, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
+        ["ch.c"]        = [[Define ch.c = { 14300, 5193.1, 3570, 1820, 1030, 710, 1040, 919, 824, 1030., 1230, 1020, 904, 710, 769.7, 705, 478.2, 520.33, 757, 631, 567, 520, 489, 448, 479, 449, 421, 445, 384.4, 388, 371, 321.4, 328, 321.2, 947.3, 248.05, 364, 300, 298, 278, 265, 251, 63, 238, 240, 240, 235, 230, 233, 217, 207, 201, 429., 158.32, 242, 205, 195, 192, 193, 190, undef, 196, 182, 240, 182, 167, 165, 168, 160, 154, 154, 144, 140, 132, 137, 130, 131, 133, 129.1, 139.5, 129, 127, 122, undef, undef, 93.65, undef, 92., 120, 118, 99.1, 116, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
+        ["ch.melt"]     = [[Define ch.melt = { 14.01, 0.95, 453.69, 1560, 2348, 3823, 63.05, 54.8, 53.5, 24.56, 370.87, 923, 933.47, 1687, 317.3, 388.36, 171.6, 83.8, 336.53, 1115, 1814, 1941, 2183, 2180, 1519, 1811, 1768, 1728, 1357.77, 692.68, 302.91, 1211.4, 1090, 494, 265.8, 115.79, 312.46, 1050, 1799, 2128, 2750, 2896, 2430, 2607, 2237, 1828.05, 1234.93, 594.22, 429.75, 505.08, 903.78, 722.66, 386.85, 161.3, 301.59, 1000, 1193, 1071, 1204, 1294, 1373, 1345, 1095, 1586, 1629, 1685, 1747, 1770, 1818, 1092, 1936, 2506, 3290, 3695, 3459, 3306, 2739, 2041.4, 1337.33, 234.32, 577, 600.61, 544.4, 527, 575, 202, 300, 973, 1323, 2023, 1845, 1408, 917, 913, 1449, 1618, 1323, 1173, 1133, 1800, 1100, 1100, 1900, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
+        ["ch.boil"]     = [[Define ch.boil = { 20.28, 4.22, 1615, 2743, 4273, 4300, 77.36, 90.2, 85.03, 27.07, 1156, 1363, 2792, 3173, 553.6, 717.87, 239.11, 87.3, 1032, 1757, 3103, 3560, 3680, 2944, 2334, 3134, 3200, 3186, 3200, 1180, 2477, 3093, 887, 958, 332, 119.93, 961, 1655, 3618, 4682, 5017, 4912, 4538, 4423, 3968, 3236, 2435, 1040, 2345, 2875, 1860, 1261, 457.4, 165.1, 944, 2143, 3737, 3633, 3563, 3373, 3273, 2076, 1800, 3523, 3503, 2840, 2973, 3141, 2223, 1469, 3675, 4876, 5731, 5828, 5869, 5285, 4701, 4098, 3129, 629.88, 1746, 2022, 1837, 1235, 610, 211.3, 950, 2010, 3473, 5093, 4273, 4200, 4273, 3503, 2284, 3383, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
+        ["ch.h_fus"]    = [[Define ch.h_fus = { 0.558, 0.02, 3., 7.95, 50, 105, 0.36, 0.222, 0.26, 0.34, 2.6, 8.7, 10.7, 50.2, 0.64, 1.73, 3.2, 1.18, 2.33, 8.54, 16, 18.7, 22.8, 20.5, 13.2, 13.8, 16.2, 17.2, 13.1, 7.35, 5.59, 31.8, 27.7, 5.4, 5.8, 1.64, 2.19, 8, 11.4, 21, 26.8, 36, 23, 25.7, 21.7, 16.7, 11.3, 6.3, 3.26, 7., 19.7, 17.5, 7.76, 2.3, 2.09, 8., 6.2, 5.5, 6.9, 7.1, 7.7, 8.6, 9.2, 10, 10.8, 11.1, 17., 19.9, 16.8, 7.7, 22, 25.5, 36, 35, 33, 31, 26, 20, 12.5, 2.29, 4.2, 4.77, 10.9, 13, 6, 3, 2, 8, 14, 16, 15, 14, 10, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
+        ["ch.h_vap"]    = [[Define ch.h_vap = { 0.452, 0.083, 147, 297, 507, 715, 2.79, 3.41, 3.27, 1.75, 97.7, 128, 293, 359, 12.4, 9.8, 10.2, 6.5, 76.9, 155, 318, 425, 453, 339, 220, 347, 375, 378, 300, 119, 256, 334, 32.4, 26, 14.8, 9.02, 72, 137, 380, 580, 690, 600, 550, 580, 495, 380, 255, 100, 230, 290, 68, 48, 20.9, 12.64, 65, 140, 400, 350, 330, 285, 290, 175, 175, 305, 295, 280, 265, 285, 250, 160, 415, 630, 735, 800, 705, 630, 560, 490, 330, 59.2, 165, 178, 160, 100, 40, 17, 65, 125, 400, 530, 470, 420, 335, 325, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]]
+        --["ch.type"]   = [[Define ch.type = { "Nonmetal", "Noble", "Alkali", "Alkaline", "Metalloid", "Nonmetal", "Nonmetal", "Nonmetal", "Halogen", "Noble", "Alkali", "Alkaline", "Other metals", "Metalloid", "Nonmetal", "Nonmetal", "Halogen", "Noble", "Alkali", "Alkaline", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Other metals", "Metalloid", "Metalloid", "Nonmetal", "Halogen", "Noble", "Alkali", "Alkaline", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Other metals", "Other metals", "Metalloid", "Metalloid", "Halogen", "Noble", "Alkali", "Alkaline", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Lanthanoid", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Other metals", "Other metals", "Other metals", "Metalloid", "Halogen", "Noble", "Alkali", "Alkaline", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Actinoid", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Transition", "Other metals", "Other metals", "Other metals", "Other metals", undef, "Noble" }]],
+        --["ch.state"]  = [[Define ch.state = { "Gas", "Gas", "Solid", "Solid", "Solid", "Solid", "Gas", "Gas", "Gas", "Gas", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Gas", "Gas", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Liquid", "Gas", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Gas", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Liquid", "Solid", "Solid", "Solid", "Solid", "Solid", "Gas", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Solid", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown" }]],
+        --["ch.group"]  = [[Define ch.group = { "Group 1 (I A)","Group 2 (II A)","Group 3 (III B)","Group 4 (IV B)","Group 5 (V B)","Group 6 (VI B)","Group 7 (VII B)","Group 8 (VIII B)","Group 9 (VIII B)","Group 10 (VIII B)","Group 11 (I B)","Group 12 (II B)","Group 13 (III A)","Group 14 (IV A)","Group 15 (V A)","Group 16 (VI A)","Group 17 (VII A)","Group 18 (VIII A)","Lanthanides","Actinides"}]],
+        --["ch.group"]  = [[Define ch.period = {}]],
         --["ch.e_conf"] = [[Define ch.e_conf = { "1s¹","1s²","[He]2s¹","[He]2s²","[He]2s²2p¹","[He]2s²2p²","[He]2s²2p³","[He]2s²2p⁴","[He]2s²2p⁵","[He]2s²2p⁶","[Ne]3s¹","[Ne]3s²","[Ne]3s²3p¹","[Ne]3s²3p²","[Ne]3s²3p³","[Ne]3s²3p⁴","[Ne]3s²3p⁵","[Ne]3s²3p⁶","[Ar]4s¹","[Ar]4s²","[Ar]3d¹4s²","[Ar]3d²4s²","[Ar]3d³4s²","[Ar]3d⁵4s¹","[Ar]3d⁵4s²","[Ar]3d⁶4s²","[Ar]3d⁷4s²","[Ar]3d⁸4s²","[Ar]3d¹⁰4s¹","[Ar]3d¹⁰4s²","[Ar]3d¹⁰4s²4p¹","[Ar]3d¹⁰4s²4p²","[Ar]3d¹⁰4s²4p³","[Ar]3d¹⁰4s²4p⁴","[Ar]3d¹⁰4s²4p⁵","[Ar]3d¹⁰4s²4p⁶","[Kr]5s¹","[Kr]5s²","[Kr]4d¹5s²","[Kr]4d²5s²","[Kr]4d⁴5s¹","[Kr]4d⁵5s¹","[Kr]4d⁵5s²","[Kr]4d⁷5s¹","[Kr]4d⁸5s¹","[Kr]4d¹⁰","[Kr]4d¹⁰5s¹","[Kr]4d¹⁰5s²","[Kr]4d¹⁰5s²5p¹","[Kr]4d¹⁰5s²5p²","[Kr]4d¹⁰5s²5p³","[Kr]4d¹⁰5s²5p⁴","[Kr]4d¹⁰5s²5p⁵","[Kr]4d¹⁰5s²5p⁶","[Xe]6s¹","[Xe]6s²","[Xe]5d¹6s²","[Xe]4f¹5d¹6s²","[Xe]4f³6s²","[Xe]4f⁴6s²","[Xe]4f⁵6s²","[Xe]4f⁶6s²","[Xe]4f⁷6s²","[Xe]4f⁷5d¹6s²","[Xe]4f⁹6s²","[Xe]4f¹⁰6s²","[Xe]4f¹¹6s²","[Xe]4f¹²6s²","[Xe]4f¹³6s²","[Xe]4f¹⁴6s²","[Xe]4f¹⁴5d¹6s²","[Xe]4f¹⁴5d²6s²","[Xe]4f¹⁴5d³6s²","[Xe]4f¹⁴5d⁴6s²","[Xe]4f¹⁴5d⁵6s²","[Xe]4f¹⁴5d⁶6s²","[Xe]4f¹⁴5d⁷6s²","[Xe]4f¹⁴5d⁹6s¹","[Xe]4f¹⁴5d¹⁰6s¹","[Xe]4f¹⁴5d¹⁰6s²","[Xe]4f¹⁴5d¹⁰6s²6p¹","[Xe]4f¹⁴5d¹⁰6s²6p²","[Xe]4f¹⁴5d¹⁰6s²6p³","[Xe]4f¹⁴5d¹⁰6s²6p⁴","[Xe]4f¹⁴5d¹⁰6s²6p⁵","[Xe]4f¹⁴5d¹⁰6s²6p⁶","[Rn]7s¹","[Rn]7s²","[Rn]6d¹7s²","[Rn]6d²7s²","[Rn]5f²6d¹7s²","[Rn]5f³6d¹7s²","[Rn]5f⁴6d¹7s²","[Rn]5f⁶7s²","[Rn]5f⁷7s²","[Rn]5f⁷6d¹7s²","[Rn]5f⁹7s²","[Rn]5f¹⁰7s²","[Rn]5f¹¹7s²","[Rn]5f¹²7s²","[Rn]5f¹³7s²","[Rn]5f¹⁴7s²","[Rn]5f¹⁴6d¹7s²","[Rn]5f¹⁴6d²7s²","[Rn]5f¹⁴6d³7s²","[Rn]5f¹⁴6d⁴7s²","[Rn]5f¹⁴6d⁵7s²","[Rn]5f¹⁴6d⁶7s²","[Rn]5f¹⁴6d⁷7s²","[Rn]5f¹⁴6d⁹7s¹","[Rn]5f¹⁴6d¹⁰7s¹","[Rn]5f¹⁴6d¹⁰7s²","[Rn]5f¹⁴6d¹⁰7s²7p¹","[Rn]5f¹⁴6d¹⁰7s²7p²","[Rn]5f¹⁴6d¹⁰7s²7p³","[Rn]5f¹⁴6d¹⁰7s²7p⁴",undef,"[Rn]5f¹⁴6d¹⁰7s²7p⁶" }]],
         --["ch.v_elec"] = [[Define ch.v_elec = { 1, 0, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 5, 0, 1, 2, 3, 4, 5, 6, 4, 3, 4, 4, 2, 2, 3, 4, 5, 6, 7, 4, 1, 2, 3, 4, 5, 6, 7, 6, 6, 4, 4, 2, 3, 4, 5, 6, 7, 6, 3, 2, 3, 4, 4, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 7, 6, 6, 7, 2, 3, 4, 5, 6, 7, 6, 3, 2, 3, 4, 5, 6, 6, 6, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 5, 6, 7, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, 6 }]],
-        --["ch.i_eng"] = [[Define ch.i_eng = { 1312., 2372.3, 520.2, 899.5, 800.6, 1086.5, 1402.3, 1313.9, 1681., 2080.7, 495.8, 737.7, 577.5, 786.5, 1011.8, 999.6, 1251.2, 1520.6, 418.8, 589.8, 633.1, 658.8, 650.9, 652.9, 717.3, 762.5, 760.4, 737.1, 745.5, 906.4, 578.8, 762, 947., 941., 1139.9, 1350.8, 403., 549.5, 600, 640.1, 652.1, 684.3, 702, 710.2, 719.7, 804.4, 731., 867.8, 558.3, 708.6, 834, 869.3, 1008.4, 1170.4, 375.7, 502.9, 538.1, 534.4, 527, 533.1, 540, 544.5, 547.1, 593.4, 565.8, 573., 581., 589.3, 596.7, 603.4, 523.5, 658.5, 761, 770, 760, 840, 880, 870, 890.1, 1007.1, 589.4, 715.6, 703, 812.1, 890, 1037, 380, 509.3, 499, 587, 568, 597.6, 604.5, 584.7, 578, 581, 601, 608, 619, 627, 635, 642, 470, 580, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
-        --["ch.e_neg"] = [[Define ch.e_neg = { 2.2, undef, 0.98, 1.57, 2.04, 2.55, 3.04, 3.44, 3.98, undef, 0.93, 1.31, 1.61, 1.9, 2.19, 2.58, 3.16, undef, 0.82, 1., 1.36, 1.54, 1.63, 1.66, 1.55, 1.83, 1.88, 1.91, 1.9, 1.65, 1.81, 2.01, 2.18, 2.55, 2.96, 3., 0.82, 0.95, 1.22, 1.33, 1.6, 2.16, 1.9, 2.2, 2.28, 2.2, 1.93, 1.69, 1.78, 1.96, 2.05, 2.1, 2.66, 2.6, 0.79, 0.89, 1.1, 1.12, 1.13, 1.14, undef, 1.17, undef, 1.2, undef, 1.22, 1.23, 1.24, 1.25, undef, 1.27, 1.3, 1.5, 2.36, 1.9, 2.2, 2.2, 2.28, 2.54, 2., 1.62, 2.33, 2.02, 2., 2.2, undef, 0.7, 0.9, 1.1, 1.3, 1.5, 1.38, 1.36, 1.28, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
-        --["ch.e_aff"] = [[Define ch.e_aff = { 72.8, 0, 59.6, 0, 26.7, 153.9, 7, 141, 328, 0, 52.8, 0, 42.5, 133.6, 72, 200, 349, 0, 48.4, 2.37, 18.1, 7.6, 50.6, 64.3, 0, 15.7, 63.7, 112, 118.4, 0, 28.9, 119, 78, 195, 324.6, 0, 46.9, 5.03, 29.6, 41.1, 86.1, 71.9, 53, 101.3, 109.7, 53.7, 125.6, 0, 28.9, 107.3, 103.2, 190.2, 295.2, 0, 45.5, 13.95, 48, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 31, 78.6, 14.5, 106.1, 151, 205.3, 222.8, 0, 19.2, 35.1, 91.2, 183.3, 270.1, 0, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
-        --["ch.a_rad"] = [[Define ch.a_rad = { 25, undef, 145, 105, 85, 70, 65, 60, 50, undef, 180, 150, 125, 110, 100, 100, 100, 71, 220, 180, 160, 140, 135, 140, 140, 140, 135, 135, 135, 135, 130, 125, 115, 115, 115, undef, 235, 200, 180, 155, 145, 145, 135, 130, 135, 140, 160, 155, 155, 145, 145, 140, 140, undef, 260, 215, 195, 185, 185, 185, 185, 185, 185, 180, 175, 175, 175, 175, 175, 175, 175, 155, 145, 135, 135, 130, 135, 135, 135, 150, 190, 180, 160, 190, 0, undef, undef, 215, 195, 180, 180, 175, 175, 175, 175, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
-        --["ch.c_rad"] = [[Define ch.c_rad = { 37, 32, 134, 90, 82, 77, 75, 73, 71, 69, 154, 130, 118, 111, 106, 102, 99, 97, 196, 174, 144, 136, 125, 127, 139, 125, 126, 121, 138, 131, 126, 122, 119, 116, 114, 110, 211, 192, 162, 148, 137, 145, 156, 126, 135, 131, 153, 148, 144, 141, 138, 135, 133, 130, 225, 198, 169, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, 160, 150, 138, 146, 159, 128, 137, 128, 144, 149, 148, 147, 146, undef, undef, 145, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
-        ["ch.dens"] = [[Define ch.dens = { 0.0899, 0.1785, 535, 1848, 2460, 2260, 1.251, 1.429, 1.696, 0.9, 968, 1738, 2700, 2330, 1823, 1960, 3.214, 1.784, 856, 1550, 2985, 4507, 6110, 7140, 7470, 7874, 8900, 8908, 8920, 7140, 5904, 5323, 5727, 4819, 3120, 3.75, 1532, 2630, 4472, 6511, 8570, 10280, 11500, 12370, 12450, 12023, 10490, 8650, 7310, 7310, 6697, 6240, 4940, 5.9, 1879, 3510, 6146, 6689, 6640, 7010, 7264, 7353, 5244, 7901, 8219, 8551, 8795, 9066, 9321, 6570, 9841, 13310, 16650, 19250, 21020, 22610, 22650, 21090, 19300, 13534, 11850, 11340, 9780, 9196, undef, 9.73, undef, 5000, 10070, 11724, 15370, 19050, 20450, 19816, undef, 13510, 14780, 15100, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
-        ["ch.c"] = [[Define ch.c = { 14300, 5193.1, 3570, 1820, 1030, 710, 1040, 919, 824, 1030., 1230, 1020, 904, 710, 769.7, 705, 478.2, 520.33, 757, 631, 567, 520, 489, 448, 479, 449, 421, 445, 384.4, 388, 371, 321.4, 328, 321.2, 947.3, 248.05, 364, 300, 298, 278, 265, 251, 63, 238, 240, 240, 235, 230, 233, 217, 207, 201, 429., 158.32, 242, 205, 195, 192, 193, 190, undef, 196, 182, 240, 182, 167, 165, 168, 160, 154, 154, 144, 140, 132, 137, 130, 131, 133, 129.1, 139.5, 129, 127, 122, undef, undef, 93.65, undef, 92., 120, 118, 99.1, 116, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
-        ["ch.melt"] = [[Define ch.melt = { 14.01, 0.95, 453.69, 1560, 2348, 3823, 63.05, 54.8, 53.5, 24.56, 370.87, 923, 933.47, 1687, 317.3, 388.36, 171.6, 83.8, 336.53, 1115, 1814, 1941, 2183, 2180, 1519, 1811, 1768, 1728, 1357.77, 692.68, 302.91, 1211.4, 1090, 494, 265.8, 115.79, 312.46, 1050, 1799, 2128, 2750, 2896, 2430, 2607, 2237, 1828.05, 1234.93, 594.22, 429.75, 505.08, 903.78, 722.66, 386.85, 161.3, 301.59, 1000, 1193, 1071, 1204, 1294, 1373, 1345, 1095, 1586, 1629, 1685, 1747, 1770, 1818, 1092, 1936, 2506, 3290, 3695, 3459, 3306, 2739, 2041.4, 1337.33, 234.32, 577, 600.61, 544.4, 527, 575, 202, 300, 973, 1323, 2023, 1845, 1408, 917, 913, 1449, 1618, 1323, 1173, 1133, 1800, 1100, 1100, 1900, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
-        ["ch.boil"] = [[Define ch.boil = { 20.28, 4.22, 1615, 2743, 4273, 4300, 77.36, 90.2, 85.03, 27.07, 1156, 1363, 2792, 3173, 553.6, 717.87, 239.11, 87.3, 1032, 1757, 3103, 3560, 3680, 2944, 2334, 3134, 3200, 3186, 3200, 1180, 2477, 3093, 887, 958, 332, 119.93, 961, 1655, 3618, 4682, 5017, 4912, 4538, 4423, 3968, 3236, 2435, 1040, 2345, 2875, 1860, 1261, 457.4, 165.1, 944, 2143, 3737, 3633, 3563, 3373, 3273, 2076, 1800, 3523, 3503, 2840, 2973, 3141, 2223, 1469, 3675, 4876, 5731, 5828, 5869, 5285, 4701, 4098, 3129, 629.88, 1746, 2022, 1837, 1235, 610, 211.3, 950, 2010, 3473, 5093, 4273, 4200, 4273, 3503, 2284, 3383, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
-        ["ch.h_fus"] = [[Define ch.h_fus = { 0.558, 0.02, 3., 7.95, 50, 105, 0.36, 0.222, 0.26, 0.34, 2.6, 8.7, 10.7, 50.2, 0.64, 1.73, 3.2, 1.18, 2.33, 8.54, 16, 18.7, 22.8, 20.5, 13.2, 13.8, 16.2, 17.2, 13.1, 7.35, 5.59, 31.8, 27.7, 5.4, 5.8, 1.64, 2.19, 8, 11.4, 21, 26.8, 36, 23, 25.7, 21.7, 16.7, 11.3, 6.3, 3.26, 7., 19.7, 17.5, 7.76, 2.3, 2.09, 8., 6.2, 5.5, 6.9, 7.1, 7.7, 8.6, 9.2, 10, 10.8, 11.1, 17., 19.9, 16.8, 7.7, 22, 25.5, 36, 35, 33, 31, 26, 20, 12.5, 2.29, 4.2, 4.77, 10.9, 13, 6, 3, 2, 8, 14, 16, 15, 14, 10, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
-        ["ch.h_vap"] = [[Define ch.h_vap = { 0.452, 0.083, 147, 297, 507, 715, 2.79, 3.41, 3.27, 1.75, 97.7, 128, 293, 359, 12.4, 9.8, 10.2, 6.5, 76.9, 155, 318, 425, 453, 339, 220, 347, 375, 378, 300, 119, 256, 334, 32.4, 26, 14.8, 9.02, 72, 137, 380, 580, 690, 600, 550, 580, 495, 380, 255, 100, 230, 290, 68, 48, 20.9, 12.64, 65, 140, 400, 350, 330, 285, 290, 175, 175, 305, 295, 280, 265, 285, 250, 160, 415, 630, 735, 800, 705, 630, 560, 490, 330, 59.2, 165, 178, 160, 100, 40, 17, 65, 125, 400, 530, 470, 420, 335, 325, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]]
+        --["ch.i_eng"]  = [[Define ch.i_eng = { 1312., 2372.3, 520.2, 899.5, 800.6, 1086.5, 1402.3, 1313.9, 1681., 2080.7, 495.8, 737.7, 577.5, 786.5, 1011.8, 999.6, 1251.2, 1520.6, 418.8, 589.8, 633.1, 658.8, 650.9, 652.9, 717.3, 762.5, 760.4, 737.1, 745.5, 906.4, 578.8, 762, 947., 941., 1139.9, 1350.8, 403., 549.5, 600, 640.1, 652.1, 684.3, 702, 710.2, 719.7, 804.4, 731., 867.8, 558.3, 708.6, 834, 869.3, 1008.4, 1170.4, 375.7, 502.9, 538.1, 534.4, 527, 533.1, 540, 544.5, 547.1, 593.4, 565.8, 573., 581., 589.3, 596.7, 603.4, 523.5, 658.5, 761, 770, 760, 840, 880, 870, 890.1, 1007.1, 589.4, 715.6, 703, 812.1, 890, 1037, 380, 509.3, 499, 587, 568, 597.6, 604.5, 584.7, 578, 581, 601, 608, 619, 627, 635, 642, 470, 580, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
+        --["ch.e_neg"]  = [[Define ch.e_neg = { 2.2, undef, 0.98, 1.57, 2.04, 2.55, 3.04, 3.44, 3.98, undef, 0.93, 1.31, 1.61, 1.9, 2.19, 2.58, 3.16, undef, 0.82, 1., 1.36, 1.54, 1.63, 1.66, 1.55, 1.83, 1.88, 1.91, 1.9, 1.65, 1.81, 2.01, 2.18, 2.55, 2.96, 3., 0.82, 0.95, 1.22, 1.33, 1.6, 2.16, 1.9, 2.2, 2.28, 2.2, 1.93, 1.69, 1.78, 1.96, 2.05, 2.1, 2.66, 2.6, 0.79, 0.89, 1.1, 1.12, 1.13, 1.14, undef, 1.17, undef, 1.2, undef, 1.22, 1.23, 1.24, 1.25, undef, 1.27, 1.3, 1.5, 2.36, 1.9, 2.2, 2.2, 2.28, 2.54, 2., 1.62, 2.33, 2.02, 2., 2.2, undef, 0.7, 0.9, 1.1, 1.3, 1.5, 1.38, 1.36, 1.28, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
+        --["ch.e_aff"]  = [[Define ch.e_aff = { 72.8, 0, 59.6, 0, 26.7, 153.9, 7, 141, 328, 0, 52.8, 0, 42.5, 133.6, 72, 200, 349, 0, 48.4, 2.37, 18.1, 7.6, 50.6, 64.3, 0, 15.7, 63.7, 112, 118.4, 0, 28.9, 119, 78, 195, 324.6, 0, 46.9, 5.03, 29.6, 41.1, 86.1, 71.9, 53, 101.3, 109.7, 53.7, 125.6, 0, 28.9, 107.3, 103.2, 190.2, 295.2, 0, 45.5, 13.95, 48, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 31, 78.6, 14.5, 106.1, 151, 205.3, 222.8, 0, 19.2, 35.1, 91.2, 183.3, 270.1, 0, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
+        --["ch.a_rad"]  = [[Define ch.a_rad = { 25, undef, 145, 105, 85, 70, 65, 60, 50, undef, 180, 150, 125, 110, 100, 100, 100, 71, 220, 180, 160, 140, 135, 140, 140, 140, 135, 135, 135, 135, 130, 125, 115, 115, 115, undef, 235, 200, 180, 155, 145, 145, 135, 130, 135, 140, 160, 155, 155, 145, 145, 140, 140, undef, 260, 215, 195, 185, 185, 185, 185, 185, 185, 180, 175, 175, 175, 175, 175, 175, 175, 155, 145, 135, 135, 130, 135, 135, 135, 150, 190, 180, 160, 190, 0, undef, undef, 215, 195, 180, 180, 175, 175, 175, 175, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
+        --["ch.c_rad"]  = [[Define ch.c_rad = { 37, 32, 134, 90, 82, 77, 75, 73, 71, 69, 154, 130, 118, 111, 106, 102, 99, 97, 196, 174, 144, 136, 125, 127, 139, 125, 126, 121, 138, 131, 126, 122, 119, 116, 114, 110, 211, 192, 162, 148, 137, 145, 156, 126, 135, 131, 153, 148, 144, 141, 138, 135, 133, 130, 225, 198, 169, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, 160, 150, 138, 146, 159, 128, 137, 128, 144, 149, 148, 147, 146, undef, undef, 145, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
         --["ch.t_cond"] = [[Define ch.t_cond = { 0.1805, 0.1513, 85, 190, 27, 140, 0.02583, 0.02658, 0.0277, 0.0491, 140, 160, 235, 150, 0.236, 0.205, 0.0089, 0.01772, 100, 200, 16, 22, 31, 94, 7.8, 80, 100, 91, 400, 120, 29, 60, 50, 0.52, 0.12, 0.00943, 58, 35, 17, 23, 54, 139, 51, 120, 150, 72, 430, 97, 82, 67, 24, 3, 0.449, 0.00565, 36, 18, 13, 11, 13, 17, 15, 13, 14, 11, 11, 11, 16, 15, 17, 39, 16, 23, 57, 170, 48, 88, 150, 72, 320, 8.3, 46, 35, 8, undef, 2, 0.00361, undef, 19, 12, 54, 47, 27, 6, 6, 10, undef, 10, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]],
         --["ch.e_cond"] = [[Define ch.e_cond = { undef, undef, 11, 25, 0.0000000001, 0.1, undef, undef, undef, undef, 21, 23, 38, 0.001, 10, 1000000000000000000000, 0.00000001, undef, 14, 29, 1.8, 2.5, 5., 7.9, 0.62, 10, 17, 14, 59, 17, 7.1, 0.002, 3.3, undef, 0.0000000000000001, undef, 8.3, 7.7, 1.8, 2.4, 6.7, 20, 5., 14, 23, 10, 62, 14, 12, 9.1, 2.5, 0.01, 0.0000000000001, undef, 5, 2.9, 1.6, 1.4, 1.4, 1.6, 1.3, 1.1, 1.1, 0.77, 0.83, 1.1, 1.1, 1.2, 1.4, 3.6, 1.8, 3.3, 7.7, 20, 5.6, 12, 21, 9.4, 45, 1, 6.7, 4.8, 0.77, 2.3, undef, undef, undef, 1, undef, 6.7, 5.6, 3.6, 0.83, 0.67, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef, undef }]]
     }
@@ -167,19 +194,19 @@ function getChem(k, v)
     end
 end
 ]]--
---------------------------------
--- End of database/values.lua --
---------------------------------
+------------------------------
+-- End of database/chem.lua --
+------------------------------
 
 
--- Set the position of each section
-ct = {}
+ct    = {} -- Set position of each section
 ct.mo = 1 -- Mechanics
 ct.th = 2 -- Thermal physics
 ct.wa = 3 -- Oscillations & Waves
 ct.ec = 4 -- Electric cuurents
 ct.ch = 5 -- Chemistry
-ct.ex = 6 -- External Database
+ct.fo = 6 -- Forces & Fields
+ct.ex = 7 -- External Database
 
 function checkIfExists(table, name)
     for k,v in pairs(table) do
@@ -202,7 +229,7 @@ function checkIfFormulaExists(table, formula)
 end
 
 Categories = {}
-Formulas = {}
+Formulas   = {}
 
 function addCat(id,name,info)
     if checkIfExists(Categories, name) then
@@ -248,9 +275,9 @@ function U(...)
     return out
 end
 
---------------------------------------------
--- Categories, Sub-Categories, & Formulas --
---------------------------------------------
+------------------------------------
+-- Start of database/database.lua --
+------------------------------------
 
 -- Almost all formulas are from the IB Physics HL Data Booklet, which contains the fundamental equations needed throughout the course. It does not contain every physics equation know to man, nor is every Data Booklet equation included in this database.
 
@@ -263,7 +290,7 @@ addCatVar(ct.mo, "s",   "Displacement", "m")
 addCatVar(ct.mo, "t",   "Final time", "s")
 addCatVar(ct.mo, "t0",  "Initial time", "s")
 addCatVar(ct.mo, s.dt,  "Change in time", "s")
-addCatVar(ct.mo, "a",   "Accleration", "m/s2")
+addCatVar(ct.mo, "a",   "Accleration", "m/s"..s.p2)
 addCatVar(ct.mo, "F",   "Force", "N")
 addCatVar(ct.mo, "m",   "Mass", "kg")
 addCatVar(ct.mo, "W",   "Work", "J")
@@ -280,7 +307,7 @@ addCatVar(ct.mo, s.th,  "Angle", s.dg)
 addCatVar(ct.mo, "Tp",  "Period", "s")
 addCatVar(ct.mo, "c",   "Circumference", "m")
 addCatVar(ct.mo, "r",   "Radius", "m")
-addCatVar(ct.mo, "ca",  "Centripital acceleration", "m/s2")
+addCatVar(ct.mo, "ca",  "Centripital acceleration", "m/s"..s.p2)
 addCatVar(ct.mo, "cF",  "Centripital force", "N")
 addCatVar(ct.mo, "cv",  "Centripital velocity", "m/s")
 
@@ -334,7 +361,7 @@ aF(ct.mo, 7, "c=2*pi*r", U("c", "r") )
 addCat(ct.th, "Thermal physics", "IB topic 3 & 10. Perform thermal related physics calculations")
 
 addCatVar(ct.th, "P",   "Pressure", "Pa")
-addCatVar(ct.th, "V",   "Volume", "m3")
+addCatVar(ct.th, "V",   "Volume", "m"..s.p3)
 addCatVar(ct.th, "T",   "Tempturature", "K")
 addCatVar(ct.th, "n",   "Amount", "mol")
 addCatVar(ct.th, "m",   "Mass", "kg")
@@ -343,7 +370,7 @@ addCatVar(ct.th, "tK",  "Kelvin", "nounit")
 addCatVar(ct.th, "tC",  "Celcius", "nounit")
 addCatVar(ct.th, "tF",  "Farhenhiet", "nounit")
 addCatVar(ct.th, "F",   "Force", "N")
-addCatVar(ct.th, "A",   "Area", "m2")
+addCatVar(ct.th, "A",   "Area", "m"..s.p2)
 addCatVar(ct.th, "Ek",  "Kinetic energy (translational)", "J")
 addCatVar(ct.th, "Q",   "Heat", "J")
 addCatVar(ct.th, "c",   "Specific heat capacity", "J/kg*K")
@@ -369,7 +396,7 @@ addCatVar(ct.wa, "F",   "Force", "N")
 addCatVar(ct.wa, "K",   "Spring constant", "N/m")
 addCatVar(ct.wa, "x",   "Displacement", "m")
 addCatVar(ct.wa, "m",   "Mass", "kg")
-addCatVar(ct.wa, "a",   "Acceleration", "m/s2")
+addCatVar(ct.wa, "a",   "Acceleration", "m/s"..s.p2)
 addCatVar(ct.wa, "Ep",  "Elastic potential energy", "J")
 addCatVar(ct.wa, "T",   "Period", "s")
 addCatVar(ct.wa, "fq",  "Frequency", "Hz")
@@ -399,7 +426,7 @@ aF(ct.wa, 2, "n0=("..con("C")..")/v0", U("n0", "v0") )
 aF(ct.wa, 2, "v=fq*"..s.la, U("v", "fq", s.la ) )
 aF(ct.wa, 2, "v0=fq*"..s.la0, U("v0", "fq", s.la0 ) )
 
-addCat(ct.ec, "Electric Curents", "IB Topic 5.")
+addCat(ct.ec, "Electric Curents", "IB Topic 5. Electricity.")
 addCatVar(ct.ec, "Ve",  "Energy", "J")
 addCatVar(ct.ec, "I",   "Current", "A")
 addCatVar(ct.ec, "q",   "Charge", "C")
@@ -409,20 +436,26 @@ addCatVar(ct.ec, "V",   "Voltage", "V")
 addCatVar(ct.ec, "A",   "Cross-sectional area", "m2")
 addCatVar(ct.ec, "l",   "Length", "m")
 addCatVar(ct.ec, "m",   "Mass", "kg")
-addCatVar(ct.ec, "", "", "")
+addCatVar(ct.ec, "v",   "Velocity", "m/s")
 
-addSubCat(ct.ec, 1, "Electrostatic?", "Static electricity")
+addSubCat(ct.ec, 1, "Electrostatic", "Solve for")
 aF(ct.ec, 1, "Ve=0.5*m*v^2", U( "Ve", "m", "v") )
 
-addSubCat(ct.ec, 2, "Electricity", "normal electricity")
+addSubCat(ct.ec, 2, "Electricity", "Solve for")
 aF(ct.ec, 2, "R=V/I", U("R", "V", "I") )
 aF(ct.ec, 2, "R=(p*L)/A", U("R", "p", "L", "A") )
+
+addCat(ct.fo, "Forces & Fields", "IB Topic 6. Forces and fields.")
+
+addSubCat(ct.fo, 1, "Forces", "Solve for")
+
+addSubCat(ct.fo, 1, "Fields", "Solve for")
 
 addCat(ct.ch, "Chemestry", "Chemistry related things that have some connection to physics")
 
 addCatVar(ct.ch, "atom",    "Atomic number", "nounit")
 addCatVar(ct.ch, "mass",    "Mass", "amu")
-addCatVar(ct.ch, "dens",    "Density", "kg/m3")
+addCatVar(ct.ch, "dens",    "Density", "kg/m"..s.p3)
 addCatVar(ct.ch, "c",       "Specific heat", "J/kg*K")
 addCatVar(ct.ch, "melt",    "Melting point", "K")
 addCatVar(ct.ch, "boil",    "Boiling point", "K")
@@ -468,10 +501,14 @@ aF(ct.ch, 1, "h_vap=ch.h_vap[atom]", U( "h_vap", "atom") )
 --aF(ct.ch, 1, "c_rad=ch.c_rad[atom]", U( "c_rad", "atom") )
 --aF(ct.ch, 1, "t_cond=ch.t_cond[atom]", U( "t_cond", "atom") )
 --aF(ct.ch, 1, "e_cond=ch.e_cond[atom]", U( "e_cond", "atom") )
+----------------------------------
+-- End of database/database.lua --
+----------------------------------
 
 --------------------------------
 -- Start of database/exdb.lua --
 --------------------------------
+
 --This part is supposed to load external formulas stored in a string from a file in MyLib.
 --WIP
 
@@ -523,216 +560,194 @@ meaning:
     n subunit = (n-b)/a mainunit
 --]]
 
-Mt = {}
-Mt.G = 1 / 1000000000
-Mt.M = 1 / 1000000
-Mt.k = 1 / 1000
-Mt.h = 1 / 100
+Mt    = {}
+Mt.G  = 1 / 1000000000
+Mt.M  = 1 / 1000000
+Mt.k  = 1 / 1000
+Mt.h  = 1 / 100
 Mt.da = 1 / 10
-Mt.d = 10
-Mt.c = 100
-Mt.m = 1000
-Mt.u = 1000000
-Mt.n = 1000000000
-Mt.p = 1000000000000
+Mt.d  = 10
+Mt.c  = 100
+Mt.m  = 1000
+Mt.u  = 1000000
+Mt.n  = 1000000000
+Mt.p  = 1000000000000
 
-Ms = {}
-Ms.min = 60
-Ms.hr = 3600
-Ms.day = 86400
-Ms.wk = 604800
-Ms.fortn = 1209600
+Ms       = {}
+Ms.min   = 60
+Ms.hr    = 3600
+Ms.day   = 86400
+Ms.wk    = 604800
 Ms.month = 18144000
-Ms.yr = 217728000
+Ms.yr    = 217728000
 
 --Time
-Units["s"] = {}
-Units["s"]["min"] = { Ms.min, 0}
-Units["s"]["hr"] = { Ms.hr, 0}
-Units["s"]["day"] = { Ms.day, 0}
-Units["s"]["wk"] = { Ms.wk, 0}
-Units["s"]["fortn"] = { Ms.fortn, 0}
-Units["s"]["month"] = { Mt.month, 0}
-Units["s"]["yr"] = { Mt.yr, 0}
-Units["s"]["mCent"] = { 34, 0}
-Units["s"]["Frieds"] = { 108864000, 0}
+Units["s"]           = {}
+Units["s"]["min"]    = { Ms.min, 0}
+Units["s"]["hr"]     = { Ms.hr, 0}
+Units["s"]["day"]    = { Ms.day, 0}
+Units["s"]["wk"]     = { Ms.wk, 0}
+Units["s"]["fortn"]  = { 1209600, 0}
+Units["s"]["month"]  = { Mt.month, 0}
+Units["s"]["yr"]     = { Mt.yr, 0}
 
 --Length
-Units["m"] = {}
-Units["m"]["pm"] = { Mt.p, 0}
-Units["m"]["nm"] = { Mt.n, 0}
-Units["m"][utf8(956).."m"] = { Mt.u, 0}
-Units["m"]["mm"] = { Mt.m, 0}
-Units["m"]["cm"] = { Mt.c, 0}
-Units["m"]["dm"] = { Mt.d, 0}
-Units["m"]["dam"] = { Mt.da, 0}
-Units["m"]["hm"] = { Mt.h, 0}
-Units["m"]["km"] = { Mt.k, 0}
-Units["m"]["Mm"] = { Mt.M, 0}
-Units["m"]["Gm"] = { Mt.G, 0}
-Units["m"]["in"] = { 0.0254, 0}
-Units["m"]["ft"] = { 0.3048, 0}
-Units["m"]["yd"] = { 0.9144, 0}
-Units["m"]["mi"] = { 1609.34, 0}
-Units["m"]["Nmi"] = { 1852, 0}
-Units["m"]["rod"] = { 4.572, 0}
-Units["m"]["chain"] = { 20.1168, 0}
-Units["m"]["Smoot"] = { 1.70180, 0}
-Units["m"]["ftm"] = { 1.8288, 0}
-Units["m"]["FB-F"] = { 109.7, 0}
-Units["m"]["furlong"] = { 201.168, 0}
-Units["m"]["brds"] = { 0.000000005, 0}
+Units["m"]            = {}
+Units["m"]["pm"]      = { Mt.p, 0}
+Units["m"]["nm"]      = { Mt.n, 0}
+Units["m"][s.mu.."m"] = { Mt.u, 0}
+Units["m"]["mm"]      = { Mt.m, 0}
+Units["m"]["cm"]      = { Mt.c, 0}
+Units["m"]["dm"]      = { Mt.d, 0}
+Units["m"]["hm"]      = { Mt.h, 0}
+Units["m"]["km"]      = { Mt.k, 0}
+Units["m"]["in"]      = { 0.0254, 0}
+Units["m"]["ft"]      = { 0.3048, 0}
+Units["m"]["yd"]      = { 0.9144, 0}
+Units["m"]["mi"]      = { 1609.34, 0}
+Units["m"]["Nmi"]     = { 1852, 0}
+Units["m"]["ftm"]     = { 1.8288, 0}
+Units["m"]["FB-F"]    = { 109.7, 0}
 
 --Area
-Units["m2"] = {}
-Units["m2"]["nm2"] = { Mt.n, 0}
-Units["m2"][utf8(956).."m2"] = { Mt.u, 0}
-Units["m2"]["mm2"] = { Mt.m2, 0}
-Units["m2"]["cm2"] = { Mt.c, 0}
-Units["m2"]["dm2"] = { Mt.d, 0}
-Units["m2"]["dam2"] = { Mt.da, 0}
-Units["m2"]["hm2"] = { Mt.h, 0}
-Units["m2"]["km2"] = { Mt.k, 0}
-Units["m2"]["Mm2"] = { Mt.M, 0}
-Units["m2"]["Gm2"] = { Mt.G, 0}
-Units["m2"]["in2"] = { 0.0254, 0}
-Units["m2"]["ft2"] = { 0.3048, 0}
-Units["m2"]["yd2"] = { 0.9144, 0}
-Units["m2"]["mi2"] = { 1609.34, 0}
-Units["m2"]["Nmi2"] = { 1852, 0}
-Units["m2"]["rod2"] = { 4.572, 0}
-Units["m2"]["chain2"] = { 20.1168, 0}
-Units["m2"]["Smoot2"] = { 1.70180, 0}
-Units["m2"]["ftm2"] = { 1.8288, 0}
-Units["m2"]["FB-F2"] = { 109.7, 0}
-Units["m2"]["furlong2"] = { 201.168, 0}
-Units["m2"]["brds2"] = { 0.000000005, 0}
+Units["m"..s.p2]                  = {}
+Units["m"..s.p2]["nm"..s.p2]      = { Mt.n, 0}
+Units["m"..s.p2][s.mu.."m"..s.p2] = { Mt.u, 0}
+Units["m"..s.p2]["mm"..s.p2]      = { Mt.m2, 0}
+Units["m"..s.p2]["cm"..s.p2]      = { Mt.c, 0}
+Units["m"..s.p2]["dm"..s.p2]      = { Mt.d, 0}
+Units["m"..s.p2]["hm"..s.p2]      = { Mt.h, 0}
+Units["m"..s.p2]["km"..s.p2]      = { Mt.k, 0}
+Units["m"..s.p2]["in"..s.p2]      = { 0.0254, 0}
+Units["m"..s.p2]["ft"..s.p2]      = { 0.3048, 0}
+Units["m"..s.p2]["yd"..s.p2]      = { 0.9144, 0}
+Units["m"..s.p2]["mi"..s.p2]      = { 1609.34, 0}
+Units["m"..s.p2]["Nmi"..s.p2]     = { 1852, 0}
+Units["m"..s.p2]["ftm"..s.p2]     = { 1.8288, 0}
+Units["m"..s.p2]["FB-F"..s.p2]    = { 109.7, 0}
 
 --Volume
-Units["m3"] = {}
-Units["m3"]["mm3"] = { Mt.m, 0}
-Units["m3"]["cm3"] = { Mt.c, 0}
-Units["m3"]["km3"] = { Mt.k, 0}
-Units["m3"]["ml"] = { 0.000001, 0}
-Units["m3"]["l"] = { 0.001, 0}
-Units["m3"]["in3"] = { .000016387064, 0}
-Units["m3"]["ft3"] = { 0.028316846592, 0}
-Units["m3"]["yd3"] = { 0.764554857984, 0}
-Units["m3"]["tsp"] = { 0.00000492892159375, 0}
-Units["m3"]["tbsp"] = { 0.00001478676478125, 0}
-Units["m3"]["floz"] = { 0.0000295735295625, 0}
-Units["m3"]["cup"] = { 0.0002365882365, 0}
-Units["m3"]["pt"] = { 0.000473176473, 0}
-Units["m3"]["qt"] = { 0.000946352946, 0}
-Units["m3"]["gal"] = { 0.003785411784, 0}
-Units["m3"]["flozUK"] = { 0.000028413075, 0}
-Units["m3"]["galUK"] = { 0.004546092, 0}
+Units["m"..s.p2]              = {}
+Units["m"..s.p2]["mm"..s.p3]  = { Mt.m, 0}
+Units["m"..s.p2]["cm3"..s.p3] = { Mt.c, 0}
+Units["m"..s.p2]["km"..s.p3]  = { Mt.k, 0}
+Units["m"..s.p2]["ml"]        = { 0.000001, 0}
+Units["m"..s.p2]["l"]         = { 0.001, 0}
+Units["m"..s.p2]["in"..s.p3] = { .000016387064, 0}
+Units["m"..s.p2]["ft"..s.p3]  = { 0.028316846592, 0}
+Units["m"..s.p2]["yd"..s.p3]  = { 0.764554857984, 0}
+Units["m"..s.p2]["tsp"]       = { 0.00000492892159375, 0}
+Units["m"..s.p2]["tbsp"]      = { 0.00001478676478125, 0}
+Units["m"..s.p2]["floz"]      = { 0.0000295735295625, 0}
+Units["m"..s.p2]["cup"]       = { 0.0002365882365, 0}
+Units["m"..s.p2]["pt"]        = { 0.000473176473, 0}
+Units["m"..s.p2]["qt"]        = { 0.000946352946, 0}
+Units["m"..s.p2]["gal"]       = { 0.003785411784, 0}
+Units["m"..s.p2]["flozUK"]    = { 0.000028413075, 0}
+Units["m"..s.p2]["galUK"]     = { 0.004546092, 0}
 
 --Velocity
-Units["m/s"] = {}
-Units["m/s"]["km/s"] = { Mt.k, 0}
-Units["m/s"]["cm/s"] = { Mt.c, 0}
-Units["m/s"]["mm/s"] = { Mt.m, 0}
-Units["m/s"]["m/hr"] = { Ms.hr, 0}
-Units["m/s"]["km/hr"] = { 3.6, 0}
-Units["m/s"]["knot"] = { 0.514444, 0}
-Units["m/s"]["mi/hr"] = { 0.44704, 0}
-Units["m/s"]["km/min"] = { 16.6667, 0}
-Units["m/s"]["ft/min"] = { 0.00508, 0}
-Units["m/s"]["ft/s"] = { 0.3048, 0}
-Units["m/s"]["mi/min"] = { 26.8224, 0}
-Units["m/s"]["brds/sec"] = { 0.000000005, 0}
+Units["m/s"]             = {}
+Units["m/s"]["km/s"]     = { Mt.k, 0}
+Units["m/s"]["cm/s"]     = { Mt.c, 0}
+Units["m/s"]["mm/s"]     = { Mt.m, 0}
+Units["m/s"]["m/hr"]     = { Ms.hr, 0}
+Units["m/s"]["km/hr"]    = { 3.6, 0}
+Units["m/s"]["knot"]     = { 0.514444, 0}
+Units["m/s"]["mi/hr"]    = { 0.44704, 0}
+Units["m/s"]["km/min"]   = { 16.6667, 0}
+Units["m/s"]["ft/min"]   = { 0.00508, 0}
+Units["m/s"]["ft/s"]     = { 0.3048, 0}
+Units["m/s"]["mi/min"]   = { 26.8224, 0}
 
 --Acceleration
-Units["m/s2"] = {}
-Units["m/s2"]["km/s2"] = { Mt.k, 0}
-Units["m/s2"]["cm/s2"] = { Mt.c, 0}
-Units["m/s2"]["mm/s2"] = { Mt.m, 0}
-Units["m/s2"]["m/hr2"] = { Ms.hr, 0}
-Units["m/s2"]["km/hr2"] = { 3.6, 0}
-Units["m/s2"]["knot2"] = { 0.514444, 0}
-Units["m/s2"]["mi/hr2"] = { 0.44704, 0}
-Units["m/s2"]["km/min2"] = { 16.6667, 0}
-Units["m/s2"]["ft/min2"] = { 0.00508, 0}
-Units["m/s2"]["ft/s2"] = { 0.3048, 0}
-Units["m/s2"]["mi/min2"] = { 26.8224, 0}
+Units["m/s"..s.p2]                 = {}
+Units["m/s"..s.p2]["km/s"..s.p2]   = { Mt.k, 0}
+Units["m/s"..s.p2]["cm/s"..s.p2]   = { Mt.c, 0}
+Units["m/s"..s.p2]["mm/s"..s.p2]   = { Mt.m, 0}
+Units["m/s"..s.p2]["m/hr"..s.p2]   = { Ms.hr, 0}
+Units["m/s"..s.p2]["km/hr"..s.p2]  = { 3.6, 0}
+Units["m/s"..s.p2]["knot"..s.p2]   = { 0.514444, 0}
+Units["m/s"..s.p2]["mi/hr"..s.p2]  = { 0.44704, 0}
+Units["m/s"..s.p2]["km/min"..s.p2] = { 16.6667, 0}
+Units["m/s"..s.p2]["ft/min"..s.p2] = { 0.00508, 0}
+Units["m/s"..s.p2]["ft/s"..s.p2]   = { 0.3048, 0}
+Units["m/s"..s.p2]["mi/min"..s.p2] = { 26.8224, 0}
 
 --Mass
-Units["kg"] = {}
-Units["kg"]["g"] = { Mt.m, 0}
-Units["kg"]["mg"] = { Mt.u, 0}
-Units["kg"]["lb"] = { 0.453592, 0}
-Units["kg"]["oz"] = { 0.0283495, 0}
-Units["kg"]["ton"] = { 907.185, 0}
+Units["kg"]         = {}
+Units["kg"]["g"]    = { Mt.m, 0}
+Units["kg"]["mg"]   = { Mt.u, 0}
+Units["kg"]["lb"]   = { 0.453592, 0}
+Units["kg"]["oz"]   = { 0.0283495, 0}
+Units["kg"]["ton"]  = { 907.185, 0}
 Units["kg"]["slug"] = { 14.5939, 0}
 
 --Force
-Units["N"] = {}
-Units["N"]["kN"] = { Mt.k, 0}
-Units["N"]["mN"] = { Mt.m, 0}
-Units["N"]["MN"] = { Mt.M, 0}
-Units["N"]["GN"] = { Mt.G, 0}
-Units["N"]["dyn"] = { 100000, 0}
-Units["N"]["lbf"] = { 0.224809, 0}
-Units["N"]["kgf"] = { 0.101972, 0}
+Units["N"]         = {}
+Units["N"]["kN"]   = { Mt.k, 0}
+Units["N"]["mN"]   = { Mt.m, 0}
+Units["N"]["dyn"]  = { 100000, 0}
+Units["N"]["lbf"]  = { 0.224809, 0}
+Units["N"]["kgf"]  = { 0.101972, 0}
 Units["N"]["tonf"] = { 0.000112404, 0}
 
 --Newton*sec (Impulse/Momentum)
 Units["N*s"] = {}
 
 --Energy
-Units["J"] = {}
-Units["J"]["GJ"] = { Mt.G, 0}
-Units["J"]["MJ"] = { Mt.M, 0}
-Units["J"]["kJ"] = { Mt.k, 0}
-Units["J"]["mJ"] = { Mt.m, 0}
-Units["J"]["kWh"] = { 3600000, 0}
+Units["J"]         = {}
+Units["J"]["GJ"]   = { Mt.G, 0}
+Units["J"]["MJ"]   = { Mt.M, 0}
+Units["J"]["kJ"]   = { Mt.k, 0}
+Units["J"]["mJ"]   = { Mt.m, 0}
+Units["J"]["kWh"]  = { 3600000, 0}
 Units["J"]["ftlb"] = { 1.35582, 0}
-Units["J"]["Btu"] = { 1055.06, 0}
+Units["J"]["Btu"]  = { 1055.06, 0}
 
 --Power
-Units["W"] = {}
-Units["W"]["GW"] = { Mt.G, 0}
-Units["W"]["MW"] = { Mt.M, 0}
-Units["W"]["kW"] = { Mt.k, 0}
-Units["W"]["mW"] = { Mt.m, 0}
-Units["W"]["hp"] = { 745.7, 0}
-Units["W"]["airW"] = { 0.9983, 0}
+Units["W"]            = {}
+Units["W"]["GW"]      = { Mt.G, 0}
+Units["W"]["MW"]      = { Mt.M, 0}
+Units["W"]["kW"]      = { Mt.k, 0}
+Units["W"]["mW"]      = { Mt.m, 0}
+Units["W"]["hp"]      = { 745.7, 0}
+Units["W"]["airW"]    = { 0.9983, 0}
 Units["W"]["Btu/min"] = { 17.5842638, 0}
 
 --Pressure
-Units["Pa"] = {}
-Units["Pa"]["mPA"] = { Mt.m, 0}
-Units["Pa"]["kPa"] = { Mt.k, 0}
-Units["Pa"]["MPa"] = { Mt.M, 0}
-Units["Pa"]["N/m2"] = { 1, 0}
-Units["Pa"]["mmH20"] = { 9.80665, 0}
-Units["Pa"]["inH2O"] = { 249.08891, 0}
-Units["Pa"]["mmHg"] = { 133.32236842105, 0}
-Units["Pa"]["inHg"] = { 3338.6388157895, 0}
-Units["Pa"]["mbar"] = { 100, 0}
-Units["Pa"]["lb/ft2"] = { 47.880258980336, 0}
-Units["Pa"]["psi"] = { 6894.7572931684, 0}
-Units["Pa"]["torr"] = { 0133.32236842105, 0}
-Units["Pa"]["atm"] = { 101325, 0}
+Units["Pa"]                = {}
+Units["Pa"]["mPA"]         = { Mt.m, 0}
+Units["Pa"]["kPa"]         = { Mt.k, 0}
+Units["Pa"]["MPa"]         = { Mt.M, 0}
+Units["Pa"]["N/m"..s.p2]   = { 1, 0}
+Units["Pa"]["mmH20"]       = { 9.80665, 0}
+Units["Pa"]["inH2O"]       = { 249.08891, 0}
+Units["Pa"]["mmHg"]        = { 133.32236842105, 0}
+Units["Pa"]["inHg"]        = { 3338.6388157895, 0}
+Units["Pa"]["mbar"]        = { 100, 0}
+Units["Pa"]["lb/ft"..s.p2] = { 47.880258980336, 0}
+Units["Pa"]["psi"]         = { 6894.7572931684, 0}
+Units["Pa"]["torr"]        = { 0133.32236842105, 0}
+Units["Pa"]["atm"]         = { 101325, 0}
 
 --Temperature
-Units["K"] = {}
-Units["K"][utf8(176).."C"] = { 1, 273.15}
---Units["K"][utf8(176).."F"] = { 0, 0}
---Units["K"]["R"] = { 0, 0}
+Units["K"]            = {}
+Units["K"][s.dg.."C"] = { 1, 273.15}
+--Units["K"][s.dg.."F"] = { 0, 0}
+--Units["K"]["R"]       = { 0, 0}
 
 --Moles
 Units["mol"] = {}
 
 --Molecular mass
-Units["amu"] = {}
+Units["amu"]       = {}
 Units["amu"]["kg"] = {0.000000000000000000000000001660538782, 0}
-Units["amu"]["g"] = {0.000000000000000000000001660538782, 0}
+Units["amu"]["g"]  = {0.000000000000000000000001660538782, 0}
 Units["amu"]["mg"] = {0.000000000000000000001660538782, 0}
 
 --Heat Capacity
-Units["J/kg*K"] = {}
+Units["J/kg*K"]           = {}
 Units["J/kg*K"]["J/kg*C"] = { 1, 0}
 --Units["J/kg*K"]["Cal/kg*K"] = {}
 
@@ -740,24 +755,37 @@ Units["J/kg*K"]["J/kg*C"] = { 1, 0}
 Units["kJ/mol"] = {}
 
 --Density
-Units["kg/m3"] = {}
+Units["kg/m"..s.p3] = {}
 
 --Spring Constant
 Units["N/m"] = {}
 
 --Frequency
-Units["Hz"] = {}
+Units["Hz"]        = {}
 Units["Hz"]["kHz"] = {Mt.k, 0}
 Units["Hz"]["MHz"] = {Mt.M, 0}
 Units["Hz"]["GHz"] = {Mt.G, 0}
 Units["Hz"]["mHz"] = {Mt.m, 0}
 Units["Hz"]["nHz"] = {Mt.n, 0}
 
---Planck
---Units["J/s"] = {}
+--Degrees (Angle)
+Units[s.dg]        = {}
+Units[s.dg]["rad"] = { (180/mathpi), 0}
 
 --Charge
---Units["C"] = {}
+Units["C"] = {}
+
+--Voltage
+Units["V"] = {}
+
+--Current
+Units["A"] = {}
+
+--Rssistence
+Units[s.om] = {}
+
+--Resistivity
+Units[s.omm] = {}
 
 --Boltzmann
 --Units["J/K"] = {}
@@ -771,17 +799,13 @@ Units["Hz"]["nHz"] = {Mt.n, 0}
 --Electrical conductivity
 --Units["MS/m"] = {}
 
---Degrees (Angle)
-Units[utf8(176)] = {}
-Units[utf8(176)]["rad"] = { (180/mathpi), 0}
-
 -------------------------------
 -- End of database/units.lua --
 -------------------------------
 
-----------------------------------
--- End of database/database.lua --
-----------------------------------
+--------------------------------
+-- End of database/dbmain.lua --
+--------------------------------
 
 --------------------------------
 -- Start of lib/animation.lua --
@@ -813,6 +837,7 @@ end
 function on.timer()
     --current_screen():timer()
     local j = 1
+
     while j <= #timer.tasks do -- for each task
         if timer.tasks[j][2]() then -- delete it if has ended
             table.remove(timer.tasks, j)
@@ -836,6 +861,7 @@ timer.addTask = function(object, task) timer.start(0.01) table.insert(timer.task
 
 function timer.purgeTasks(object)
     local j = 1
+
     while j <= #timer.tasks do
         if timer.tasks[j][1] == object then
             table.remove(timer.tasks, j)
@@ -849,12 +875,12 @@ end
 ---------- Animable Object class
 Object = class()
 function Object:init(x, y, w, h, r)
-    self.tasks = {}
-    self.x = x
-    self.y = y
-    self.w = w
-    self.h = h
-    self.r = r
+    self.tasks   = {}
+    self.x       = x
+    self.y       = y
+    self.w       = w
+    self.h       = h
+    self.r       = r
     self.visible = true
 end
 
@@ -863,6 +889,7 @@ function Object:PushTask(task, t, ms, callback)
     timer.start(0.01)
     if #self.tasks == 1 then
         local ok = task(self, t, ms, callback)
+
         if not ok then table.remove(self.tasks, 1) end
     end
 end
@@ -872,6 +899,7 @@ function Object:PopTask()
     if #self.tasks > 0 then
         local task, t, ms, callback = unpack(self.tasks[1])
         local ok = task(self, t, ms, callback)
+
         if not ok then table.remove(self.tasks, 1) end
     end
 end
@@ -896,32 +924,34 @@ function Object:__Animate(t, ms, callback)
     if not ms then ms = 50 end
     if ms < 0 then print("Error: Invalid time divisor (must be >= 0)") return end
     ms = ms / timer.multiplier
-    if ms == 0 then ms = 1 end
+    if ms               == 0 then ms = 1 end
     if not t or type(t) ~= "table" then print("Error: Target position is " .. type(t)) return end
     if not t.x then t.x = self.x end
     if not t.y then t.y = self.y end
     if not t.w then t.w = self.w end
     if not t.h then t.h = self.h end
     if not t.r then t.r = self.r else t.r = math.pi * t.r / 180 end
-    local xinc = (t.x - self.x) / ms
+    local xinc  = (t.x - self.x) / ms
     local xside = xinc >= 0 and 1 or -1
-    local yinc = (t.y - self.y) / ms
+    local yinc  = (t.y - self.y) / ms
     local yside = yinc >= 0 and 1 or -1
-    local winc = (t.w - self.w) / ms
+    local winc  = (t.w - self.w) / ms
     local wside = winc >= 0 and 1 or -1
-    local hinc = (t.h - self.h) / ms
+    local hinc  = (t.h - self.h) / ms
     local hside = hinc >= 0 and 1 or -1
-    local rinc = (t.r - self.r) / ms
+    local rinc  = (t.r - self.r) / ms
     local rside = rinc >= 0 and 1 or -1
+
     timer.addTask(self, function()
         local b1, b2, b3, b4, b5 = false, false, false, false, false
+
         if (self.x + xinc * speed) * xside < t.x * xside then self.x = self.x + xinc * speed else b1 = true end
-        if self.y * yside < t.y * yside then self.y = self.y + yinc * speed else b2 = true end
-        if self.w * wside < t.w * wside then self.w = self.w + winc * speed else b3 = true end
-        if self.h * hside < t.h * hside then self.h = self.h + hinc * speed else b4 = true end
-        if self.r * rside < t.r * rside then self.r = self.r + rinc * speed else b5 = true end
-        if self.w < 0 then self.w = 0 end
-        if self.h < 0 then self.h = 0 end
+        if self.y * yside < t.y * yside then self.y                  = self.y + yinc * speed else b2 = true end
+        if self.w * wside < t.w * wside then self.w                  = self.w + winc * speed else b3 = true end
+        if self.h * hside < t.h * hside then self.h                  = self.h + hinc * speed else b4 = true end
+        if self.r * rside < t.r * rside then self.r                  = self.r + rinc * speed else b5 = true end
+        if self.w < 0 then self.w                                    = 0 end
+        if self.h < 0 then self.h                                    = 0 end
         if b1 and b2 and b3 and b4 and b5 then
             self.x, self.y, self.w, self.h, self.r = t.x, t.y, t.w, t.h, t.r
             self:PopTask()
@@ -939,6 +969,7 @@ function Object:__Delay(_, ms, callback)
     ms = ms / timer.multiplier
     if ms == 0 then ms = 1 end
     local t = 0
+
     timer.addTask(self, function()
         if t < ms then
             t = t + 1
@@ -982,6 +1013,7 @@ end
 ------------------------------
 -- Start of lib/globals.lua --
 ------------------------------
+
 ------------------------------------------------------------------
 --                  Overall Global Variables                    --
 ------------------------------------------------------------------
@@ -989,53 +1021,53 @@ end
 -- Uses BetterLuaAPI : https://github.com/adriweb/BetterLuaAPI-for-TI-Nspire
 --
 
-a_acute = string.uchar(225)
-a_circ  = string.uchar(226)
-a_tilde = string.uchar(227)
-a_diaer = string.uchar(228)
-a_ring  = string.uchar(229)
-e_acute = string.uchar(233)
-e_grave = string.uchar(232)
-o_acute = string.uchar(243) 
-o_circ  = string.uchar(244)
-l_alpha = string.uchar(945)
-l_beta = string.uchar(946)
-l_omega = string.uchar(2126)
-sup_plus = string.uchar(8314)
-sup_minus = string.uchar(8315)
+a_acute     = string.uchar(225)
+a_circ      = string.uchar(226)
+a_tilde     = string.uchar(227)
+a_diaer     = string.uchar(228)
+a_ring      = string.uchar(229)
+e_acute     = string.uchar(233)
+e_grave     = string.uchar(232)
+o_acute     = string.uchar(243)
+o_circ      = string.uchar(244)
+l_alpha     = string.uchar(945)
+l_beta      = string.uchar(946)
+l_omega     = string.uchar(2126)
+sup_plus    = string.uchar(8314)
+sup_minus   = string.uchar(8315)
 right_arrow = string.uchar(8594)
 
 
 Color = {
-    ["black"] = {0, 0, 0},
-    ["red"] = {255, 0, 0},
-    ["green"] = {0, 255, 0},
-    ["blue "] = {0, 0, 255},
-    ["white"] = {255, 255, 255},
-    ["brown"] = {165,42,42},
-    ["cyan"] = {0,255,255},
-    ["darkblue"] = {0,0,139},
-    ["darkred"] = {139,0,0},
-    ["fuchsia"] = {255,0,255},
-    ["gold"] = {255,215,0},
-    ["gray"] = {127,127,127},
-    ["grey"] = {127,127,127},
-    ["lightblue"] = {173,216,230},
+    ["black"]      = {0, 0, 0},
+    ["red"]        = {255, 0, 0},
+    ["green"]      = {0, 255, 0},
+    ["blue "]      = {0, 0, 255},
+    ["white"]      = {255, 255, 255},
+    ["brown"]      = {165,42,42},
+    ["cyan"]       = {0,255,255},
+    ["darkblue"]   = {0,0,139},
+    ["darkred"]    = {139,0,0},
+    ["fuchsia"]    = {255,0,255},
+    ["gold"]       = {255,215,0},
+    ["gray"]       = {127,127,127},
+    ["grey"]       = {127,127,127},
+    ["lightblue"]  = {173,216,230},
     ["lightgreen"] = {144,238,144},
-    ["magenta"] = {255,0,255},
-    ["maroon"] = {128,0,0},
-    ["navyblue"] = {159,175,223},
-    ["orange"] = {255,165,0},
-    ["palegreen"] = {152,251,152},
-    ["pink"] = {255,192,203},
-    ["purple"] = {128,0,128},
-    ["royalblue"] = {65,105,225},
-    ["salmon"] = {250,128,114},
-    ["seagreen"] = {46,139,87},
-    ["silver"] = {192,192,192},
-    ["turquoise"] = {64,224,208},
-    ["violet"] = {238,130,238},
-    ["yellow"] = {255,255,0}
+    ["magenta"]    = {255,0,255},
+    ["maroon"]     = {128,0,0},
+    ["navyblue"]   = {159,175,223},
+    ["orange"]     = {255,165,0},
+    ["palegreen"]  = {152,251,152},
+    ["pink"]       = {255,192,203},
+    ["purple"]     = {128,0,128},
+    ["royalblue"]  = {65,105,225},
+    ["salmon"]     = {250,128,114},
+    ["seagreen"]   = {46,139,87},
+    ["silver"]     = {192,192,192},
+    ["turquoise"]  = {64,224,208},
+    ["violet"]     = {238,130,238},
+    ["yellow"]     = {255,255,0}
 }
 Color.mt = {__index = function () return {0,0,0} end}
 setmetatable(Color,Color.mt)
@@ -1050,7 +1082,7 @@ end
 
 function deepcopy(t) -- This function recursively copies a table's contents, and ensures that metatables are preserved. That is, it will correctly clone a pure Lua object.
     if type(t) ~= 'table' then return t end
-    local mt = getmetatable(t)
+    local mt  = getmetatable(t)
     local res = {}
     for k,v in pairs(t) do
         if type(v) == 'table' then
@@ -1188,13 +1220,13 @@ end
 -- Start of lib/screen.lua --
 -----------------------------
 
-
 stdout = print
 
 function pprint(...)
         stdout(...)
-        local out        = ""
-        for _,v in ipairs({...}) do 
+        local out = ""
+
+        for _,v in ipairs({...}) do
                 out = out .. (_==1 and "" or "    ") .. tostring(v)
         end
         var.store("print", out)
@@ -1203,6 +1235,7 @@ end
 
 function Pr(n, d, s, ex)
         local nc = tonumber(n)
+
         if nc and nc<math.abs(nc) then
                 return s-ex-(type(n)== "number" and math.abs(n) or (.01*s*math.abs(nc)))
         else
@@ -1210,11 +1243,12 @@ function Pr(n, d, s, ex)
         end
 end
 
--- Apply an extension on a class, and return our new frankenstein 
+-- Apply an extension on a class, and return our new frankenstein
 function addExtension(oldclass, extension)
-        local newclass        = class(oldclass)
+        local newclass = class(oldclass)
+
         for key, data in pairs(extension) do
-                newclass[key]        = data
+                newclass[key] = data
         end
         return newclass
 end
@@ -1224,26 +1258,27 @@ clipRectData = {}
 function gc_clipRect(gc, what, x, y, w, h)
         if what == "set" and clipRectData.current then
                 clipRectData.old = clipRectData.current
-                
+
         elseif what == "subset" and clipRectData.current then
                 clipRectData.old = clipRectData.current
-                x = clipRectData.old.x<x and x or clipRectData.old.x
-                y = clipRectData.old.y<y and y or clipRectData.old.y
-                h = clipRectData.old.y+clipRectData.old.h > y+h and h or clipRectData.old.y+clipRectData.old.h-y
-                w = clipRectData.old.x+clipRectData.old.w > x+w and w or clipRectData.old.x+clipRectData.old.w-x
+
+                x    = clipRectData.old.x<x and x or clipRectData.old.x
+                y    = clipRectData.old.y<y and y or clipRectData.old.y
+                h    = clipRectData.old.y+clipRectData.old.h > y+h and h or clipRectData.old.y+clipRectData.old.h-y
+                w    = clipRectData.old.x+clipRectData.old.w > x+w and w or clipRectData.old.x+clipRectData.old.w-x
                 what = "set"
-                
+
         elseif what == "restore" and clipRectData.old then
                 --gc:clipRect("reset")
                 what = "set"
-                x = clipRectData.old.x
-                y = clipRectData.old.y
-                h = clipRectData.old.h
-                w = clipRectData.old.w
+                x    = clipRectData.old.x
+                y    = clipRectData.old.y
+                h    = clipRectData.old.h
+                w    = clipRectData.old.w
         elseif what == "restore" then
                 what = "reset"
         end
-        
+
         gc:clipRect(what, x, y, w, h)
         if x and y and w and h then clipRectData.current = {x=x,y=y,w=w,h=h} end
 end
@@ -1259,6 +1294,7 @@ Screens = {}
 function scrollScreen(screen, d, callback)
   --  print("scrollScreen.  number of screens : ", #Screens)
     local dir = d or 1
+
     screen.x=dir*kXSize
     screen:Animate( {x=0}, 10, callback )
 end
@@ -1287,8 +1323,9 @@ end
 
 function push_screen(screen, ...)
     --print("push_screen")
-    local args = ...
+    local args      = ...
     local theScreen = current_screen()
+
     pushFromBack = false
     insertScreen(screen, ...)
     scrollScreen(screen, 1, function() remove_screen_previous(theScreen) end)
@@ -1297,6 +1334,7 @@ end
 function push_screen_back(screen, ...)
     --print("push_screen_back")
     local theScreen = current_screen()
+
     pushFromBack = true
     insertScreen(screen, ...)
     scrollScreen(screen, -1, function() remove_screen_previous(theScreen) end)
@@ -1352,10 +1390,10 @@ function Screen:init(xx,yy,ww,hh)
         self.xx = xx
         self.hh = hh
         self.ww = ww
-        
+
         self:ext()
         self:size(0)
-        
+
         Object.init(self, self.x, self.y, self.w, self.h, 0)
 end
 
@@ -1392,38 +1430,37 @@ function Screen:invalidate()
         platform.window:invalidate(self.x ,self.y , self.w, self.h)
 end
 
-function Screen:arrowKey()        end
-function Screen:enterKey()        end
-function Screen:backspaceKey()        end
-function Screen:clearKey()         end
-function Screen:escapeKey()        end
-function Screen:tabKey()        end
-function Screen:backtabKey()        end
-function Screen:charIn(char)        end
+function Screen:arrowKey() end
+function Screen:enterKey() end
+function Screen:backspaceKey() end
+function Screen:clearKey() end
+function Screen:escapeKey() end
+function Screen:tabKey() end
+function Screen:backtabKey() end
+function Screen:charIn(char) end
 
-
-function Screen:mouseDown()        end
-function Screen:mouseUp()        end
-function Screen:mouseMove()        end
-function Screen:contextMenu()        end
+function Screen:mouseDown() end
+function Screen:mouseUp() end
+function Screen:mouseMove() end
+function Screen:contextMenu() end
 
 function Screen:appended() end
 
 function Screen:resize(w,h) end
 
 function Screen:destroy()
-        self        = nil
+        self = nil
 end
 
 ------------------------------------------------------------------
 --                   WidgetManager Extension                    --
 ------------------------------------------------------------------
 
-WidgetManager        = {}
+WidgetManager = {}
 
 function WidgetManager:ext()
-        self.widgets        =        {}
-        self.focus        =        0
+        self.widgets =        {}
+        self.focus   =        0
 end
 
 function WidgetManager:resize(w,h)
@@ -1432,15 +1469,15 @@ function WidgetManager:resize(w,h)
     end
 end
 
-function WidgetManager:appendWidget(widget, xx, yy) 
-        widget.xx        =        xx
-        widget.yy        =        yy
-        widget.parent        =        self
+function WidgetManager:appendWidget(widget, xx, yy)
+        widget.xx     = xx
+        widget.yy     = yy
+        widget.parent = self
         widget:size()
-        
+
         table.insert(self.widgets, widget)
-        widget.pid        =        #self.widgets
-        
+        widget.pid = #self.widgets
+
         widget:appended(self)
         return self
 end
@@ -1449,16 +1486,16 @@ function WidgetManager:getWidget()
         return self.widgets[self.focus]
 end
 
-function WidgetManager:drawWidgets(gc) 
+function WidgetManager:drawWidgets(gc)
         for _, widget in pairs(self.widgets) do
                 widget:size()
                 widget:draw(gc)
-                
+
                 gc:setColorRGB(0,0,0)
         end
 end
 
-function WidgetManager:postPaint(gc) 
+function WidgetManager:postPaint(gc)
 end
 
 function WidgetManager:draw(gc)
@@ -1474,12 +1511,12 @@ function WidgetManager:loop(n) end
 function WidgetManager:stealFocus(n)
         local oldfocus=self.focus
         if oldfocus~=0 then
-                local veto        = self:getWidget():loseFocus(n)
+                local veto = self:getWidget():loseFocus(n)
                 if veto == -1 then
                         return -1, oldfocus
                 end
-                self:getWidget().hasFocus        =        false
-                self.focus        = 0
+                self:getWidget().hasFocus = false
+                self.focus                = 0
         end
         return 0, oldfocus
 end
@@ -1487,38 +1524,40 @@ end
 function WidgetManager:focusChange() end
 
 function WidgetManager:switchFocus(n, b)
-        if n~=0 and #self.widgets>0 then
-                local veto, focus        = self:stealFocus(n)
-                if veto == -1 then
-                        return -1
-                end
-                
-                local looped
-                self.focus        =        focus + n
-                if self.focus>#self.widgets then
-                        self.focus        =        1
-                        looped        = true
-                elseif self.focus<1 then
-                        self.focus        =        #self.widgets
-                        looped        = true
-                end        
-                if looped and self.noloop and not b then
-                        self.focus        = focus
-                        self:loop(n)
-                else
-                        self:getWidget().hasFocus        =        true        
-                        self:getWidget():getFocus(n)
-                end
+    if n~=0 and #self.widgets>0 then
+        local veto, focus = self:stealFocus(n)
+
+        if veto == -1 then
+            return -1
         end
-        self:focusChange()
+
+        local looped
+
+        self.focus = focus + n
+        if self.focus>#self.widgets then
+            self.focus = 1
+            looped     = true
+        elseif self.focus<1 then
+            self.focus = #self.widgets
+            looped     = true
+        end
+        if looped and self.noloop and not b then
+            self.focus = focus
+            self:loop(n)
+        else
+            self:getWidget().hasFocus = true
+            self:getWidget():getFocus(n)
+        end
+    end
+    self:focusChange()
 end
 
 
-function WidgetManager:arrowKey(arrow)        
-        if self.focus~=0 then
-                self:getWidget():arrowKey(arrow)
-        end
-        self:invalidate()
+function WidgetManager:arrowKey(arrow)
+    if self.focus~=0 then
+        self:getWidget():arrowKey(arrow)
+    end
+    self:invalidate()
 end
 
 function WidgetManager:enterKey()
@@ -1532,70 +1571,72 @@ function WidgetManager:enterKey()
     self:invalidate()
 end
 
-function WidgetManager:clearKey()        
-        if self.focus~=0 then
-                self:getWidget():clearKey()
-        end
-        self:invalidate()
+function WidgetManager:clearKey()
+    if self.focus~=0 then
+        self:getWidget():clearKey()
+    end
+    self:invalidate()
 end
 
 function WidgetManager:backspaceKey()
-        if self.focus~=0 then
-                self:getWidget():backspaceKey()
-        end
-        self:invalidate()
+    if self.focus~=0 then
+        self:getWidget():backspaceKey()
+    end
+    self:invalidate()
 end
 
-function WidgetManager:escapeKey()        
-        if self.focus~=0 then
-                self:getWidget():escapeKey()
-        end
-        self:invalidate()
+function WidgetManager:escapeKey()
+    if self.focus~=0 then
+        self:getWidget():escapeKey()
+    end
+    self:invalidate()
 end
 
-function WidgetManager:tabKey()        
-        self:switchFocus(1)
-        self:invalidate()
+function WidgetManager:tabKey()
+    self:switchFocus(1)
+    self:invalidate()
 end
 
-function WidgetManager:backtabKey()        
-        self:switchFocus(-1)
-        self:invalidate()
+function WidgetManager:backtabKey()
+    self:switchFocus(-1)
+    self:invalidate()
 end
 
 function WidgetManager:charIn(char)
-        if self.focus~=0 then
-            self:getWidget():charIn(char)
-        end
-        self:invalidate()
+    if self.focus~=0 then
+        self:getWidget():charIn(char)
+    end
+    self:invalidate()
 end
 
 function WidgetManager:getWidgetIn(x, y)
-    for n, widget in pairs(self.widgets) do    
-        local wox        = widget.ox or 0
-        local woy        = widget.oy or 0
+    for n, widget in pairs(self.widgets) do
+        local wox = widget.ox or 0
+        local woy = widget.oy or 0
+
         if x>=widget.x-wox and y>=widget.y-wox and x<widget.x+widget.w-wox and y<widget.y+widget.h-woy then
             return n, widget
         end
-    end 
+    end
 end
 
-function WidgetManager:mouseDown(x, y) 
-    local n, widget        =        self:getWidgetIn(x, y)
+function WidgetManager:mouseDown(x, y)
+    local n, widget = self:getWidgetIn(x, y)
+
     if n then
         if self.focus~=0 and self.focus~=n then self:getWidget().hasFocus = false self:getWidget():loseFocus()  end
         self.focus = n
-        
+
         widget.hasFocus = true
         widget:getFocus()
 
         widget:mouseDown(x, y)
         self:focusChange()
-        else
-            if self.focus~=0 then 
-            self:getWidget().hasFocus = false 
-            self:getWidget():loseFocus() end
-            self.focus        =        0
+    else
+        if self.focus~=0 then
+        self:getWidget().hasFocus = false
+        self:getWidget():loseFocus() end
+        self.focus = 0
         end
 end
 
@@ -1628,52 +1669,52 @@ Dialog = class(WScreen)
 
 function Dialog:init(title,xx,yy,ww,hh)
 
-        self.yy        =        yy
-        self.xx        =        xx
-        self.hh        =        hh
-        self.ww        =        ww
-        self.title        =        title
-        self:size()
-        
-        self.widgets        =        {}
-        self.focus        =        0
-            
+    self.yy    = yy
+    self.xx    = xx
+    self.hh    = hh
+    self.ww    = ww
+    self.title = title
+    self:size()
+
+    self.widgets = {}
+    self.focus   = 0
+
 end
 
 function Dialog:paint(gc)
-        self.xx        = (pww()-self.w)/2
-        self.yy        = (pwh()-self.h)/2
-        self.x, self.y        = self.xx, self.yy
-        
-        gc:setFont("sansserif","r",10)
-        gc:setColorRGB(224,224,224)
-        gc:fillRect(self.x, self.y, self.w, self.h)
+    self.xx        = (pww()-self.w)/2
+    self.yy        = (pwh()-self.h)/2
+    self.x, self.y = self.xx, self.yy
 
-        for i=1, 14,2 do
-                gc:setColorRGB(32+i*3, 32+i*4, 32+i*3)
-                gc:fillRect(self.x, self.y+i, self.w,2)
-        end
-        gc:setColorRGB(32+16*3, 32+16*4, 32+16*3)
-        gc:fillRect(self.x, self.y+15, self.w, 10)
-        
-        gc:setColorRGB(128,128,128)
-        gc:drawRect(self.x, self.y, self.w, self.h)
-        gc:drawRect(self.x-1, self.y-1, self.w+2, self.h+2)
-        
-        gc:setColorRGB(96,100,96)
-        gc:fillRect(self.x+self.w+1, self.y, 1, self.h+2)
-        gc:fillRect(self.x, self.y+self.h+2, self.w+3, 1)
-        
-        gc:setColorRGB(104,108,104)
-        gc:fillRect(self.x+self.w+2, self.y+1, 1, self.h+2)
-        gc:fillRect(self.x+1, self.y+self.h+3, self.w+3, 1)
-        gc:fillRect(self.x+self.w+3, self.y+2, 1, self.h+2)
-        gc:fillRect(self.x+2, self.y+self.h+4, self.w+2, 1)
-                        
-        gc:setColorRGB(255,255,255)
-        gc:drawString(self.title, self.x + 4, self.y+2, "top")
-        
-        self:postPaint(gc)
+    gc:setFont("sansserif","r",10)
+    gc:setColorRGB(224,224,224)
+    gc:fillRect(self.x, self.y, self.w, self.h)
+
+    for i=1, 14,2 do
+        gc:setColorRGB(32+i*3, 32+i*4, 32+i*3)
+        gc:fillRect(self.x, self.y+i, self.w,2)
+    end
+    gc:setColorRGB(32+16*3, 32+16*4, 32+16*3)
+    gc:fillRect(self.x, self.y+15, self.w, 10)
+
+    gc:setColorRGB(128,128,128)
+    gc:drawRect(self.x, self.y, self.w, self.h)
+    gc:drawRect(self.x-1, self.y-1, self.w+2, self.h+2)
+
+    gc:setColorRGB(96,100,96)
+    gc:fillRect(self.x+self.w+1, self.y, 1, self.h+2)
+    gc:fillRect(self.x, self.y+self.h+2, self.w+3, 1)
+
+    gc:setColorRGB(104,108,104)
+    gc:fillRect(self.x+self.w+2, self.y+1, 1, self.h+2)
+    gc:fillRect(self.x+1, self.y+self.h+3, self.w+3, 1)
+    gc:fillRect(self.x+self.w+3, self.y+2, 1, self.h+2)
+    gc:fillRect(self.x+2, self.y+self.h+4, self.w+2, 1)
+
+    gc:setColorRGB(255,255,255)
+    gc:drawString(self.title, self.x + 4, self.y+2, "top")
+
+    self:postPaint(gc)
 end
 
 function Dialog:postPaint() end
@@ -1684,7 +1725,7 @@ function Dialog:postPaint() end
 -- The dummy screen
 ---
 
-DummyScreen        = Screen()
+DummyScreen = Screen()
 
 
 ------------------------------------------------------------------
@@ -1692,13 +1733,13 @@ DummyScreen        = Screen()
 ------------------------------------------------------------------
 
 
-function on.paint(gc)        
+function on.paint(gc)
     allWentWell, generalErrMsg = pcall(onpaint, gc)
     if not allWentWell and errorHandler then
-        errorHandler.display = true
+        errorHandler.display      = true
         errorHandler.errorMessage = generalErrMsg
     end
-    if platform.hw and platform.hw() < 4 and not doNotDisplayIcon then 
+    if platform.hw and platform.hw() < 4 and not doNotDisplayIcon then
         platform.withGC(on.draw)
     end
 end
@@ -1716,7 +1757,7 @@ function on.resize(w, h)
     -- Global Ratio Constants for On-Calc (shouldn't be used often though...)
     kXRatio = w/320
     kYRatio = h/212
-    
+
     kXSize, kYSize = w, h
 
     for _,screen in pairs(Screens) do
@@ -1733,8 +1774,8 @@ function on.charIn(ch) current_screen():charIn(ch) end
 function on.backspaceKey() current_screen():backspaceKey() end
 function on.contextMenu() current_screen():contextMenu() end
 function on.mouseDown(x,y) current_screen():mouseDown(x,y) end
-function on.mouseUp(x,y) 
-    if (x == 0 and y == 0) then 
+function on.mouseUp(x,y)
+    if (x == 0 and y == 0) then
         current_screen():enterKey()
     else
         current_screen():mouseUp(x,y)
@@ -1756,18 +1797,18 @@ end
 
 function textLim(gc, text, max)
     local ttext, out = "",""
-    local width    = gc:getStringWidth(text)
+    local width      = gc:getStringWidth(text)
     if width<max then
         return text, width
     else
         for i=1, #text do
-            ttext    = text:usub(1, i)
-            if gc:getStringWidth(ttext .. "..")>max then
+            ttext = text:usub(1, i)
+            if gc:getStringWidth(ttext.."..")>max then
                 break
             end
             out = ttext
         end
-        return out .. "..", gc:getStringWidth(out .. "..")
+        return out.."..", gc:getStringWidth(out.."..")
     end
 end
 
@@ -1781,7 +1822,7 @@ Widget = class(Screen)
 function Widget:init()
     self.dw = 10
     self.dh = 10
-    
+
     self:ext()
 end
 
@@ -1799,47 +1840,47 @@ function Widget:size(n)
     if n then return end
     self.w = math.floor(Pr(self.ww, self.dw, self.parent.w, 0)+.5)
     self.h = math.floor(Pr(self.hh, self.dh, self.parent.h, 0)+.5)
-    
-    self.rx    =    math.floor(Pr(self.xx, 0, self.parent.w, self.w)+.5)
-    self.ry    =    math.floor(Pr(self.yy, 0, self.parent.h, self.h)+.5)
-    self.x    =    self.parent.x + self.rx
-    self.y    =    self.parent.y + self.ry
+
+    self.rx = math.floor(Pr(self.xx, 0, self.parent.w, self.w)+.5)
+    self.ry = math.floor(Pr(self.yy, 0, self.parent.h, self.h)+.5)
+    self.x  = self.parent.x + self.rx
+    self.y  = self.parent.y + self.ry
 end
 
 function Widget:giveFocus()
-    if self.parent.focus~=0 then
-        local veto    = self.parent:stealFocus()
+    if self.parent.focus ~=0 then
+        local veto = self.parent:stealFocus()
         if veto == -1 then
             return -1
-        end        
+        end
     end
-    
-    self.hasFocus    =    true
-    self.parent.focus    =    self.pid
+
+    self.hasFocus     = true
+    self.parent.focus = self.pid
     self:getFocus()
 end
 
 function Widget:getFocus() end
 function Widget:loseFocus() end
-function Widget:clearKey()     end
+function Widget:clearKey() end
 
-function Widget:enterKey() 
+function Widget:enterKey()
     self.parent:switchFocus(1)
 end
 function Widget:arrowKey(arrow)
-    if arrow=="up" then 
+    if arrow == "up" then
         self.parent:switchFocus(self.focusUp or -1)
-    elseif arrow=="down"  then
+    elseif arrow == "down"  then
         self.parent:switchFocus(self.focusDown or 1)
-    elseif arrow=="left" then 
+    elseif arrow == "left" then
         self.parent:switchFocus(self.focusLeft or -1)
-    elseif arrow=="right"  then
-        self.parent:switchFocus(self.focusRight or 1)    
+    elseif arrow == "right"  then
+        self.parent:switchFocus(self.focusRight or 1)
     end
 end
 
 
-WWidget    = addExtension(Widget, WidgetManager)
+WWidget = addExtension(Widget, WidgetManager)
 
 
 ------------------------------------------------------------------
@@ -1847,20 +1888,20 @@ WWidget    = addExtension(Widget, WidgetManager)
 ------------------------------------------------------------------
 
 -- First, create a new class based on Widget
-box    =    class(Widget)
+box = class(Widget)
 
 -- Init. You should define self.dh and self.dw, in case the user doesn't supply correct width/height values.
 -- self.ww and self.hh can be a number or a string. If it's a number, the width will be that amount of pixels.
 -- If it's a string, it will be interpreted as % of the parent screen size.
 -- These values will be used to calculate self.w and self.h (don't write to this, it will overwritten everytime the widget get's painted)
 -- self.xx and self.yy will be set when appending the widget to a screen. This value support the same % method (in a string)
--- They will be used to calculate self.x and self.h 
+-- They will be used to calculate self.x and self.h
 function box:init(ww,hh,t)
-    self.dh    = 10
-    self.dw    = 10
-    self.ww    = ww
-    self.hh    = hh
-    self.t    = t
+    self.dh = 10
+    self.dw = 10
+    self.ww = ww
+    self.hh = hh
+    self.t  = t
 end
 
 -- Paint. Here you can paint your widget stuff
@@ -1871,7 +1912,7 @@ end
 
 function box:paint(gc)
     gc:setColorRGB(0,0,0)
-    
+
     -- Do I have focus?
     if self.hasFocus then
         -- Yes, draw a filled black square
@@ -1880,7 +1921,7 @@ function box:paint(gc)
         -- No, draw only the outline
         gc:drawRect(self.x, self.y, self.w, self.h)
     end
-    
+
     gc:setColorRGB(128,128,128)
     if self.t then
         gc:drawString(self.t,self.x+2,self.y+2,"top")
@@ -1896,40 +1937,40 @@ end
 sInput    =    class(Widget)
 
 function sInput:init()
-    self.dw    =    100
-    self.dh    =    20
-    
-    self.value    =    ""    
-    self.bgcolor    =    {255,255,255}
-    self.disabledcolor    = {128,128,128}
-    self.font    =    {"sansserif", "r", 10}
-    self.disabled    = false
+    self.dw = 100
+    self.dh = 20
+
+    self.value         = ""
+    self.bgcolor       = {255,255,255}
+    self.disabledcolor = {128,128,128}
+    self.font          = {"sansserif", "r", 10}
+    self.disabled      = false
 end
 
 function sInput:paint(gc)
-    self.gc    =    gc
-    local x    =    self.x
-    local y =     self.y
-    
+    self.gc = gc
+    local x = self.x
+    local y = self.y
+
     gc:setFont(uCol(self.font))
     gc:setColorRGB(uCol(self.bgcolor))
     gc:fillRect(x, y, self.w, self.h)
 
     gc:setColorRGB(0,0,0)
     gc:drawRect(x, y, self.w, self.h)
-    
+
     if self.hasFocus then
         gc:setColorRGB(40, 148, 184)
         gc:drawRect(x-1, y-1, self.w+2, self.h+2)
         gc:setColorRGB(0, 0, 0)
     end
-        
-    local text    =    self.value
-    local    p    =    0
-    
-    
+
+    local text = self.value
+    local p    = 0
+
+
     gc_clipRect(gc, "subset", x, y, self.w, self.h)
-    
+
     --[[
     while true do
         if p==#self.value then break end
@@ -1937,30 +1978,30 @@ function sInput:paint(gc)
         text    =    self.value:sub(-p, -p) .. text
         if gc:getStringWidth(text) > (self.w - 8) then
             text    =    text:sub(2,-1)
-            break 
+            break
         end
     end
     --]]
-    
+
     if self.disabled or self.value == "" then
         gc:setColorRGB(uCol(self.disabledcolor))
     end
     if self.value == ""  then
-        text    = self.placeholder or ""
+        text = self.placeholder or ""
     end
-    
+
     local strwidth = gc:getStringWidth(text)
-    
+
     if strwidth<self.w-4 or not self.hasFocus then
         gc:drawString(text, x+2, y+1, "top")
     else
         gc:drawString(text, x-4+self.w-strwidth, y+1, "top")
     end
-    
+
     if self.hasFocus and self.value ~= "" then
         gc:fillRect(self.x+(text==self.value and strwidth+2 or self.w-4), self.y, 1, self.h)
     end
-    
+
     gc_clipRect(gc, "restore")
 end
 
@@ -1969,18 +2010,18 @@ function sInput:charIn(char)
         return
     end
     --char = (char == ",") and "." or char
-    self.value    =    self.value .. char
+    self.value = self.value .. char
 end
 
 function sInput:clearKey()
     if self:deleteInvalid() then return 0 end
-    self.value    =    ""
+    self.value = ""
 end
 
 function sInput:backspaceKey()
     if self:deleteInvalid() then return 0 end
     if not self.disabled then
-        self.value    =    self.value:usub(1,-2)
+        self.value = self.value:usub(1,-2)
     end
 end
 
@@ -1994,11 +2035,11 @@ function sInput:deleteInvalid()
 end
 
 function sInput:enable()
-    self.disabled    = false
+    self.disabled = false
 end
 
 function sInput:disable()
-    self.disabled    = true
+    self.disabled = true
 end
 
 
@@ -2008,41 +2049,41 @@ end
 --                         Label Widget                         --
 ------------------------------------------------------------------
 
-sLabel    =    class(Widget)
+sLabel = class(Widget)
 
 function sLabel:init(text, widget)
-    self.widget    =    widget
-    self.text    =    text
-    self.ww        =    30
-    
-    self.hh        =    20
-    self.lim    =    false
-    self.color    =    {0,0,0}
-    self.font    =    {"sansserif", "r", 10}
-    self.p        =    "top"
-    
+    self.widget = widget
+    self.text   = text
+    self.ww     = 30
+
+    self.hh    = 20
+    self.lim   = false
+    self.color = {0,0,0}
+    self.font  = {"sansserif", "r", 10}
+    self.p     = "top"
+
 end
 
 function sLabel:paint(gc)
     gc:setFont(uCol(self.font))
     gc:setColorRGB(uCol(self.color))
-    
-    local text    =    ""
+
+    local text = ""
     local ttext
     if self.lim then
-        text, self.dw    = textLim(gc, self.text, self.w)
+        text, self.dw = textLim(gc, self.text, self.w)
     else
         text = self.text
     end
-    
+
     gc:drawString(text, self.x, self.y, self.p)
 end
 
 function sLabel:getFocus(n)
     if n then
-        n    = n < 0 and -1 or (n > 0 and 1 or 0)
+        n = n < 0 and -1 or (n > 0 and 1 or 0)
     end
-    
+
     if self.widget and not n then
         self.widget:giveFocus()
     elseif n then
@@ -2055,23 +2096,23 @@ end
 --                        Button Widget                         --
 ------------------------------------------------------------------
 
-sButton    =    class(Widget)
+sButton = class(Widget)
 
 function sButton:init(text, action)
-    self.text    =    text
-    self.action    =    action
+    self.text   =  text
+    self.action =  action
     self.pushed = false
 
-    self.dh    =    27
-    self.dw    =    48
+    self.dh = 27
+    self.dw = 48
 
-    self.bordercolor    =    {136,136,136}
-    self.font    =    {"sansserif", "r", 10}
+    self.bordercolor = {136,136,136}
+    self.font        = {"sansserif", "r", 10}
 end
 
 function sButton:paint(gc)
     gc:setFont(uCol(self.font))
-    self.ww    =    gc:getStringWidth(self.text)+8
+    self.ww = gc:getStringWidth(self.text)+8
     self:size()
 
     if self.pushed and self.forcePushed then
@@ -2118,14 +2159,14 @@ end
 
 function sButton:mouseDown(x,y)
     if (x>self.x and x<(self.x+self.w) and y>self.y and y<(self.y+self.h)) then
-        self.pushed = true
+        self.pushed      = true
         self.forcePushed = true
     end
     platform.window:invalidate()
 end
 
 function sButton:mouseUp(x,y)
-    self.pushed = false
+    self.pushed      = false
     self.forcePushed = false
     if (x>self.x and x<(self.x+self.w) and y>self.y and y<(self.y+self.h)) then
         self:enterKey()
@@ -2139,7 +2180,7 @@ end
 ------------------------------------------------------------------
 
 
-scrollBar    = class(Widget)
+scrollBar = class(Widget)
 
 scrollBar.upButton=image.new("\011\0\0\0\010\0\0\0\0\0\0\0\022\0\0\0\016\0\001\0001\1981\1981\1981\1981\1981\1981\1981\1981\1981\1981\1981\198\255\255\255\255\255\255\255\255\156\243\255\255\255\255\255\255\255\2551\1981\198\255\255\255\255\255\255\214\218\0\128\214\218\255\255\255\255\255\2551\1981\198\255\255\255\255\247\222B\136\0\128B\136\247\222\255\255\255\2551\1981\198\255\255\247\222B\136!\132\0\128!\132B\136\247\222\255\2551\1981\198\247\222B\136!\132B\136R\202B\136!\132B\136\247\2221\1981\198\132\144B\136B\136\247\222\255\255\247\222B\136B\136\132\1441\1981\198\156\243\132\144\247\222\255\255\255\255\255\255\247\222\132\144\189\2471\1981\198\255\255\222\251\255\255\255\255\255\255\255\255\255\255\222\251\255\2551\1981\1981\1981\1981\1981\1981\1981\1981\1981\1981\1981\198")
 scrollBar.downButton=image.new("\011\0\0\0\010\0\0\0\0\0\0\0\022\0\0\0\016\0\001\0001\1981\1981\1981\1981\1981\1981\1981\1981\1981\1981\1981\198\255\255\222\251\255\255\255\255\255\255\255\255\255\255\222\251\255\2551\1981\198\156\243\132\144\247\222\255\255\255\255\255\255\247\222\132\144\189\2471\1981\198\132\144B\136B\136\247\222\255\255\247\222B\136B\136\132\1441\1981\198\247\222B\136!\132B\136R\202B\136!\132B\136\247\2221\1981\198\255\255\247\222B\136!\132\0\128!\132B\136\247\222\255\2551\1981\198\255\255\255\255\247\222B\136\0\128B\136\247\222\255\255\255\2551\1981\198\255\255\255\255\255\255\214\218\0\128\214\218\255\255\255\255\255\2551\1981\198\255\255\255\255\255\255\255\255\156\243\255\255\255\255\255\255\255\2551\1981\1981\1981\1981\1981\1981\1981\1981\1981\1981\1981\198")
@@ -2147,10 +2188,10 @@ scrollBar.downButton=image.new("\011\0\0\0\010\0\0\0\0\0\0\0\022\0\0\0\016\0\001
 function scrollBar:init(h, top, visible, total)
     self.color1    = {96, 100, 96}
     self.color2    = {184, 184, 184}
-    
-    self.hh    = h or 100
+
+    self.hh = h or 100
     self.ww = 14
-    
+
     self.visible = visible or 10
     self.total   = total   or 15
     self.top     = top     or 4
@@ -2159,16 +2200,16 @@ end
 function scrollBar:paint(gc)
     gc:setColorRGB(255,255,255)
     gc:fillRect(self.x+1, self.y+1, self.w-1, self.h-1)
-    
+
     gc:drawImage(self.upButton  , self.x+2, self.y+2)
     gc:drawImage(self.downButton, self.x+2, self.y+self.h-11)
     gc:setColorRGB(uCol(self.color1))
     if self.h > 28 then
         gc:drawRect(self.x + 3, self.y + 14, 8, self.h - 28)
     end
-    
+
     if self.visible<self.total then
-        local step    = (self.h-26)/self.total
+        local step = (self.h-26)/self.total
         gc:fillRect(self.x + 3, self.y + 14  + step*self.top, 9, step*self.visible)
         gc:setColorRGB(uCol(self.color2))
         gc:fillRect(self.x + 2 , self.y + 14 + step*self.top, 1, step*self.visible)
@@ -2177,26 +2218,26 @@ function scrollBar:paint(gc)
 end
 
 function scrollBar:update(top, visible, total)
-    self.top      = top     or self.top
-    self.visible  = visible or self.visible
-    self.total    = total   or self.total
+    self.top     = top     or self.top
+    self.visible = visible or self.visible
+    self.total   = total   or self.total
 end
 
 function scrollBar:action(top) end
 
 function scrollBar:mouseUp(x, y)
-    local upX    = self.x+2
-    local upY    = self.y+2
-    local downX    = self.x+2
-    local downY    = self.y+self.h-11
-    local butH    = 10
-    local butW    = 11
-    
-    if x>=upX and x<upX+butW and y>=upY and y<upY+butH and self.top>0 then
-        self.top    = self.top-1
+    local upX   = self.x+2
+    local upY   = self.y+2
+    local downX = self.x+2
+    local downY = self.y+self.h-11
+    local butH  = 10
+    local butW  = 11
+
+    if x >=upX and x<upX+butW and y>=upY and y<upY+butH and self.top>0 then
+        self.top = self.top-1
         self:action(self.top)
     elseif x>=downX and x<downX+butW and y>=downY and y<downY+butH and self.top<self.total-self.visible then
-        self.top    = self.top+1
+        self.top = self.top+1
         self:action(self.top)
     end
 end
@@ -2212,46 +2253,46 @@ end
 --                         List Widget                          --
 ------------------------------------------------------------------
 
-sList    = class(WWidget)
+sList = class(WWidget)
 
 function sList:init()
     Widget.init(self)
-    self.dw    = 150
-    self.dh    = 153
+    self.dw = 150
+    self.dh = 153
 
-    self.ih    = 18
+    self.ih = 18
 
-    self.top    = 0
-    self.sel    = 1
-    
-    self.font    = {"sansserif", "r", 10}
-    self.colors    = {50,150,190}
-    self.items    = {}
+    self.top = 0
+    self.sel = 1
+
+    self.font   = {"sansserif", "r", 10}
+    self.colors = {50,150,190}
+    self.items  = {}
 end
 
 function sList:appended()
-    self.scrollBar    = scrollBar("100", self.top, #self.items,#self.items)
+    self.scrollBar = scrollBar("100", self.top, #self.items,#self.items)
     self:appendWidget(self.scrollBar, -1, 0)
-    
+
     function self.scrollBar:action(top)
-        self.parent.top    = top
+        self.parent.top = top
     end
 end
 
 
 function sList:paint(gc)
-    local x    = self.x
-    local y    = self.y
-    local w    = self.w
-    local h    = self.h
-    
-    
-    local ih    = self.ih   
-    local top    = self.top        
-    local sel    = self.sel        
-              
-    local items    = self.items            
-    local visible_items    = math.floor(h/ih)    
+    local x = self.x
+    local y = self.y
+    local w = self.w
+    local h = self.h
+
+
+    local ih  = self.ih
+    local top = self.top
+    local sel = self.sel
+
+    local items         = self.items
+    local visible_items = math.floor(h/ih)
     gc:setColorRGB(255, 255, 255)
     gc:fillRect(x, y, w, h)
     gc:setColorRGB(0, 0, 0)
@@ -2259,36 +2300,36 @@ function sList:paint(gc)
     gc_clipRect(gc, "set", x, y, w, h)
     gc:setFont(unpack(self.font))
 
-    
-    
+
+
     local label, item
     for i=1, math.min(#items-top, visible_items+1) do
-        item    = items[i+top]
-        label    = textLim(gc, item, w-(5 + 12 + 2 + 1))
-        
+        item  = items[i+top]
+        label = textLim(gc, item, w-(5 + 12 + 2 + 1))
+
         if i+top == sel then
             gc:setColorRGB(unpack(self.colors))
             gc:fillRect(x+1, y + i*ih-ih + 1, w-(12 + 2 + 2), ih)
-            
+
             gc:setColorRGB(255, 255, 255)
         end
-        
+
         gc:drawString(label, x+5, y + i*ih-ih , "top")
         gc:setColorRGB(0, 0, 0)
     end
-    
+
     self.scrollBar:update(top, visible_items, #items)
-    
+
     gc_clipRect(gc, "reset")
 end
 
-function sList:arrowKey(arrow)    
-    
-    if arrow=="up" then
+function sList:arrowKey(arrow)
+
+    if arrow == "up" then
         if self.sel>1 then
-            self.sel    = self.sel - 1
+            self.sel = self.sel - 1
             if self.top>=self.sel then
-                self.top    = self.top - 1
+                self.top = self.top - 1
             end
         else
             self.top = self.h/self.ih < #self.items and math.ceil(#self.items - self.h/self.ih) or 0
@@ -2297,11 +2338,11 @@ function sList:arrowKey(arrow)
         self:change(self.sel, self.items[self.sel])
     end
 
-    if arrow=="down" then
+    if arrow == "down" then
         if self.sel<#self.items then
-            self.sel    = self.sel + 1
+            self.sel = self.sel + 1
             if self.sel>(self.h/self.ih)+self.top then
-                self.top    = self.top + 1
+                self.top = self.top + 1
             end
         else
             self.top = 0
@@ -2314,27 +2355,27 @@ end
 
 function sList:mouseUp(x, y)
     if x>=self.x and x<self.x+self.w-16 and y>=self.y and y<self.y+self.h then
-        
-        local sel    = math.floor((y-self.y)/self.ih) + 1 + self.top
-        if sel==self.sel then
+
+        local sel = math.floor((y-self.y)/self.ih) + 1 + self.top
+        if sel == self.sel then
             self:enterKey()
             return
         end
         if self.items[sel] then
-            self.sel=sel
+            self.sel = sel
             self:change(self.sel, self.items[self.sel])
         else
             return
         end
-        
+
         if self.sel>(self.h/self.ih)+self.top then
-            self.top    = self.top + 1
+            self.top = self.top + 1
         end
         if self.top>=self.sel then
-            self.top    = self.top - 1
+            self.top = self.top - 1
         end
-                        
-    end 
+
+    end
     self.scrollBar:mouseUp(x, y)
 end
 
@@ -2350,8 +2391,8 @@ function sList:change() end
 function sList:action() end
 
 function sList:reset()
-    self.sel    = 1
-    self.top    = 0
+    self.sel = 1
+    self.top = 0
 end
 
 ------------------------------------------------------------------
@@ -2362,22 +2403,22 @@ sScreen    = class(WWidget)
 
 function sScreen:init(w, h)
     Widget.init(self)
-    self.ww    = w
-    self.hh    = h
-    self.oy    = 0
-    self.ox    = 0
-    self.noloop    = true
+    self.ww     = w
+    self.hh     = h
+    self.oy     = 0
+    self.ox     = 0
+    self.noloop = true
 end
 
 function sScreen:appended()
-    self.oy    = 0
-    self.ox    = 0
+    self.oy = 0
+    self.ox = 0
 end
 
 function sScreen:paint(gc)
     gc_clipRect(gc, "set", self.x, self.y, self.w, self.h)
-    self.x    = self.x + self.ox
-    self.y    = self.y + self.oy
+    self.x = self.x + self.ox
+    self.y = self.y + self.oy
 end
 
 function sScreen:postPaint(gc)
@@ -2385,19 +2426,19 @@ function sScreen:postPaint(gc)
 end
 
 function sScreen:setY(y)
-    self.oy    = y or self.oy
+    self.oy = y or self.oy
 end
-                        
+
 function sScreen:setX(x)
-    self.ox    = x or self.ox
+    self.ox = x or self.ox
 end
 
 function sScreen:showWidget()
-    local w    = self:getWidget()
+    local w  = self:getWidget()
     if not w then print("bye") return end
-    local y    = self.y - self.oy
+    local y  = self.y - self.oy
     local wy = w.y - self.oy
-    
+
     if w.y-2 < y then
         print("Moving up")
         self:setY(-(wy-y)+4)
@@ -2405,14 +2446,14 @@ function sScreen:showWidget()
         print("moving down")
         self:setY(-(wy-(y+self.h)+w.h+2))
     end
-    
+
     if self.focus == 1 then
         self:setY(0)
     end
 end
 
 function sScreen:getFocus(n)
-    if n==-1 or n==1 then
+    if n == -1 or n == 1 then
         self:stealFocus()
         self:switchFocus(n, true)
     end
@@ -2434,7 +2475,7 @@ function sScreen:loseFocus(n)
     else
         self:stealFocus()
     end
-    
+
 end
 
 
@@ -2446,24 +2487,24 @@ sDropdown    =    class(Widget)
 
 
 function sDropdown:init(items)
-    self.dh    = 21
-    self.dw    = 75
-    self.screen    = WScreen()
-    self.sList    = sList()
-    self.sList.items    = items or {}
+    self.dh          = 21
+    self.dw          = 75
+    self.screen      = WScreen()
+    self.sList       = sList()
+    self.sList.items = items or {}
     self.screen:appendWidget(self.sList,0,0)
-    self.sList.action    = self.listAction
-    self.sList.loseFocus    = self.screenEscape
-    self.sList.change    = self.listChange
-    self.screen.escapeKey    = self.screenEscape
-    self.lak    = self.sList.arrowKey    
-    self.sList.arrowKey    = self.listArrowKey
-    self.value    = items[1] or ""
-    self.valuen    = #items>0 and 1 or 0
-    self.rvalue    = items[1] or ""
-    self.rvaluen=self.valuen
-    
-    self.sList.parentWidget = self
+    self.sList.action     = self.listAction
+    self.sList.loseFocus  = self.screenEscape
+    self.sList.change     = self.listChange
+    self.screen.escapeKey = self.screenEscape
+    self.lak              = self.sList.arrowKey
+    self.sList.arrowKey   = self.listArrowKey
+    self.value            = items[1] or ""
+    self.valuen           = #items>0 and 1 or 0
+    self.rvalue           = items[1] or ""
+    self.rvaluen          = self.valuen
+
+    self.sList.parentWidget  = self
     self.screen.parentWidget = self
     --self.screen.focus=1
 end
@@ -2482,12 +2523,12 @@ end
 
 sDropdown.img = image.new("\14\0\0\0\7\0\0\0\0\0\0\0\28\0\0\0\16\0\1\000{\239{\239{\239{\239{\239{\239{\239{\239{\239{\239{\239{\239{\239{\239al{\239{\239{\239{\239{\239{\239{\239{\239{\239{\239{\239{\239alalal{\239{\239\255\255\255\255\255\255\255\255\255\255\255\255{\239{\239alalalalal{\239{\239\255\255\255\255\255\255\255\255{\239{\239alalalalalalal{\239{\239\255\255\255\255{\239{\239alalalalalalalalal{\239{\239{\239{\239alalalalalalalalalalal{\239{\239alalalalalal")
 
-function sDropdown:arrowKey(arrow)    
-    if arrow=="up" then
+function sDropdown:arrowKey(arrow)
+    if arrow == "up" then
         self.parent:switchFocus(self.focusUp or -1)
-    elseif arrow=="down" then
+    elseif arrow == "down" then
         self.parent:switchFocus(self.focusDown or 1)
-    elseif arrow=="left" then 
+    elseif arrow == "left" then
         self.parent:switchFocus(self.focusLeft or -1)
     elseif arrow == "right" then
         self:open()
@@ -2508,32 +2549,33 @@ function sDropdown:listChange(a, b)
 end
 
 function sDropdown:open()
-    self.screen.yy    = self.y+self.h
-    self.screen.xx    = self.x-1
-    self.screen.ww    = self.w + 13
+    self.screen.yy = self.y+self.h
+    self.screen.xx = self.x-1
+    self.screen.ww = self.w + 13
+
     local h = 2+(18*#self.sList.items)
-    
-    local py    = self.parent.oy and self.parent.y-self.parent.oy or self.parent.y
-    local ph    = self.parent.h
-    
-    self.screen.hh    = self.y+self.h+h>ph+py-10 and ph-py-self.y-self.h-10 or h
+
+    local py = self.parent.oy and self.parent.y-self.parent.oy or self.parent.y
+    local ph = self.parent.h
+
+    self.screen.hh = self.y+self.h+h>ph+py-10 and ph-py-self.y-self.h-10 or h
     if self.y+self.h+h>ph+py-10  and self.screen.hh<40 then
         self.screen.hh = h < self.y and h or self.y-5
         self.screen.yy = self.y-self.screen.hh
     end
-    
+
     self.sList.ww = self.w + 13
     self.sList.hh = self.screen.hh-2
-    self.sList.yy =self.sList.yy+1
+    self.sList.yy = self.sList.yy+1
     self.sList:giveFocus()
-    
+
     self.screen:size()
     push_screen_direct(self.screen)
 end
 
 function sDropdown:listAction(a,b)
-    self.parentWidget.value  = b
-    self.parentWidget.valuen = a
+    self.parentWidget.value   = b
+    self.parentWidget.valuen  = a
     self.parentWidget.rvalue  = b
     self.parentWidget.rvaluen = a
     self.parentWidget:change(a, b)
@@ -2544,7 +2586,7 @@ function sDropdown:change() end
 
 function sDropdown:screenEscape()
     self.parentWidget.sList.sel = self.parentWidget.rvaluen
-    self.parentWidget.value    = self.parentWidget.rvalue
+    self.parentWidget.value     = self.parentWidget.rvalue
     if current_screen() == self.parentWidget.screen then
         remove_screen()
     end
@@ -2553,29 +2595,29 @@ end
 function sDropdown:paint(gc)
     gc:setColorRGB(255, 255, 255)
     gc:fillRect(self.x, self.y, self.w-1, self.h-1)
-    
+
     gc:setColorRGB(0,0,0)
     gc:drawRect(self.x, self.y, self.w-1, self.h-1)
-    
+
     if self.hasFocus then
         gc:setColorRGB(40, 148, 184)
         gc:drawRect(self.x-1, self.y-1, self.w+1, self.h+1)
         gc:setColorRGB(0, 0, 0)
     end
-    
+
     gc:setColorRGB(192, 192, 192)
     gc:fillRect(self.x+self.w-21, self.y+1, 20, 19)
     gc:setColorRGB(224, 224, 224)
     gc:fillRect(self.x+self.w-22, self.y+1, 1, 19)
-    
+
     gc:drawImage(self.img, self.x+self.w-18, self.y+9)
-    
+
     gc:setColorRGB(0,0,0)
     local text = self.value
     if self.unitmode then
-        text=text:gsub("([^%d]+)(%d)", numberToSub)
+        text = text:gsub("([^%d]+)(%d)", numberToSub)
     end
-    
+
     gc:drawString(textLim(gc, text, self.w-5-22), self.x+5, self.y, "top")
 end
 
@@ -2593,7 +2635,7 @@ end
 
 function math.solve(formula, tosolve)
     --local eq="max(exp" .. string.uchar(9654) .. "list(solve(" .. formula .. ", " .. tosolve ..")," .. tosolve .."))"
-    local eq = "nsolve(" .. formula .. ", " .. tosolve .. ")"
+    local eq  = "nsolve(" .. formula .. ", " .. tosolve .. ")"
     local res = tostring(math.eval(eq)):gsub(utf8(8722), "-")
     --print("-", eq, math.eval(eq), tostring(math.eval(eq)), tostring(math.eval(eq)):gsub(utf8(8722), "-"))
     return tonumber(res)
@@ -2626,7 +2668,7 @@ function find_data(known, cid, sid)
     end
 
     local no
-    local dirty_exit = true
+    local dirty_exit    = true
     local tosolve
     local couldnotsolve = {}
 
@@ -2655,7 +2697,7 @@ function find_data(known, cid, sid)
 
                 for var in pairs(formula.variables) do
                     if not known[var] then
-                        no = no + 1
+                        no      = no + 1
                         tosolve = var
                         if no == 2 then break end
                     end
@@ -2666,9 +2708,9 @@ function find_data(known, cid, sid)
 
                     local sol, r = math.solve(formula.formula, tosolve)
                     if sol then
-                        sol = round(sol, 4)
-                        known[tosolve] = sol
-                        done[formula] = true
+                        sol                    = round(sol, 4)
+                        known[tosolve]         = sol
+                        done[formula]          = true
                         var.store(tosolve, sol)
                         couldnotsolve[formula] = nil
                         print(tosolve .. " = " .. sol)
@@ -2700,8 +2742,8 @@ end
 
 CategorySel = WScreen()
 
-CategorySel.iconS = 48
-CategorySel.sublist = sList()
+CategorySel.iconS       = 48
+CategorySel.sublist     = sList()
 CategorySel:appendWidget(CategorySel.sublist, 5, 5 + 24)
 CategorySel.sublist:setSize(-10, -70)
 CategorySel.sublist.cid = 0
@@ -2722,7 +2764,7 @@ function CategorySel:paint(gc)
     gc:setColorRGB(255, 255, 255)
     gc:fillRect(self.x, self.y, self.w, self.h)
 
-    if not kIsInSubCatScreen then 
+    if not kIsInSubCatScreen then
         gc:setColorRGB(0, 0, 0)
         gc:setFont("sansserif", "r", 16)
         gc:drawString(pInfo["name"], self.x + 5, 0, "top")
@@ -2748,6 +2790,7 @@ end
 
 function CategorySel:pushed()
     local items = {}
+
     for cid, cat in ipairs(Categories) do
         table.insert(items, cat.name)
     end
@@ -2763,10 +2806,10 @@ end
 
 SubCatSel = WScreen()
 
-SubCatSel.sel = 1
-SubCatSel.sublist = sList()
+SubCatSel.sel         = 1
+SubCatSel.sublist     = sList()
 SubCatSel:appendWidget(SubCatSel.sublist, 5, 5 + 24)
-SubCatSel.back = sButton(utf8(9664) .. " Back")
+SubCatSel.back        = sButton(utf8(9664) .. " Back")
 SubCatSel:appendWidget(SubCatSel.back, 5, -5)
 SubCatSel.sublist:setSize(-10, -66)
 SubCatSel.sublist.cid = 0
@@ -2793,7 +2836,7 @@ end
 function SubCatSel:pushed(sel)
 
     kIsInSubCatScreen = true
-    self.cid = sel
+    self.cid          = sel
     local items = {}
     for sid, subcat in ipairs(Categories[sel].sub) do
         table.insert(items, subcat.name .. (#subcat.formulas == 0 and " (Empty)" or ""))
@@ -2819,7 +2862,7 @@ end
 -- Manual solver --
 -------------------
 
-manualSolver = WScreen()
+manualSolver    = WScreen()
 manualSolver.pl = sScreen(-20, -50)
 manualSolver:appendWidget(manualSolver.pl, 2, 4)
 
@@ -2853,10 +2896,10 @@ function manualSolver:paint(gc)
 
     gc:setFont("sansserif", "r", 10)
     local name = self.sub.name
-    local len = gc:getStringWidth(name)
+    local len  = gc:getStringWidth(name)
     if len >= .7*self.w then name = string.sub(name, 1, -10) .. ". " end
     local len = gc:getStringWidth(name)
-    local x = self.x + (self.w - len) / 2
+    local x   = self.x + (self.w - len) / 2
 
     --gc:setColorRGB(255,255,255)
     --gc:fillRect(x-3, 10, len+6, 18)
@@ -2871,7 +2914,7 @@ function manualSolver:postPaint(gc)
     --gc:drawRect(self.x, self.y, self.w, self.h-46)
 end
 
-basicFuncsInited = false
+basicFuncsInited    = false
 elementValuesInited = false
 
 function manualSolver:pushed(cid, sid)
@@ -2880,21 +2923,21 @@ function manualSolver:pushed(cid, sid)
         initBasicFunctions()
         basicFuncsInited = true
     end
-    
+
     if not elementValuesInited then
         initElementValues()
         elementValuesInited = true
     end
 
     self.pl.widgets = {}
-    self.pl.focus = 0
-    self.cid = cid
-    self.sid = sid
-    self.sub = Categories[cid].sub[sid]
-    self.pl.oy = 0
-    self.known = {}
-    self.inputs = {}
-    self.constants = {}
+    self.pl.focus   = 0
+    self.cid        = cid
+    self.sid        = sid
+    self.sub        = Categories[cid].sub[sid]
+    self.pl.oy      = 0
+    self.known      = {}
+    self.inputs     = {}
+    self.constants  = {}
 
     local inp, lbl
     local i = 0
@@ -2919,10 +2962,10 @@ function manualSolver:pushed(cid, sid)
             end
 
             self.inputs[variable] = inp
-            inp.ww = -145
+            inp.ww        = -145
             inp.focusDown = 4
-            inp.focusUp = -2
-            lbl = sLabel(variable, inp)
+            inp.focusUp   = -2
+            lbl           = sLabel(variable, inp)
 
             self.pl:appendWidget(inp, 60, i * 30 - 28)
             self.pl:appendWidget(lbl, 2, i * 30 - 28)
@@ -2943,23 +2986,23 @@ function manualSolver:pushed(cid, sid)
                     for k, _ in pairs(Units[variabledata.unit]) do
                         table.insert(itms, k)
                     end
-                    inp.dropdown = sDropdown(itms)
-                    inp.dropdown.unitmode = true
-                    inp.dropdown.change = self.update
-                    inp.dropdown.focusUp = nodropdown and -5 or -4
+                    inp.dropdown           = sDropdown(itms)
+                    inp.dropdown.unitmode  = true
+                    inp.dropdown.change    = self.update
+                    inp.dropdown.focusUp   = nodropdown and -5 or -4
                     inp.dropdown.focusDown = 2
                     self.pl:appendWidget(inp.dropdown, -2, i * 30 - 28)
-                    nodropdown = false
-                    lastdropdown = inp.dropdown
+                    nodropdown             = false
+                    lastdropdown           = inp.dropdown
                 else
                     self.pl:appendWidget(sLabel(""), -32, i * 30 - 28)
                 end
             else
-                nodropdown = true
+                nodropdown    = true
                 inp.focusDown = 1
                 if lastdropdown then
                     lastdropdown.focusDown = 1
-                    lastdropdown = false
+                    lastdropdown           = false
                 end
             end
 
@@ -2974,7 +3017,7 @@ function manualSolver:pushed(cid, sid)
     manualSolver.sb:update(0, math.floor(self.pl.h / 30 + .5), i)
     self.pl:giveFocus()
 
-    self.pl.focus = 1
+    self.pl.focus                = 1
     self.pl:getWidget().hasFocus = true
     self.pl:getWidget():getFocus()
 end
@@ -2986,14 +3029,14 @@ end
 function manualSolver:preSolve(input)
     local res, err
     res, err = math.eval(input.value)
-    res = res and round(res, 4)
+    res      = res and round(res, 4)
     print("Presolve : ", input.value .. " = " .. tostring(res), "(err ? = " .. tostring(err) .. ")")
     input.value = res and tostring(res) or input.value
     return res and 1 or false
 end
 
 function manualSolver:solve()
-    local inputed = {}
+    local inputed  = {}
     local disabled = {}
 
     for variable, input in pairs(self.inputs) do
@@ -3022,8 +3065,8 @@ function manualSolver:solve()
     for variable, value in pairs(self.known) do
         if (not inputed[variable] and self.inputs[variable]) then
             local variabledata = Categories[self.cid].varlink[variable]
-            local result = tostring(value)
-            local input = self.inputs[variable]
+            local result       = tostring(value)
+            local input        = self.inputs[variable]
 
             if input.dropdown and input.dropdown.rvalue ~= variabledata.unit then
                 result = Units.mainToSub(variabledata.unit, input.dropdown.rvalue, result)
@@ -3111,7 +3154,7 @@ function usedFormulas:removed()
         usedFormulas.ed:resize(1, 1)
         usedFormulas.ed:move(-10, -10)
     end
-    usedFormulas.ed = nil
+    usedFormulas.ed  = nil
     doNotDisplayIcon = false
 end
 
@@ -3126,11 +3169,11 @@ end
 
 function initBasicFunctions()
     local basicFunctions = {
-        ["erf"] = [[Define erf(x)=Func:2/sqrt(pi)*integral(exp(-t*t),t,0,x):EndFunc]],
-        ["erfc"] = [[Define erfc(x)=Func:1-erf(x):EndFunc]],
-        ["ni"] = [[Define ni(ttt)=Func:7.7835*10^21*ttt^(3/2)*exp((4.73*10^-4*ttt^2/(ttt+636)-1.17)/(1.72143086667*10^-4*ttt)):EndFunc]],
+        ["erf"]    = [[Define erf(x)=Func:2/sqrt(pi)*integral(exp(-t*t),t,0,x):EndFunc]],
+        ["erfc"]   = [[Define erfc(x)=Func:1-erf(x):EndFunc]],
+        ["ni"]     = [[Define ni(ttt)=Func:7.7835*10^21*ttt^(3/2)*exp((4.73*10^-4*ttt^2/(ttt+636)-1.17)/(1.72143086667*10^-4*ttt)):EndFunc]],
         ["eegalv"] = [[Define eegalv(rrx,rr2,rr3,rr4,rrg,rrs,vs)=Func:Local rra,rrb,rrc,vb,rg34,rx2ab: rg34:=rrg+rr3+rr4:  rra:=((rrg*rr3)/(rg34)): rrb:=((rrg*rr4)/(rg34)): rrc:=((rr3*rr4)/(rg34)): rx2ab:=rrx+rr2+rra+rrb: rra:=((rrg*rr3)/(rg34)): vb:=((((vs*(rrx+rra)*(rr2+rrb))/(rx2ab)))/(rrs+rrc+(((rrx+rra)*(rr2+rrb))/(rx2ab)))): vb*(((rx)/(rrx+rra))-((rr2)/(rr2+rrb))):Return :EndFunc]],
-    }
+        }
     for var, func in pairs(basicFunctions) do
         math.eval(func .. ":Lock " .. var) -- defines and prevents against delvar.
     end
@@ -3139,9 +3182,9 @@ end
 -- End of FormulaPro/FPMain.lua --
 ----------------------------------
 
-------------------------------------------
--- Start of reference/ReferenceMain.lua --
-------------------------------------------
+------------------------------------
+-- Start of reference/RefMain.lua --
+------------------------------------
 
 ------------------------------------------
 -- Start of reference/REFSIPrefixes.lua --
@@ -3211,9 +3254,9 @@ end
 ---------------------------------------------
 
 Greek = Screen()
- 
+
 Greek.font = "serif"
-  
+
 Greek.alphabet1 = {
     {utf8(913), utf8(945), "Alpha"},
     {utf8(914), utf8(946), "Beta"},
@@ -3244,12 +3287,12 @@ Greek.alphabet3 = {
     {utf8(936), utf8(968), "Psi"},
     {utf8(937), utf8(969), "Omega"}
 }
- 
+
 function Greek:paint(gc)
     gc:setColorRGB(255,255,255)
     gc:fillRect(self.x, self.y, self.w, self.h)
     gc:setColorRGB(0,0,0)
-    
+
         local msg = "Greek Alphabet"
         gc:setFont("sansserif","b",12)
         drawXCenteredString(gc,msg,5)
@@ -3264,7 +3307,7 @@ function Greek:paint(gc)
                 gc:drawString(v[3] .. " : " .. v[1] .. " " .. v[2], 5+.67*pww(), 10+22*k, "top")
         end
 end
- 
+
 function Greek:enterKey()
     Greek.font = Greek.font == "serif" and "sansserif" or "serif"
     Greek:invalidate()
@@ -3309,7 +3352,7 @@ function RefConstants:paint(gc)
     gc:setColorRGB(255,255,255)
     gc:fillRect(self.x, self.y, self.w, self.h)
     gc:setColorRGB(0,0,0)
-    
+
         msg = "Physical Constants: "
         gc:setFont("sansserif","b",12)
         if RefConstants.leftRight > 1 then
@@ -3326,7 +3369,7 @@ function RefConstants:paint(gc)
         end
         drawXCenteredString(gc,msg,4)
         gc:setFont("sansserif","r",12)
-        
+
            local tmp = 0
            for k=RefConstants.tmpScroll,table.getn(RefConstants.data) do
             tmp = tmp + 1
@@ -3389,7 +3432,7 @@ function MotionVars:paint(gc)
     gc:setColorRGB(255,255,255)
     gc:fillRect(self.x, self.y, self.w, self.h)
     gc:setColorRGB(0,0,0)
-    
+
         msg = "Motion Variables : "
         gc:setFont("sansserif","b",12)
         if MotionVars.tmpScroll > 1 then
@@ -3400,7 +3443,7 @@ function MotionVars:paint(gc)
         end
         drawXCenteredString(gc,msg,4)
         gc:setFont("sansserif","r",12)
-        
+
            local tmp = 0
            for k=MotionVars.tmpScroll,table.getn(MotionVars.data) do
                tmp = tmp + 1
@@ -3537,7 +3580,7 @@ function RefBoolExpr:paint(gc)
 	gc:setColorRGB(255,255,255)
 	gc:fillRect(self.x, self.y, self.w, self.h)
 	gc:setColorRGB(0,0,0)
-	
+
 	    msg = "Boolean Expressions : "
         gc:setFont("sansserif","b",12)
         if RefBoolExpr.tmpScroll > 1 then
@@ -3548,7 +3591,7 @@ function RefBoolExpr:paint(gc)
         end
         drawXCenteredString(gc,msg,4)
         gc:setFont("sansserif","r",12)
-        
+
        	local tmp = 0
        	for k=RefBoolExpr.tmpScroll,table.getn(RefBoolExpr.data) do
        		tmp = tmp + 1
@@ -4163,19 +4206,19 @@ Ref.escapeKey = Ref.tabKey
 
 Ref.addRefs()
 
-----------------------------------------
--- End of reference/ReferenceMain.lua --
-----------------------------------------
+----------------------------------
+-- End of reference/RefMain.lua --
+----------------------------------
 
 
 aboutWindow	= Dialog("About", 50, 20, 280, 180)
 
 local origInfoStr = "Orig Code:\nFormulaPro v1.4a LGPL3\nJim Bauwens, Adrien \"Adriweb\" Bertrand, Levak\ntiplanet.org - inspired-lua.org"
-local aboutstr = infoStr.."\n"..origInfoStr
-local aboutButton	= sButton("OK")
+local aboutstr    = infoStr.."\n"..origInfoStr
+local aboutButton = sButton("OK")
 
 for i, line in ipairs(aboutstr:split("\n")) do
-    local aboutlabel	= sLabel(line)
+    local aboutlabel = sLabel(line)
     aboutWindow:appendWidget(aboutlabel, 10, 27 + i*14-12)
 end
 
@@ -4200,9 +4243,9 @@ end
 function errorPopup(gc)
 
     errorHandler.display = false
-    errorDialog = Dialog("Oops...", 50, 20, "85", "80")
+    errorDialog          = Dialog("Oops...", 50, 20, "85", "80")
 
-    local textMessage	= [[PhysPro has encountered an error:
+    local textMessage = [[PhysPro has encountered an error:
 Error at line ]]..errorHandler.errorLine
     local errorOKButton	= sButton("OK")
 
@@ -4241,11 +4284,11 @@ errorHandler = {}
 
 function handleError(line, errMsg, callStack, locals)
     print("Error handled!", errMsg)
-    errorHandler.display = true
+    errorHandler.display      = true
     errorHandler.errorMessage = errMsg
-    errorHandler.errorLine = line
-    errorHandler.callStack = callStack
-    errorHandler.locals = locals
+    errorHandler.errorLine    = line
+    errorHandler.callStack    = callStack
+    errorHandler.locals       = locals
     platform.window:invalidate()
     return true --go on....
 end

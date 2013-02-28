@@ -1,3 +1,6 @@
+--@@  REFTIme.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 RefTime = Screen()
 

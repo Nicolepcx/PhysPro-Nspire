@@ -1,3 +1,7 @@
+--@@  analysis.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
+
 Analysis = Dialog("Note",50, 50, 200, 120)
 
 txt = sLabel ("Analysis is not yet done!")

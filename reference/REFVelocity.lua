@@ -1,3 +1,6 @@
+--@@  REFVelocity.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 RefVelocity = Screen()
 

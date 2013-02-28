@@ -1,7 +1,10 @@
+--@@  FPSolver.lua
+--@@  LGLP 3 License
+--@@  alex3yoyo
 
 function math.solve(formula, tosolve)
     --local eq="max(exp" .. string.uchar(9654) .. "list(solve(" .. formula .. ", " .. tosolve ..")," .. tosolve .."))"
-    local eq = "nsolve(" .. formula .. ", " .. tosolve .. ")"
+    local eq  = "nsolve(" .. formula .. ", " .. tosolve .. ")"
     local res = tostring(math.eval(eq)):gsub(utf8(8722), "-")
     --print("-", eq, math.eval(eq), tostring(math.eval(eq)), tostring(math.eval(eq)):gsub(utf8(8722), "-"))
     return tonumber(res)
@@ -34,7 +37,7 @@ function find_data(known, cid, sid)
     end
 
     local no
-    local dirty_exit = true
+    local dirty_exit    = true
     local tosolve
     local couldnotsolve = {}
 
@@ -63,7 +66,7 @@ function find_data(known, cid, sid)
 
                 for var in pairs(formula.variables) do
                     if not known[var] then
-                        no = no + 1
+                        no      = no + 1
                         tosolve = var
                         if no == 2 then break end
                     end
@@ -74,9 +77,9 @@ function find_data(known, cid, sid)
 
                     local sol, r = math.solve(formula.formula, tosolve)
                     if sol then
-                        sol = round(sol, 4)
-                        known[tosolve] = sol
-                        done[formula] = true
+                        sol                    = round(sol, 4)
+                        known[tosolve]         = sol
+                        done[formula]          = true
                         var.store(tosolve, sol)
                         couldnotsolve[formula] = nil
                         print(tosolve .. " = " .. sol)
