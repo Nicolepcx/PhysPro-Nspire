@@ -44,7 +44,8 @@ if [[ "$ARGS" == *"-luna"* ]]; then
     luna PhysPro.big.lua PhysPro-Nspire.tns
     echo "Done building PhysPro"
 elif [[ "$ARGS" == *"-etk"* ]]; then
-    echo "Error: Not done with this part yet."
+    build/etk.lua main.lua build/PhysPro-Nspire.tns
+    cp build/PhysPro.src.lua build/PhysPro.src.lua.tns
 fi
 
 if [[ "$ARGS" == *"-o"* ]]; then
