@@ -35,10 +35,6 @@ if [[ "$ARGS" == *"-luna"* ]]; then
     echo "Done building PhysPro"
 elif [[ "$ARGS" == *"-etk"* ]]; then
     build/etk main.lua build/PhysPro-Nspire.tns
-    sed "/--@@/ d" big.main.lua > build/PhysPro.src.lua
-    echo "Concatenated sources"
-    echo "Removed source headers"
-    rm big.main.lua
     cp build/PhysPro.src.lua build/PhysPro.src.lua.tns
 fi
 
