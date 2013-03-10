@@ -34,7 +34,7 @@ if [[ "$ARGS" == *"-luna"* ]]; then
     cp PhysPro.src.lua PhysPro.src.lua.tns
     echo "Done building PhysPro"
 elif [[ "$ARGS" == *"-etk"* ]]; then
-    build/etk main.lua build/PhysPro-Nspire.tns
+    build/etk.lua main.lua build/PhysPro-Nspire.tns
     cp build/PhysPro.src.lua build/PhysPro.src.lua.tns
 fi
 
