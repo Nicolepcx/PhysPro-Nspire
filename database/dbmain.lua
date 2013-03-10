@@ -12,8 +12,7 @@ ct.th = 2 -- Thermal physics
 ct.wa = 3 -- Oscillations & Waves
 ct.ec = 4 -- Electric cuurents
 ct.ch = 5 -- Chemistry
-ct.fo = 6 -- Forces & Fields
-ct.ex = 7 -- External Database
+ct.ex = 6 -- External Database
 
 function checkIfExists(table, name)
     for k,v in pairs(table) do

@@ -81,13 +81,22 @@ g.ps = {utf8(936), utf8(968), "Psi"}
 g.om = {utf8(937), utf8(969), "Omega"}
 
 s     = {} -- Symbols
+s.sh  = utf8(8315)      -- superscript (ss) "-"
+s.s1  = utf8(185)       -- ss "1"
+s.s1h = s.sh..s.s1      -- ss "-1"
+s.s2  = utf8(178)       -- superscript "2"
+s.s2h = s.sh..s.s2      -- ss "-2"
+s.s3  = utf8(179)       -- superscript "3"
+s.s4  = utf8(8308)      -- ss "4"
+s.s5  = utf8(8309)      -- ss "5"
+s.s6  = utf8(8310)      -- ss "6"
+s.s7  = utf8(8311)      -- ss "7"
+s.s8  = utf8(8312)      -- ss "8"
+s.s9  = utf8(8313)      -- ss "9"
+s.s0  = utf8(8304)      -- ss "0"
+s.sb2 = utf8(8322)      -- subscript (sb) "2"
+s.bul = utf8(8729)      -- bullet operator
 s.dg  = utf8(176)       -- degree symbol
-s.ph  = utf8(8315)      -- superscript "-"
-s.p1  = utf8(185)       -- superscript "1"
-s.p1h = s.ph..s.p1
-s.p2  = utf8(178)       -- superscript "2"
-s.p2h = s.ph..s.p2
-s.p3  = utf8(179)       -- superscript "3"
 s.th  = g.th[2]         -- theta
 s.th0 = g.th[2].."0"    -- theta0
 s.la  = g.la[2]         -- lambda
@@ -97,9 +106,9 @@ s.dpm = g.de[1].."pm"   -- Change in momentum
 s.dt  = g.de[1].."t"    -- Change in time
 s.dh  = g.de[1].."h"    -- change in height
 s.om  = g.om[1]         -- Resistance
-s.omm = g.om[1].."*m"   -- Resistivity unit (ohms * meter)
+s.omm = g.om[1]..s.bul.."m"   -- Resistivity unit (ohms * meter)
 s.rh  = g.rh[2]         -- Resistivity
-s.mu  = g.mu[2]         -- Mu greek character
+s.mu  = g.mu[2]         -- mu
 ---------------------------------
 -- End of database/symbols.lua --
 ---------------------------------
@@ -109,13 +118,13 @@ s.mu  = g.mu[2]         -- Mu greek character
 -------------------------------------
 
 Constants = {
-{key="g",   info="Acceleration due to gravity", val="-9.81",                unit="m/s"..s.p2},
-{key="G",   info="Gravitational constant",      val="6.67*10^(-11)",        unit="Nm"..s.p2.."/kg"..s.p2h},
-{key="N",   info="Avogadro's constant",         val="6.022*10^(23)",        unit="mol"..s.p1h},
-{key="R",   info="Gas constant",                val="8.314",                unit="J/((mol"..s.p1h..")*(K"..s.p1h.."))"},
-{key="k1",  info="Boltzmann's constant",        val="1.38*10^(-23)",        unit="J/K"..s.p1h},
-{key="k2",  info="Stefan-Boltzmann constant",   val="5.67*10^-8",           unit="W*m"..s.p2h.."*K"..s.p1h},
-{key="k3",  info="Coulomb constant",            val="8.99*10^9",            unit="N*m"..s.p2.."*C"..s.p2h},
+{key="g",   info="Acceleration due to gravity", val="-9.81",                unit="m/s"..s.s2},
+{key="G",   info="Gravitational constant",      val="6.67*10^(-11)",        unit="Nm"..s.s2.."/kg"..s.s2h},
+{key="N",   info="Avogadro's constant",         val="6.022*10^(23)",        unit="mol"..s.s1h},
+{key="R",   info="Gas constant",                val="8.314",                unit="J/((mol"..s.s1h..")"..s.bul.."(K"..s.s1h.."))"},
+{key="k1",  info="Boltzmann's constant",        val="1.38*10^(-23)",        unit="J/K"..s.s1h},
+{key="k2",  info="Stefan-Boltzmann constant",   val="5.67*10^-8",           unit="W"..s.bul.."m"..s.s2h..s.bul.."K"..s.s1h},
+{key="k3",  info="Coulomb constant",            val="8.99*10^9",            unit="N"..s.bul.."m"..s.s2..s.bul.."C"..s.s2h},
 {key="C",   info="Speed of light in vacuum",    val="2.9979*10^(8)",        unit="m/s"},
 {key="h",   info="Planck constant",             val="6.626*10^(-34)",       unit="J/s"},
 {key="q",   info="Elementary charge",           val="1.60218*10^(-19)",     unit="C"},
@@ -123,8 +132,8 @@ Constants = {
 {key="mp",  info="Proton rest mass",            val="1.6726*10^(-27)",      unit="kg"},
 {key="mn",  info="Neutron rest mass",           val="1.675*10^(-27)",       unit="kg"},
 {key="mu",  info="Atomic mass unit",            val="1.66*10^(-27)",        unit="kg"},
-{key=utf8(949).."0", info="Permittivity of a vacuum", val="8.854*10^(-12)", unit="F/m"..s.p1h},
-{key=utf8(956).."0", info="Permeability of a vacuum", val="4*pi*10^(-7)",   unit="N/A"..s.p2h}
+{key=g.ep[2].."0", info="Permittivity of a vacuum", val="8.854*10^(-12)",   unit="F/m"..s.s1h},
+{key=utf8(956).."0", info="Permeability of a vacuum", val="4*pi*10^(-7)",   unit="N/A"..s.s2h}
 }
 
 function con(i) -- Shortcut for using constants in the database part
@@ -205,8 +214,7 @@ ct.th = 2 -- Thermal physics
 ct.wa = 3 -- Oscillations & Waves
 ct.ec = 4 -- Electric cuurents
 ct.ch = 5 -- Chemistry
-ct.fo = 6 -- Forces & Fields
-ct.ex = 7 -- External Database
+ct.ex = 6 -- External Database
 
 function checkIfExists(table, name)
     for k,v in pairs(table) do
@@ -290,16 +298,16 @@ addCatVar(ct.mo, "s",   "Displacement", "m")
 addCatVar(ct.mo, "t",   "Final time", "s")
 addCatVar(ct.mo, "t0",  "Initial time", "s")
 addCatVar(ct.mo, s.dt,  "Change in time", "s")
-addCatVar(ct.mo, "a",   "Accleration", "m/s"..s.p2)
+addCatVar(ct.mo, "a",   "Accleration", "m/s"..s.s2)
 addCatVar(ct.mo, "F",   "Force", "N")
 addCatVar(ct.mo, "m",   "Mass", "kg")
 addCatVar(ct.mo, "W",   "Work", "J")
 addCatVar(ct.mo, "P",   "Power", "W")
 addCatVar(ct.mo, s.dh,  "Change in height", "m")
-addCatVar(ct.mo, "imp", "Impulse", "N*s")
-addCatVar(ct.mo, "pm",  "Final momentum", "N*s")
-addCatVar(ct.mo, "pm0", "Initial momentum", "N*s")
-addCatVar(ct.mo, s.dpm, "Change in momentum", "N*s")
+addCatVar(ct.mo, "imp", "Impulse", "N"..s.bul.."s")
+addCatVar(ct.mo, "pm",  "Final momentum", "N"..s.bul.."s")
+addCatVar(ct.mo, "pm0", "Initial momentum", "N"..s.bul.."s")
+addCatVar(ct.mo, s.dpm, "Change in momentum", "N"..s.bul.."s")
 addCatVar(ct.mo, "Epg", "gravitational potential energy", "J")
 addCatVar(ct.mo, "Ek",  "Kinetic energy (translational)", "J")
 addCatVar(ct.mo, "TME", "Total mechanical energy", "J")
@@ -307,7 +315,7 @@ addCatVar(ct.mo, s.th,  "Angle", s.dg)
 addCatVar(ct.mo, "Tp",  "Period", "s")
 addCatVar(ct.mo, "c",   "Circumference", "m")
 addCatVar(ct.mo, "r",   "Radius", "m")
-addCatVar(ct.mo, "ca",  "Centripital acceleration", "m/s"..s.p2)
+addCatVar(ct.mo, "ca",  "Centripital acceleration", "m/s"..s.s2)
 addCatVar(ct.mo, "cF",  "Centripital force", "N")
 addCatVar(ct.mo, "cv",  "Centripital velocity", "m/s")
 
@@ -358,23 +366,23 @@ aF(ct.mo, 7, "ca=(4*pi^2*r)/Tp^2", U("ca", "r", "Tp") )
 aF(ct.mo, 7, "ca=cv^2/r^2", U("ca", "cv", "r") )
 aF(ct.mo, 7, "c=2*pi*r", U("c", "r") )
 
-addCat(ct.th, "Thermal physics", "IB topic 3 & 10. Perform thermal related physics calculations")
+addCat(ct.th, "Thermal physics", "IB topic 3 & 10. Perform thermal related physics calculations.")
 
 addCatVar(ct.th, "P",   "Pressure", "Pa")
-addCatVar(ct.th, "V",   "Volume", "m"..s.p3)
+addCatVar(ct.th, "V",   "Volume", "m"..s.s3)
 addCatVar(ct.th, "T",   "Tempturature", "K")
 addCatVar(ct.th, "n",   "Amount", "mol")
 addCatVar(ct.th, "m",   "Mass", "kg")
 addCatVar(ct.th, "amu", "Molecular mass", "amu")
+addCatVar(ct.th, "F",   "Force", "N")
+addCatVar(ct.th, "A",   "Area", "m"..s.s2)
+addCatVar(ct.th, "Ek",  "Kinetic energy (translational)", "J")
+addCatVar(ct.th, "Q",   "Heat", "J")
+addCatVar(ct.th, "c",   "Specific heat capacity", "J/kg"..s.bul.."K")
+addCatVar(ct.th, "L",   "Latent heat", "nounit")
 addCatVar(ct.th, "tK",  "Kelvin", "nounit")
 addCatVar(ct.th, "tC",  "Celcius", "nounit")
 addCatVar(ct.th, "tF",  "Farhenhiet", "nounit")
-addCatVar(ct.th, "F",   "Force", "N")
-addCatVar(ct.th, "A",   "Area", "m"..s.p2)
-addCatVar(ct.th, "Ek",  "Kinetic energy (translational)", "J")
-addCatVar(ct.th, "Q",   "Heat", "J")
-addCatVar(ct.th, "c",   "Specific heat capacity", "J/kg*K")
-addCatVar(ct.th, "L",   "Latent heat", "nounit")
 
 addSubCat(ct.th, 1, "Tempurature", "Convert between the different tempurature scales")
 aF(ct.th, 1, "tF=(9/5)*tC+32", U("tC", "tF") )
@@ -386,7 +394,7 @@ aF(ct.th, 2, "n=m/amu", U("n", "m", "amu") )
 aF(ct.th, 2, "P=F/A", U("P", "F", "A") )
 aF(ct.th, 2, "Ek=(3/2)*("..con("k1")..")*T", U("Ek", "T") )
 
-addSubCat(ct.th, 3, "Capacity", "Solve for Q, T, m, c, L")
+addSubCat(ct.th, 3, "Heat Capacity", "Solve for Q, T, m, c, L")
 aF(ct.th, 3, "Q=c*m*T", U("Q", "c", "m", "T") )
 aF(ct.th, 3, "Q=m*L", U("Q", "m", "L") )
 
@@ -396,7 +404,7 @@ addCatVar(ct.wa, "F",   "Force", "N")
 addCatVar(ct.wa, "K",   "Spring constant", "N/m")
 addCatVar(ct.wa, "x",   "Displacement", "m")
 addCatVar(ct.wa, "m",   "Mass", "kg")
-addCatVar(ct.wa, "a",   "Acceleration", "m/s"..s.p2)
+addCatVar(ct.wa, "a",   "Acceleration", "m/s"..s.s2)
 addCatVar(ct.wa, "Ep",  "Elastic potential energy", "J")
 addCatVar(ct.wa, "T",   "Period", "s")
 addCatVar(ct.wa, "fq",  "Frequency", "Hz")
@@ -411,7 +419,7 @@ addCatVar(ct.wa, s.la0, "Wavelength", "m")
 
 addSubCat(ct.wa, 1, "Waves", "Solve for F, K, m, a, x, Ep")
 aF(ct.wa, 1, "F=m*a", U("F", "m", "a") ) -- force
-aF(ct.wa, 1, "F=-K*x", U("F", "K", "x") ) -- force (spring_constant*displacement)
+aF(ct.wa, 1, "F=-K*x", U("F", "K", "x") ) -- force (spring_constant * displacement)
 aF(ct.wa, 1, "Ep=0.5*K*(x)^2", U("Ep", "K") )
 aF(ct.wa, 1, "a=(-K/m)*x", U("a", "K", "m", "x") )
 aF(ct.wa, 1, "T=2*pi*sqrt(m/K)", U("T", "m", "K") )
@@ -426,36 +434,38 @@ aF(ct.wa, 2, "n0=("..con("C")..")/v0", U("n0", "v0") )
 aF(ct.wa, 2, "v=fq*"..s.la, U("v", "fq", s.la ) )
 aF(ct.wa, 2, "v0=fq*"..s.la0, U("v0", "fq", s.la0 ) )
 
-addCat(ct.ec, "Electric Curents", "IB Topic 5. Electricity.")
-addCatVar(ct.ec, "Ve",  "Energy", "J")
-addCatVar(ct.ec, "I",   "Current", "A")
+addCat(ct.ec, "Electric Curents", "IB Topic 5 & 12.")
 addCatVar(ct.ec, "q",   "Charge", "C")
 addCatVar(ct.ec, "t",   "Time", "s")
-addCatVar(ct.ec, "R",   "Resistence", s.oh)
+addCatVar(ct.ec, "I",   "Current", "A")
+addCatVar(ct.ec, "R",   "Resistence", s.om)
 addCatVar(ct.ec, "V",   "Voltage", "V")
-addCatVar(ct.ec, "A",   "Cross-sectional area", "m2")
-addCatVar(ct.ec, "l",   "Length", "m")
-addCatVar(ct.ec, "m",   "Mass", "kg")
-addCatVar(ct.ec, "v",   "Velocity", "m/s")
+addCatVar(ct.ec, "P",   "Power", "W")
+addCatVar(ct.ec, s.rh,  "Resistivity", s.omm)
+addCatVar(ct.ec, "A",   "Cross-sectional area", "m"..s.s2)
+addCatVar(ct.ec, "L",   "Length", "m")
+--addCatVar(ct.ec, "Ve",  "Energy", "J")
+--addCatVar(ct.ec, "m",   "Mass", "kg")
+--addCatVar(ct.ec, "v",   "Velocity", "m/s")
 
 addSubCat(ct.ec, 1, "Electrostatic", "Solve for")
-aF(ct.ec, 1, "Ve=0.5*m*v^2", U( "Ve", "m", "v") )
+--aF(ct.ec, 1, "Ve=0.5*m*v^2", U( "Ve", "m", "v") )
 
-addSubCat(ct.ec, 2, "Electricity", "Solve for")
+addSubCat(ct.ec, 2, "Electricity", "Solve for I, q, t, V, R, P, "..s.rh)
+aF(ct.ec, 2, "I=q/t", U("I", "q", "t") )
 aF(ct.ec, 2, "R=V/I", U("R", "V", "I") )
-aF(ct.ec, 2, "R=(p*L)/A", U("R", "p", "L", "A") )
+aF(ct.ec, 2, "R=("..s.rh.."*L)/A", U("R", s.rh, "L", "A") )
+aF(ct.ec, 2, "P=V*I", U("P", "V", "I") )
+aF(ct.ec, 2, "P=I^2*R", U("P", "I", "R") )
+aF(ct.ec, 2, "P=V^2/R", U("P", "V", "R") )
 
-addCat(ct.fo, "Forces & Fields", "IB Topic 6. Forces and fields.")
-
-addSubCat(ct.fo, 1, "Forces", "Solve for")
-
-addSubCat(ct.fo, 1, "Fields", "Solve for")
+addSubCat(ct.ec, 3, "Electromagnetic Induction", "Solver for I, V, N, R, P, B, A, "..s.th)
 
 addCat(ct.ch, "Chemestry", "Chemistry related things that have some connection to physics")
 
 addCatVar(ct.ch, "atom",    "Atomic number", "nounit")
 addCatVar(ct.ch, "mass",    "Mass", "amu")
-addCatVar(ct.ch, "dens",    "Density", "kg/m"..s.p3)
+addCatVar(ct.ch, "dens",    "Density", "kg/m"..s.s3)
 addCatVar(ct.ch, "c",       "Specific heat", "J/kg*K")
 addCatVar(ct.ch, "melt",    "Melting point", "K")
 addCatVar(ct.ch, "boil",    "Boiling point", "K")
@@ -477,7 +487,7 @@ addCatVar(ct.ch, "h_vap",   "Heat of vaporization", "kJ/mol")
 -- addCatVar(ct.ch, "t_cond",  "Thermal conductivity", "W/mK")
 -- addCatVar(ct.ch, "e_cond",  "Electrical conductivity", "MS/m")
 
-addSubCat(ct.ch, 1, "Elements", "Obtain information relating to the periodic elements")
+addSubCat(ct.ch, 1, "Basic Properties", "Obtain information relating to the periodic elements")
 aF(ct.ch, 1, "mass=ch.mass[atom]", U( "mass", "atom") )
 aF(ct.ch, 1, "dens=ch.dens[atom]", U( "dens", "atom") )
 aF(ct.ch, 1, "c=ch.c[atom]", U( "c", "atom") )
@@ -573,23 +583,20 @@ Mt.u  = 1000000
 Mt.n  = 1000000000
 Mt.p  = 1000000000000
 
-Ms       = {}
-Ms.min   = 60
-Ms.hr    = 3600
-Ms.day   = 86400
-Ms.wk    = 604800
-Ms.month = 18144000
-Ms.yr    = 217728000
+Ms     = {}
+Ms.min = 60
+Ms.hr  = 3600
+Ms.day = 86400
+Ms.wk  = 604800
+Ms.yr  = 217728000
 
 --Time
-Units["s"]           = {}
-Units["s"]["min"]    = { Ms.min, 0}
-Units["s"]["hr"]     = { Ms.hr, 0}
-Units["s"]["day"]    = { Ms.day, 0}
-Units["s"]["wk"]     = { Ms.wk, 0}
-Units["s"]["fortn"]  = { 1209600, 0}
-Units["s"]["month"]  = { Mt.month, 0}
-Units["s"]["yr"]     = { Mt.yr, 0}
+Units["s"]        = {}
+Units["s"]["min"] = { Ms.min, 0}
+Units["s"]["hr"]  = { Ms.hr, 0}
+Units["s"]["day"] = { Ms.day, 0}
+Units["s"]["wk"]  = { Ms.wk, 0}
+Units["s"]["yr"]  = { Mt.yr, 0}
 
 --Length
 Units["m"]            = {}
@@ -599,7 +606,6 @@ Units["m"][s.mu.."m"] = { Mt.u, 0}
 Units["m"]["mm"]      = { Mt.m, 0}
 Units["m"]["cm"]      = { Mt.c, 0}
 Units["m"]["dm"]      = { Mt.d, 0}
-Units["m"]["hm"]      = { Mt.h, 0}
 Units["m"]["km"]      = { Mt.k, 0}
 Units["m"]["in"]      = { 0.0254, 0}
 Units["m"]["ft"]      = { 0.3048, 0}
@@ -610,69 +616,68 @@ Units["m"]["ftm"]     = { 1.8288, 0}
 Units["m"]["FB-F"]    = { 109.7, 0}
 
 --Area
-Units["m"..s.p2]                  = {}
-Units["m"..s.p2]["nm"..s.p2]      = { Mt.n, 0}
-Units["m"..s.p2][s.mu.."m"..s.p2] = { Mt.u, 0}
-Units["m"..s.p2]["mm"..s.p2]      = { Mt.m2, 0}
-Units["m"..s.p2]["cm"..s.p2]      = { Mt.c, 0}
-Units["m"..s.p2]["dm"..s.p2]      = { Mt.d, 0}
-Units["m"..s.p2]["hm"..s.p2]      = { Mt.h, 0}
-Units["m"..s.p2]["km"..s.p2]      = { Mt.k, 0}
-Units["m"..s.p2]["in"..s.p2]      = { 0.0254, 0}
-Units["m"..s.p2]["ft"..s.p2]      = { 0.3048, 0}
-Units["m"..s.p2]["yd"..s.p2]      = { 0.9144, 0}
-Units["m"..s.p2]["mi"..s.p2]      = { 1609.34, 0}
-Units["m"..s.p2]["Nmi"..s.p2]     = { 1852, 0}
-Units["m"..s.p2]["ftm"..s.p2]     = { 1.8288, 0}
-Units["m"..s.p2]["FB-F"..s.p2]    = { 109.7, 0}
+Units["m"..s.s2]                  = {}
+Units["m"..s.s2]["nm"..s.s2]      = { Mt.n, 0}
+Units["m"..s.s2][s.mu.."m"..s.s2] = { Mt.u, 0}
+Units["m"..s.s2]["mm"..s.s2]      = { Mt.m2, 0}
+Units["m"..s.s2]["cm"..s.s2]      = { Mt.c, 0}
+Units["m"..s.s2]["dm"..s.s2]      = { Mt.d, 0}
+Units["m"..s.s2]["km"..s.s2]      = { Mt.k, 0}
+Units["m"..s.s2]["in"..s.s2]      = { 0.0254, 0}
+Units["m"..s.s2]["ft"..s.s2]      = { 0.3048, 0}
+Units["m"..s.s2]["yd"..s.s2]      = { 0.9144, 0}
+Units["m"..s.s2]["mi"..s.s2]      = { 1609.34, 0}
+Units["m"..s.s2]["Nmi"..s.s2]     = { 1852, 0}
+Units["m"..s.s2]["ftm"..s.s2]     = { 1.8288, 0}
+Units["m"..s.s2]["FB-F"..s.s2]    = { 109.7, 0}
 
 --Volume
-Units["m"..s.p2]              = {}
-Units["m"..s.p2]["mm"..s.p3]  = { Mt.m, 0}
-Units["m"..s.p2]["cm3"..s.p3] = { Mt.c, 0}
-Units["m"..s.p2]["km"..s.p3]  = { Mt.k, 0}
-Units["m"..s.p2]["ml"]        = { 0.000001, 0}
-Units["m"..s.p2]["l"]         = { 0.001, 0}
-Units["m"..s.p2]["in"..s.p3] = { .000016387064, 0}
-Units["m"..s.p2]["ft"..s.p3]  = { 0.028316846592, 0}
-Units["m"..s.p2]["yd"..s.p3]  = { 0.764554857984, 0}
-Units["m"..s.p2]["tsp"]       = { 0.00000492892159375, 0}
-Units["m"..s.p2]["tbsp"]      = { 0.00001478676478125, 0}
-Units["m"..s.p2]["floz"]      = { 0.0000295735295625, 0}
-Units["m"..s.p2]["cup"]       = { 0.0002365882365, 0}
-Units["m"..s.p2]["pt"]        = { 0.000473176473, 0}
-Units["m"..s.p2]["qt"]        = { 0.000946352946, 0}
-Units["m"..s.p2]["gal"]       = { 0.003785411784, 0}
-Units["m"..s.p2]["flozUK"]    = { 0.000028413075, 0}
-Units["m"..s.p2]["galUK"]     = { 0.004546092, 0}
+Units["m"..s.s3]             = {}
+Units["m"..s.s3]["mm"..s.s3] = { Mt.m, 0}
+Units["m"..s.s3]["cm"..s.s3] = { Mt.c, 0}
+Units["m"..s.s3]["km"..s.s3] = { Mt.k, 0}
+Units["m"..s.s3]["ml"]       = { 0.000001, 0}
+Units["m"..s.s3]["l"]        = { 0.001, 0}
+Units["m"..s.s3]["in"..s.s3] = { .000016387064, 0}
+Units["m"..s.s3]["ft"..s.s3] = { 0.028316846592, 0}
+Units["m"..s.s3]["yd"..s.s3] = { 0.764554857984, 0}
+Units["m"..s.s3]["tsp"]      = { 0.00000492892159375, 0}
+Units["m"..s.s3]["tbsp"]     = { 0.00001478676478125, 0}
+Units["m"..s.s3]["floz"]     = { 0.0000295735295625, 0}
+Units["m"..s.s3]["cup"]      = { 0.0002365882365, 0}
+Units["m"..s.s3]["pt"]       = { 0.000473176473, 0}
+Units["m"..s.s3]["qt"]       = { 0.000946352946, 0}
+Units["m"..s.s3]["gal"]      = { 0.003785411784, 0}
+Units["m"..s.s3]["flozUK"]   = { 0.000028413075, 0}
+Units["m"..s.s3]["galUK"]    = { 0.004546092, 0}
 
 --Velocity
-Units["m/s"]             = {}
-Units["m/s"]["km/s"]     = { Mt.k, 0}
-Units["m/s"]["cm/s"]     = { Mt.c, 0}
-Units["m/s"]["mm/s"]     = { Mt.m, 0}
-Units["m/s"]["m/hr"]     = { Ms.hr, 0}
-Units["m/s"]["km/hr"]    = { 3.6, 0}
-Units["m/s"]["knot"]     = { 0.514444, 0}
-Units["m/s"]["mi/hr"]    = { 0.44704, 0}
-Units["m/s"]["km/min"]   = { 16.6667, 0}
-Units["m/s"]["ft/min"]   = { 0.00508, 0}
-Units["m/s"]["ft/s"]     = { 0.3048, 0}
-Units["m/s"]["mi/min"]   = { 26.8224, 0}
+Units["m/s"]           = {}
+Units["m/s"]["km/s"]   = { Mt.k, 0}
+Units["m/s"]["cm/s"]   = { Mt.c, 0}
+Units["m/s"]["mm/s"]   = { Mt.m, 0}
+Units["m/s"]["m/hr"]   = { Ms.hr, 0}
+Units["m/s"]["km/hr"]  = { 3.6, 0}
+Units["m/s"]["knot"]   = { 0.514444, 0}
+Units["m/s"]["mi/hr"]  = { 0.44704, 0}
+Units["m/s"]["km/min"] = { 16.6667, 0}
+Units["m/s"]["ft/min"] = { 0.00508, 0}
+Units["m/s"]["ft/s"]   = { 0.3048, 0}
+Units["m/s"]["mi/min"] = { 26.8224, 0}
 
 --Acceleration
-Units["m/s"..s.p2]                 = {}
-Units["m/s"..s.p2]["km/s"..s.p2]   = { Mt.k, 0}
-Units["m/s"..s.p2]["cm/s"..s.p2]   = { Mt.c, 0}
-Units["m/s"..s.p2]["mm/s"..s.p2]   = { Mt.m, 0}
-Units["m/s"..s.p2]["m/hr"..s.p2]   = { Ms.hr, 0}
-Units["m/s"..s.p2]["km/hr"..s.p2]  = { 3.6, 0}
-Units["m/s"..s.p2]["knot"..s.p2]   = { 0.514444, 0}
-Units["m/s"..s.p2]["mi/hr"..s.p2]  = { 0.44704, 0}
-Units["m/s"..s.p2]["km/min"..s.p2] = { 16.6667, 0}
-Units["m/s"..s.p2]["ft/min"..s.p2] = { 0.00508, 0}
-Units["m/s"..s.p2]["ft/s"..s.p2]   = { 0.3048, 0}
-Units["m/s"..s.p2]["mi/min"..s.p2] = { 26.8224, 0}
+Units["m/s"..s.s2]                 = {}
+Units["m/s"..s.s2]["km/s"..s.s2]   = { Mt.k, 0}
+Units["m/s"..s.s2]["cm/s"..s.s2]   = { Mt.c, 0}
+Units["m/s"..s.s2]["mm/s"..s.s2]   = { Mt.m, 0}
+Units["m/s"..s.s2]["m/hr"..s.s2]   = { Ms.hr, 0}
+Units["m/s"..s.s2]["km/hr"..s.s2]  = { 3.6, 0}
+Units["m/s"..s.s2]["knot"..s.s2]   = { 0.514444, 0}
+Units["m/s"..s.s2]["mi/hr"..s.s2]  = { 0.44704, 0}
+Units["m/s"..s.s2]["km/min"..s.s2] = { 16.6667, 0}
+Units["m/s"..s.s2]["ft/min"..s.s2] = { 0.00508, 0}
+Units["m/s"..s.s2]["ft/s"..s.s2]   = { 0.3048, 0}
+Units["m/s"..s.s2]["mi/min"..s.s2] = { 26.8224, 0}
 
 --Mass
 Units["kg"]         = {}
@@ -693,7 +698,7 @@ Units["N"]["kgf"]  = { 0.101972, 0}
 Units["N"]["tonf"] = { 0.000112404, 0}
 
 --Newton*sec (Impulse/Momentum)
-Units["N*s"] = {}
+Units["N"..s.bul.."s"] = {}
 
 --Energy
 Units["J"]         = {}
@@ -703,33 +708,30 @@ Units["J"]["kJ"]   = { Mt.k, 0}
 Units["J"]["mJ"]   = { Mt.m, 0}
 Units["J"]["kWh"]  = { 3600000, 0}
 Units["J"]["ftlb"] = { 1.35582, 0}
-Units["J"]["Btu"]  = { 1055.06, 0}
+Units["J"]["BTU"]  = { 1055.06, 0}
 
 --Power
-Units["W"]            = {}
-Units["W"]["GW"]      = { Mt.G, 0}
-Units["W"]["MW"]      = { Mt.M, 0}
-Units["W"]["kW"]      = { Mt.k, 0}
-Units["W"]["mW"]      = { Mt.m, 0}
-Units["W"]["hp"]      = { 745.7, 0}
-Units["W"]["airW"]    = { 0.9983, 0}
-Units["W"]["Btu/min"] = { 17.5842638, 0}
+Units["W"]         = {}
+Units["W"]["GW"]   = { Mt.G, 0}
+Units["W"]["MW"]   = { Mt.M, 0}
+Units["W"]["kW"]   = { Mt.k, 0}
+Units["W"]["mW"]   = { Mt.m, 0}
+Units["W"]["hp"]   = { 745.7, 0}
+Units["W"]["airW"] = { 0.9983, 0}
 
 --Pressure
-Units["Pa"]                = {}
-Units["Pa"]["mPA"]         = { Mt.m, 0}
-Units["Pa"]["kPa"]         = { Mt.k, 0}
-Units["Pa"]["MPa"]         = { Mt.M, 0}
-Units["Pa"]["N/m"..s.p2]   = { 1, 0}
-Units["Pa"]["mmH20"]       = { 9.80665, 0}
-Units["Pa"]["inH2O"]       = { 249.08891, 0}
-Units["Pa"]["mmHg"]        = { 133.32236842105, 0}
-Units["Pa"]["inHg"]        = { 3338.6388157895, 0}
-Units["Pa"]["mbar"]        = { 100, 0}
-Units["Pa"]["lb/ft"..s.p2] = { 47.880258980336, 0}
-Units["Pa"]["psi"]         = { 6894.7572931684, 0}
-Units["Pa"]["torr"]        = { 0133.32236842105, 0}
-Units["Pa"]["atm"]         = { 101325, 0}
+Units["Pa"]                    = {}
+Units["Pa"]["mPA"]             = { Mt.m, 0}
+Units["Pa"]["kPa"]             = { Mt.k, 0}
+Units["Pa"]["MPa"]             = { Mt.M, 0}
+Units["Pa"]["mmH"..s.sb2.."O"] = { 9.80665, 0}
+Units["Pa"]["inH"..s.sb2.."O"] = { 249.08891, 0}
+Units["Pa"]["mmHg"]            = { 133.32236842105, 0}
+Units["Pa"]["inHg"]            = { 3338.6388157895, 0}
+Units["Pa"]["mbar"]            = { 100, 0}
+Units["Pa"]["lb/ft"..s.s2]     = { 47.880258980336, 0}
+Units["Pa"]["psi"]             = { 6894.7572931684, 0}
+Units["Pa"]["atm"]             = { 101325, 0}
 
 --Temperature
 Units["K"]            = {}
@@ -747,15 +749,15 @@ Units["amu"]["g"]  = {0.000000000000000000000001660538782, 0}
 Units["amu"]["mg"] = {0.000000000000000000001660538782, 0}
 
 --Heat Capacity
-Units["J/kg*K"]           = {}
-Units["J/kg*K"]["J/kg*C"] = { 1, 0}
+Units["J/kg"..s.bul.."K"]                     = {}
+Units["J/kg"..s.bul.."K"]["J/kg"..s.bul.."C"] = { 1, 0}
 --Units["J/kg*K"]["Cal/kg*K"] = {}
 
 --Mole Energy
 Units["kJ/mol"] = {}
 
 --Density
-Units["kg/m"..s.p3] = {}
+Units["kg/m"..s.s3] = {}
 
 --Spring Constant
 Units["N/m"] = {}
@@ -770,19 +772,27 @@ Units["Hz"]["nHz"] = {Mt.n, 0}
 
 --Degrees (Angle)
 Units[s.dg]        = {}
-Units[s.dg]["rad"] = { (180/mathpi), 0}
+Units[s.dg]["rad"] = {(180/mathpi), 0}
 
 --Charge
-Units["C"] = {}
+Units["C"]            = {}
+Units["C"]["mC"]      = {Mt.m, 0}
+Units["C"][s.mu.."C"] = {Mt.u, 0}
 
 --Voltage
-Units["V"] = {}
+Units["V"]       = {}
+Units["V"]["mV"] = {Mt.m, 0}
 
 --Current
-Units["A"] = {}
+Units["A"]            = {}
+Units["A"]["mA"]      = {Mt.m, 0}
+Units["A"][s.mu.."A"] = {Mt.u, 0}
 
 --Rssistence
-Units[s.om] = {}
+Units[s.om]             = {}
+Units[s.om]["k"..s.om]  = {Mt.k, 0}
+Units[s.om]["m"..s.om]  = {Mt.m, 0}
+Units[s.om][s.mu..s.om] = {Mt.u, 0}
 
 --Resistivity
 Units[s.omm] = {}
@@ -798,7 +808,6 @@ Units[s.omm] = {}
 
 --Electrical conductivity
 --Units["MS/m"] = {}
-
 -------------------------------
 -- End of database/units.lua --
 -------------------------------
