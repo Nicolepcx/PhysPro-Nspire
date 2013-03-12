@@ -252,6 +252,9 @@ Units[s.om][s.mu..s.om] = {Mt.u, 0}
 --Resistivity
 Units[s.omm] = {}
 
+--Teslas
+Units["Teslas"] = {}
+
 --Boltzmann
 --Units["J/K"] = {}
 

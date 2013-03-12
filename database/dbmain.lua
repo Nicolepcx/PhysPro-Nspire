@@ -10,14 +10,15 @@ ct    = {} -- Set position of each section
 ct.mo = 1 -- Mechanics
 ct.th = 2 -- Thermal physics
 ct.wa = 3 -- Oscillations & Waves
-ct.ec = 4 -- Electric cuurents
-ct.ch = 5 -- Chemistry
-ct.ex = 6 -- External Database
+ct.ec = 4 -- Electric curents
+ct.fo = 5 -- Forces and Fields
+ct.ch = 6 -- Chemistry
+ct.ex = 7 -- External Database
 
 function checkIfExists(table, name)
     for k,v in pairs(table) do
         if (v.name == name) or (v == name) then
-            print("Conflict (elements appearing twice) detected when loading Database. Skipping the item.")
+            print("Conflict (element appearing twice) detected when loading Database. Skipping the item.")
             return true
         end
     end

@@ -7,8 +7,8 @@
 
 0-------------------0
 |                   |
-|   PhysPro v1.2.0  |
-|   (25 Feb 2013)   |
+|   PhysPro v1.2.1  |
+|   (10 Mar 2013)   |
 |   LGLP 3 License  |
 |     alex3yoyo     |
 |                   |
@@ -24,7 +24,7 @@ TI-Planet.org       Inspired-Lua.org
 pInfo = {
     name="PhysPro-Nspire",
     by="alex3yoyo",
-    ver="v1.2.0",
+    ver="v1.2.1",
     web="http://github.com/alex3yoyo/physpro-nspire",
     license="LGPL3 License"
 }
@@ -123,8 +123,8 @@ Constants = {
 {key="N",   info="Avogadro's constant",         val="6.022*10^(23)",        unit="mol"..s.s1h},
 {key="R",   info="Gas constant",                val="8.314",                unit="J/((mol"..s.s1h..")"..s.bul.."(K"..s.s1h.."))"},
 {key="k1",  info="Boltzmann's constant",        val="1.38*10^(-23)",        unit="J/K"..s.s1h},
-{key="k2",  info="Stefan-Boltzmann constant",   val="5.67*10^-8",           unit="W"..s.bul.."m"..s.s2h..s.bul.."K"..s.s1h},
-{key="k3",  info="Coulomb constant",            val="8.99*10^9",            unit="N"..s.bul.."m"..s.s2..s.bul.."C"..s.s2h},
+{key="k2",  info="Coulomb constant",            val="8.99*10^9",            unit="N"..s.bul.."m"..s.s2..s.bul.."C"..s.s2h},
+{key="k3",  info="Stefan-Boltzmann constant",   val="5.67*10^-8",           unit="W"..s.bul.."m"..s.s2h..s.bul.."K"..s.s1h},
 {key="C",   info="Speed of light in vacuum",    val="2.9979*10^(8)",        unit="m/s"},
 {key="h",   info="Planck constant",             val="6.626*10^(-34)",       unit="J/s"},
 {key="q",   info="Elementary charge",           val="1.60218*10^(-19)",     unit="C"},
@@ -212,14 +212,15 @@ ct    = {} -- Set position of each section
 ct.mo = 1 -- Mechanics
 ct.th = 2 -- Thermal physics
 ct.wa = 3 -- Oscillations & Waves
-ct.ec = 4 -- Electric cuurents
-ct.ch = 5 -- Chemistry
-ct.ex = 6 -- External Database
+ct.ec = 4 -- Electric curents
+ct.fo = 5 -- Forces and Fields
+ct.ch = 6 -- Chemistry
+ct.ex = 7 -- External Database
 
 function checkIfExists(table, name)
     for k,v in pairs(table) do
         if (v.name == name) or (v == name) then
-            print("Conflict (elements appearing twice) detected when loading Database. Skipping the item.")
+            print("Conflict (element appearing twice) detected when loading Database. Skipping the item.")
             return true
         end
     end
@@ -435,6 +436,7 @@ aF(ct.wa, 2, "v=fq*"..s.la, U("v", "fq", s.la ) )
 aF(ct.wa, 2, "v0=fq*"..s.la0, U("v0", "fq", s.la0 ) )
 
 addCat(ct.ec, "Electric Curents", "IB Topic 5 & 12.")
+
 addCatVar(ct.ec, "q",   "Charge", "C")
 addCatVar(ct.ec, "t",   "Time", "s")
 addCatVar(ct.ec, "I",   "Current", "A")
@@ -459,7 +461,38 @@ aF(ct.ec, 2, "P=V*I", U("P", "V", "I") )
 aF(ct.ec, 2, "P=I^2*R", U("P", "I", "R") )
 aF(ct.ec, 2, "P=V^2/R", U("P", "V", "R") )
 
-addSubCat(ct.ec, 3, "Electromagnetic Induction", "Solver for I, V, N, R, P, B, A, "..s.th)
+addSubCat(ct.ec, 3, "Electromagnetic Induction", "Solve for I, V, N, R, P, B, A, "..s.th)
+
+addCat(ct.fo, "Forces and Fields", "IB topic 6. Includes electrosatic, gravitational, and magnetic fields")
+
+addCatVar(ct.fo, "F", "Force", "N")
+addCatVar(ct.fo, "m", "Mass", "kg")
+addCatVar(ct.fo, "m1", "Mass 1", "kg")
+addCatVar(ct.fo, "m2", "Mass 2", "kg")
+addCatVar(ct.fo, "r", "Distance", "m")
+addCatVar(ct.fo, "q", "Charge", "C")
+addCatVar(ct.fo, "q1", "Charge 1", "C")
+addCatVar(ct.fo, "q2", "Charge 2", "C")
+addCatVar(ct.fo, "g", "?", "")
+addCatVar(ct.fo, "E", "?", "")
+addCatVar(ct.fo, "v", "Velocity", "m/s")
+addCatVar(ct.fo, s.th, "Angle", s.dg)
+addCatVar(ct.fo, "B", "Teslas", "Teslas")
+addCatVar(ct.fo, "L", "Length", "m")
+addCatVar(ct.ec, "I",   "Current", "A")
+
+addSubCat(ct.fo, 1, "Electrostaic", "Electric fields")
+aF(ct.fo, 1, "F=("..con("G")..")*((m1*m2)/r^2)", U("F", "m1", "m2", "r") )
+aF(ct.fo, 1, "g=F/m", U("g", "F", "m") )
+
+addSubCat(ct.fo, 2, "Gravitational", "Gravitational fields")
+aF(ct.fo, 2, "F=("..con("k2")..")*((q1*q2)/r^2)", U("F", "q1", "q2", "r") )
+aF(ct.fo, 1, "E=F/q", U("E", "F", "q") )
+
+addSubCat(ct.fo, 3, "Magnetic", "Magnetic fields")
+aF(ct.fo, 3, "F=(q1*q2)/(4*pi*con()*r^2)", U("F", "q1", "q2", "r") )
+aF(ct.fo, 3, "F=q*v*B*sin("..s.th..")", U("F", "q", "v", "B", s.th) )
+aF(ct.fo, 3, "F=B*I*L*sin("..s.th..")", U("F", "B", "I", "L", s.th) )
 
 addCat(ct.ch, "Chemestry", "Chemistry related things that have some connection to physics")
 
@@ -796,6 +829,9 @@ Units[s.om][s.mu..s.om] = {Mt.u, 0}
 
 --Resistivity
 Units[s.omm] = {}
+
+--Teslas
+Units["Teslas"] = {}
 
 --Boltzmann
 --Units["J/K"] = {}
