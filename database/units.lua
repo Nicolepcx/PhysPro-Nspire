@@ -253,7 +253,7 @@ Units[s.om][s.mu..s.om] = {Mt.u, 0}
 Units[s.omm] = {}
 
 --Teslas
-Units["Teslas"] = {}
+Units["T"] = {}
 
 --Boltzmann
 --Units["J/K"] = {}
