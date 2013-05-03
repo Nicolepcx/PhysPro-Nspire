@@ -195,11 +195,11 @@ addCatVar(ct.fo, "B", "Teslas", "T")
 addCatVar(ct.fo, "L", "Length", "m")
 addCatVar(ct.fo, "I", "Current", "A")
 
-addSubCat(ct.fo, 1, "Electrostaic", "Electric fields")
+addSubCat(ct.fo, 1, "Gravitational", "Gravitational fields")
 aF(ct.fo, 1, "F=("..con("G")..")*((m1*m2)/r^2)", U("F", "m1", "m2", "r") )
 -- aF(ct.fo, 1, "g=F/m", U("g", "F", "m") )
 
-addSubCat(ct.fo, 2, "Gravitational", "Gravitational fields")
+addSubCat(ct.fo, 2, "Electrostatic", "Electrostatic fields")
 aF(ct.fo, 2, "F=("..con("k2")..")*((q1*q2)/r^2)", U("F", "q1", "q2", "r") )
 -- aF(ct.fo, 1, "E=F/q", U("E", "F", "q") )
 
