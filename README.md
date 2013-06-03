@@ -5,7 +5,7 @@ Solves multiple physics equations and perforoms routine physics-related calculat
 ## Download
 Download: [build/downloads](https://github.com/alex3yoyo/PhysPro-Nspire/tree/master/build/downloads/)
 
-Latest version: [PhysPro-Nspire_v1.3.0.tns](https://github.com/alex3yoyo/PhysPro-Nspire/tree/master/build/downloads/PhysPro-Nspire_v1.3.0.tns)
+Latest version: [PhysPro-Nspire_v1.3.0.tns](https://github.com/alex3yoyo/PhysPro-Nspire/tree/master/build/downloads/PhysPro-Nspire_v1.3.0.tns?raw=true)
 
 
 ## Licence
