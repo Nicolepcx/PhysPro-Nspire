@@ -7,13 +7,34 @@
 --include "chem.lua"
 
 ct    = {} -- Set position of each section
-ct.mo = 1 -- Mechanics
-ct.th = 2 -- Thermal physics
-ct.wa = 3 -- Oscillations & Waves
-ct.ec = 4 -- Electric curents
-ct.fo = 5 -- Forces and Fields
-ct.ch = 6 -- Chemistry
-ct.ex = 7 -- External Database
+ct.t1 = 1   -- Topic 1
+ct.mo = 2   -- Mechanics
+ct.th = 3   -- Thermal physics
+ct.wa = 4   -- Oscillations & Waves
+ct.ec = 5   -- Electric curents
+ct.fo = 6   -- Forces and Fields
+ct.nu = 7   -- Atomic and Nuclear
+ct.en = 8   -- Energy, Climate Change
+ct.ch = 9   -- Chemistry
+ct.ex = 10  -- External Database
+
+function con(i) -- Shortcut for using constants in the database part
+    for k,v in ipairs(Constants) do
+        if Constants[k].key == i then
+            return Constants[k].val
+        end
+    end
+    return "undef"
+end
+
+function refCon() -- Makes the constants reference page
+    local t2 = {}
+
+    for k,v in ipairs(Constants) do
+        t2[k] = {v.info,v.key,v.val.." "..v.unit}
+    end
+    return t2
+end
 
 function checkIfExists(table, name)
     for k,v in pairs(table) do

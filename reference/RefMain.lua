@@ -5,31 +5,31 @@
 --include "REFSIPrefixes.lua"
 --include "REFGreekAlphabet.lua"
 --include "REFConstants.lua"
---include "REFMotionVars.lua"
 --include "REFBoolAlg.lua"
 --include "REFBoolExpr.lua"
---include "REFDisplacement.lua"
---include "REFVelocity.lua"
---include "REFAcceleration.lua"
---include "REFTime.lua"
---include "REFForce.lua"
---include "REFEnergy.lua"
---include "REFPower.lua"
+-- do not include "REFDisplacement.lua"
+-- do not include "REFVelocity.lua"
+-- do not include "REFAcceleration.lua"
+-- do not include "REFTime.lua"
+-- do not include "REFForce.lua"
+-- do not include "REFEnergy.lua"
+-- do not include "REFPower.lua"
+-- do not include "REFMotionVars.lua"
 
 References = {
-    {title="SI Prefixes",           info="",    screen=SIPrefixes },
-    {title="Greek Alphabet",        info="",    screen=Greek },
-    {title="Constants",             info="",    screen=RefConstants },
-    {title="Motion Variables",      info="",    screen=MotionVars },
-    {title="BoolAlg",               info="",    screen=RefBoolAlg },
-    {title="BoolExpr",              info="",    screen=RefBoolExpr },
-    {title="Displacement Units",    info="",    screen=RefDisplacement },
-    {title="Velocity Units",        info="",    screen=RefVelocity },
-    {title="Acceleration Units",    info="",    screen=RefAcceleration },
-    {title="Time Units",            info="",    screen=RefTime },
-    {title="Force Units",           info="",    screen=RefForce },
-    {title="Energy Units",          info="",    screen=RefEnergy },
-    {title="Power Units",           info="",    screen=RefPower }
+    {title="SI Prefixes",           info="",    screen=SIPrefixes},
+    {title="Greek Alphabet",        info="",    screen=Greek},
+    {title="Constants",             info="",    screen=RefConstants},
+    {title="BoolAlg",               info="",    screen=RefBoolAlg},
+    {title="BoolExpr",              info="",    screen=RefBoolExpr},
+    -- {title="Displacement Units",    info="",    screen=RefDisplacement},
+    -- {title="Velocity Units",        info="",    screen=RefVelocity},
+    -- {title="Acceleration Units",    info="",    screen=RefAcceleration},
+    -- {title="Time Units",            info="",    screen=RefTime},
+    -- {title="Force Units",           info="",    screen=RefForce},
+    -- {title="Energy Units",          info="",    screen=RefEnergy},
+    -- {title="Power Units",           info="",    screen=RefPower},
+    -- {title="Motion Variables",      info="",    screen=MotionVars}
 }
 
 Ref = WScreen()
