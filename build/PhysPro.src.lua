@@ -181,16 +181,16 @@ end
 
 
 ct    = {} -- Set position of each section
-ct.t1 = 1   -- Topic 1
-ct.mo = 2   -- Mechanics
-ct.th = 3   -- Thermal physics
-ct.wa = 4   -- Oscillations & Waves
-ct.ec = 5   -- Electric curents
-ct.fo = 6   -- Forces and Fields
-ct.nu = 7   -- Atomic and Nuclear
-ct.en = 8   -- Energy, Climate Change
-ct.ch = 9   -- Chemistry
-ct.ex = 10  -- External Database
+-- ct.t1 = 1   -- Topic 1
+ct.mo = 1   -- Mechanics
+ct.th = 2   -- Thermal physics
+ct.wa = 3   -- Oscillations & Waves
+ct.ec = 4   -- Electric curents
+ct.fo = 5   -- Forces and Fields
+ct.nu = 6   -- Atomic and Nuclear
+ct.en = 7   -- Energy, Climate Change
+ct.ch = 8   -- Chemistry
+ct.ex = 9   -- External Database
 
 function con(i) -- Shortcut for using constants in the database part
     for k,v in ipairs(Constants) do
@@ -284,7 +284,7 @@ end
 -- Almost all formulas are from the IB Physics HL Data Booklet, which contains the fundamental equations needed throughout the course. It does not contain every physics equation know to man, nor is every Data Booklet equation included in this database.
 
 
-addCat(ct.t1, "Physics and physical measurement", "IB Topic 1. ￼Note: All equations relate to the magnitude of the quantities only. Vector notation has not been used.")
+--addCat(ct.t1, "Physics and physical measurement", "IB Topic 1. ￼Note: All equations relate to the magnitude of the quantities only. Vector notation has not been used.")
 
 
 addCat(ct.mo, "Mechanics", "IB topic 2. Perform motion-related calculations")
@@ -434,9 +434,9 @@ aF(ct.wa, 2, "v=fq*"..g.la[2], U("v", "fq", g.la[2] ) )
 aF(ct.wa, 2, "v0=fq*"..s.la0, U("v0", "fq", s.la0 ) )
 --aF(ct.wa, 2, "v/"..g.la[2].."=v0/"..s.la0, U("v", "v0", g.la[2], s.la0) )
 
-addSubCat(ct.wa, 3, "Wave phenomena", "")
+-- addSubCat(ct.wa, 3, "Wave phenomena", "")
 
-addSubCat(ct.wa, 4, "Sight and wave phenomena", "")
+-- addSubCat(ct.wa, 4, "Sight and wave phenomena", "")
 
 
 addCat(ct.ec, "Electric Curents", "IB Topic 5 & 12.")
@@ -471,7 +471,7 @@ aF(ct.ec, 2, "P=V*I", U("P", "V", "I") )
 aF(ct.ec, 2, "P=I^2*R", U("P", "I", "R") )
 aF(ct.ec, 2, "P=V^2/R", U("P", "V", "R") )
 
-addSubCat(ct.ec, 3, "Electromagnetic Induction", "")
+-- addSubCat(ct.ec, 3, "Electromagnetic Induction", "")
 -- aF(ct.ec, 3, g.ph[1].."=B*A*cos("..g.th[2]..")", U(g.ph[1], "B", "A", g.th[2]) )
 -- aF(ct.ec, 3, g.ep[2].."=B*vel*l", U(g.ep[2], "B", "vel", "l") )
 -- aF(ct.ec, 3, g.ep[2].."-N*("..s.dep.."/"..s.dt..")", U(g.ep[2], "N", s.dep, s.dt) )
@@ -508,7 +508,7 @@ aF(ct.fo, 3, "F=(q1*q2)/(4*pi*"..con(s.ep0).."*r^2)", U("F", "q1", "q2", "r") )
 aF(ct.fo, 3, "F=q*v*B*sin("..g.th[2]..")", U("F", "q", "v", "B", g.th[2]) )
 aF(ct.fo, 3, "F=B*I*L*sin("..g.th[2]..")", U("F", "B", "I", "L", g.th[2]) )
 
-addSubCat(ct.fo, 4, "Motion in fields", "")
+-- addSubCat(ct.fo, 4, "Motion in fields", "")
 
 addCat(ct.nu, "Topic 7", "Atomic & nuclear physics")
 
@@ -568,6 +568,7 @@ aF(ct.en, 2, "P="..g.rh[2].."*"..con("+g").."*h*(v/ti)", U("P", g.rh[2], "h", "v
 addSubCat(ct.en, 3, "Tidal", "")
 aF(ct.en, 3, "P=(1/2)*"..g.rh[2].."*"..con("+g").."*A^2*v", U("P", g.rh[2], "A", "v") )
 aF(ct.en, 3, "v="..g.la[2].."*f", U("v", g.la[2], "f") )
+
 addSubCat(ct.en, 4, "Solar", "")
 -- aF(ct.en, 4, "", U("") )
 

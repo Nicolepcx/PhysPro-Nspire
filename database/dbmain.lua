@@ -7,16 +7,16 @@
 --include "chem.lua"
 
 ct    = {} -- Set position of each section
-ct.t1 = 1   -- Topic 1
-ct.mo = 2   -- Mechanics
-ct.th = 3   -- Thermal physics
-ct.wa = 4   -- Oscillations & Waves
-ct.ec = 5   -- Electric curents
-ct.fo = 6   -- Forces and Fields
-ct.nu = 7   -- Atomic and Nuclear
-ct.en = 8   -- Energy, Climate Change
-ct.ch = 9   -- Chemistry
-ct.ex = 10  -- External Database
+-- ct.t1 = 1   -- Topic 1
+ct.mo = 1   -- Mechanics
+ct.th = 2   -- Thermal physics
+ct.wa = 3   -- Oscillations & Waves
+ct.ec = 4   -- Electric curents
+ct.fo = 5   -- Forces and Fields
+ct.nu = 6   -- Atomic and Nuclear
+ct.en = 7   -- Energy, Climate Change
+ct.ch = 8   -- Chemistry
+ct.ex = 9   -- External Database
 
 function con(i) -- Shortcut for using constants in the database part
     for k,v in ipairs(Constants) do
