@@ -4,7 +4,7 @@
 
 --[[
 
-PhysPro v1.3
+PhysPro v1.3.0.1
 alex3yoyo (Mr-Kitty)
 LGLP 3 License
 
@@ -18,7 +18,7 @@ TI-Planet.org       Inspired-Lua.org
 pInfo = {
     name="PhysPro-Nspire",
     by="alex3yoyo",
-    ver="v1.3",
+    ver="v1.3.0.1",
     web="http://github.com/alex3yoyo/physpro-nspire",
     license="LGPL3 License"
 }
